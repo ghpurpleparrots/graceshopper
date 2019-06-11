@@ -39,7 +39,7 @@ class AllProducts extends React.Component {
   render() {
     const {classes} = this.props
     return (
-      <div>
+      <div className="component">
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
