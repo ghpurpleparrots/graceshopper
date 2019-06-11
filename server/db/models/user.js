@@ -40,7 +40,7 @@ const User = db.define('user', {
     allowNull: false,
     validate: {
       isNumeric: true,
-      len: [8]
+      len: [10]
     }
   },
   imageUrl: {
