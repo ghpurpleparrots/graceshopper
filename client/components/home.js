@@ -1,40 +1,62 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Typography from '@material-ui/core/Typography'
-import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
+import {makeStyles} from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import {Link} from 'react-router-dom'
 
 /**
  * COMPONENT
  */
+
+const useStyles = makeStyles(theme => ({
+  button: {
+    margin: theme.spacing(1),
+    backgroundColor: 'purple',
+    color: 'white'
+  },
+  input: {
+    display: 'none'
+  }
+}))
+
 export const UserHome = props => {
   const {email} = props
+  const classes = useStyles()
 
   return (
-    <Grid
-      container
-      spacing={1}
-      alignItems="center"
-      justify="center"
-      style={{minHeight: '100vh'}}
-    >
-      <Grid item />
+    <div id="home">
+      <Grid
+        container
+        spacing={1}
+        alignItems="center"
+        justify="center"
+        style={{minHeight: '100vh'}}
+      >
+        <Grid item />
 
-      <Grid item>
-        <h3>Welcome, {email}</h3>
-        <img src="/companylogo.jpg" />
+        <Grid item>
+          <Link to="/products">
+            <Button variant="contained" className={classes.button}>
+              See All Products
+            </Button>
+          </Link>
+        </Grid>
+        <Grid item>
+          <h3>Welcome, {email}</h3>
+          <img src="/companylogo.jpg" />
+        </Grid>
+        <Grid item>
+          {/* FIX LINK FOR ORDER */}
+          <Link to="/">
+            <Button variant="contained" className={classes.button}>
+              Start Order
+            </Button>
+          </Link>
+        </Grid>
       </Grid>
-    </Grid>
-
-    // <React.Fragment>
-    //   <CssBaseline />
-    //   <Container maxWidth="sm">
-
-    //   </Container>
-    // </React.Fragment>
+    </div>
   )
 }
 

@@ -34,7 +34,8 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     [theme.breakpoints.up('sm')]: {
       display: 'block'
-    }
+    },
+    color: 'white'
   },
   sectionDesktop: {
     display: 'none',
@@ -54,7 +55,7 @@ const Navbar = () => {
   const classes = useStyles()
   return (
     <div className={classes.grow}>
-      <AppBar position="static" className={classes.appbar}>
+      <AppBar position="fixed" className={classes.appbar}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -67,9 +68,11 @@ const Navbar = () => {
             <AccountCircle />
           </IconButton>
 
-          <Typography className={classes.title} variant="h6" noWrap>
-            Purple Parrots
-          </Typography>
+          <Link to="/">
+            <Typography className={classes.title} variant="h6" noWrap>
+              Purple Parrots
+            </Typography>
+          </Link>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="Show 17 new notifications" color="inherit">
