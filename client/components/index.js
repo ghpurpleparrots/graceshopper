@@ -5,5 +5,5 @@
  */
 export {default as AllProducts} from './allProducts'
 export {default as Navbar} from './navbar'
-export {default as UserHome} from './user-home'
+export {default as Home} from './home'
 export {Login, Signup} from './auth-form'

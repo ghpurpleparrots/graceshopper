@@ -15,7 +15,11 @@ nav a {
   margin: 1em;
 }
 
-form div {
+#home {
+  padding-top: 70px;
+}
+
+/* form div {
   margin: 1em;
   display: inline-block;
-}
+} */
