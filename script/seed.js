@@ -1,15 +1,41 @@
 'use strict'
 
 const db = require('../server/db')
-const {User} = require('../server/db/models')
+const {User, Product} = require('../server/db/models')
 
 async function seed() {
-  await db.sync({force: true})
+  await db.sync()
   console.log('db synced!')
 
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
+    User.create({
+      name: 'Cody',
+      email: 'cody@email.com',
+      password: '123',
+      address: '1 Main St',
+      phoneNumber: '1234567891'
+    }),
+    User.create({
+      name: 'Murphy',
+      email: 'murphy@email.com',
+      password: '123',
+      address: '1 Main St',
+      phoneNumber: '1234567891'
+    })
+  ])
+
+  const products = await Promise.all([
+    Product.create({category: 'container', name: 'Cone', quantity: 1000}),
+    Product.create({category: 'flavor', name: 'Strawberry', quantity: 100}),
+    Product.create({category: 'flavor', name: 'Rum Raisin', quantity: 1000}),
+    Product.create({
+      category: 'flavor',
+      name: 'Mint Chocolate Chip',
+      quantity: 1000
+    }),
+    Product.create({category: 'topping', name: 'Walnuts', quantity: 1000}),
+    Product.create({category: 'topping', name: 'Strawberries', quantity: 1000}),
+    Product.create({category: 'topping', name: 'Bananas', quantity: 1000})
   ])
 
   console.log(`seeded ${users.length} users`)

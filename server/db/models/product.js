@@ -3,7 +3,7 @@ const db = require('../db')
 
 const Product = db.define('product', {
   category: {
-    type: Sequelize.ENUM(container, flavor, topping),
+    type: Sequelize.ENUM('container', 'flavor', 'topping'),
     allowNull: false
   },
   name: {
@@ -18,7 +18,7 @@ const Product = db.define('product', {
   },
   imageUrl: {
     type: Sequelize.STRING,
-    defaultValue: 'product-default-image'
+    defaultValue: 'product-default-image.png'
   }
 })
 
