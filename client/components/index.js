@@ -4,6 +4,7 @@
  * having to figure out which file they belong to!
  */
 export {default as AllProducts} from './allProducts'
+export {default as StartOrder} from './startOrder'
 export {default as Navbar} from './navbar'
 export {default as Home} from './home'
 export {Login, Signup} from './auth-form'

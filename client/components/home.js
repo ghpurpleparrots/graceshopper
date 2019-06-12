@@ -49,7 +49,7 @@ export const UserHome = props => {
         </Grid>
         <Grid item>
           {/* FIX LINK FOR ORDER */}
-          <Link to="/">
+          <Link to="/start-order">
             <Button variant="contained" className={classes.button}>
               Start Order
             </Button>
