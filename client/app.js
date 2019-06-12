@@ -1,15 +1,21 @@
 import React from 'react'
-
+import store from './store'
+import {me} from './store/user'
 import {Navbar} from './components'
 import Routes from './routes'
 
-const App = () => {
-  return (
-    <div>
-      <Navbar />
-      <Routes />
-    </div>
-  )
+class App extends React.Component {
+  componentDidMount() {
+    store.dispatch(me())
+  }
+  render() {
+    return (
+      <div>
+        <Navbar />
+        <Routes />
+      </div>
+    )
+  }
 }
 
 export default App

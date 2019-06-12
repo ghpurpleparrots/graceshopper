@@ -12,6 +12,7 @@ router.post('/login', async (req, res, next) => {
       console.log('Incorrect password for user:', req.body.email)
       res.status(401).send('Wrong username and/or password')
     } else {
+      req.session.userId = user.id
       req.login(user, err => (err ? next(err) : res.json(user)))
     }
   } catch (err) {
@@ -38,8 +39,17 @@ router.post('/logout', (req, res) => {
   res.redirect('/')
 })
 
-router.get('/me', (req, res) => {
-  res.json(req.user)
+router.get('/me', (req, res, next) => {
+  try {
+    if (!req.session.userId) {
+      next()
+    } else {
+      User.findByPk(req.session.userId)
+      res.json(req.user)
+    }
+  } catch (error) {
+    next(error)
+  }
 })
 
 router.use('/google', require('./google'))

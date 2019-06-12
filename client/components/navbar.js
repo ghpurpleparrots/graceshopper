@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
-import {fade, makeStyles} from '@material-ui/core/styles'
+import {makeStyles} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
@@ -12,12 +12,12 @@ import InputBase from '@material-ui/core/InputBase'
 import Badge from '@material-ui/core/Badge'
 import MenuItem from '@material-ui/core/MenuItem'
 import Menu from '@material-ui/core/Menu'
-import MenuIcon from '@material-ui/icons/Menu'
 import ShoppingCart from '@material-ui/icons/ShoppingCartOutlined'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import MailIcon from '@material-ui/icons/Mail'
 import NotificationsIcon from '@material-ui/icons/Notifications'
 import MoreIcon from '@material-ui/icons/MoreVert'
+import TextField from '@material-ui/core/TextField'
+import LoginMenu from './loginMenu'
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -53,21 +53,18 @@ const useStyles = makeStyles(theme => ({
 
 const Navbar = () => {
   const classes = useStyles()
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  function handleClick(event) {
+    setAnchorEl(event.currentTarget)
+  }
+  function handleClose() {
+    setAnchorEl(null)
+  }
   return (
     <div className={classes.grow}>
       <AppBar position="fixed" className={classes.appbar}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            aria-label="Account of current user"
-            // aria-controls={menuId}
-            aria-haspopup="true"
-            // onClick={handleProfileMenuOpen}
-            color="inherit"
-          >
-            <AccountCircle />
-          </IconButton>
-
+          <LoginMenu />
           <Link to="/">
             <Typography className={classes.title} variant="h6" noWrap>
               Purple Parrots
