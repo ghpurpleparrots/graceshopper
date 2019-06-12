@@ -19,8 +19,8 @@ import DeleteIcon from '@material-ui/icons/Delete'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
-    maxWidth: 752
+    width: 400,
+    flexGrow: 1
   },
   demo: {
     backgroundColor: theme.palette.background.paper
@@ -35,29 +35,33 @@ const useStyles = makeStyles(theme => ({
 const Cart = props => {
   const classes = useStyles
   return (
-    <Grid item xs={12} md={6}>
-      <Typography variant="h6" className={classes.title}>
-        Avatar with text and icon
-      </Typography>
-      <div className={classes.demo}>
-        <List>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar className={classes.avatar} src="icecream_icon.png" />
-            </ListItemAvatar>
-            <ListItemText
-              primary="Single-line item"
-              secondary="Secondary text"
-            />
-            <ListItemSecondaryAction>
-              <IconButton edge="end" aria-label="Delete">
-                <DeleteIcon />
-              </IconButton>
-            </ListItemSecondaryAction>
-          </ListItem>
-        </List>
-      </div>
-    </Grid>
+    <div className={classes.root}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={6}>
+          <Typography variant="h6" className={classes.title}>
+            Your
+          </Typography>
+          <div className={classes.demo}>
+            <List>
+              <ListItem>
+                <ListItemAvatar>
+                  <Avatar className={classes.avatar} src="icecream_icon.png" />
+                </ListItemAvatar>
+                <ListItemText
+                  primary="Single-line item"
+                  secondary="Secondary text"
+                />
+                <ListItemSecondaryAction>
+                  <IconButton edge="end" aria-label="Delete">
+                    <DeleteIcon />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            </List>
+          </div>
+        </Grid>
+      </Grid>
+    </div>
   )
 }
 

@@ -18,6 +18,8 @@ import NotificationsIcon from '@material-ui/icons/Notifications'
 import MoreIcon from '@material-ui/icons/MoreVert'
 import TextField from '@material-ui/core/TextField'
 import LoginMenu from './loginMenu'
+import {Cart} from '../components'
+import Drawer from '@material-ui/core/Drawer'
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -54,11 +56,24 @@ const useStyles = makeStyles(theme => ({
 const Navbar = () => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
+  const [state, setState] = React.useState({
+    right: false
+  })
   function handleClick(event) {
     setAnchorEl(event.currentTarget)
   }
   function handleClose() {
     setAnchorEl(null)
+  }
+  const toggleDrawer = (side, open) => event => {
+    if (
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return
+    }
+
+    setState({...state, [side]: open})
   }
   return (
     <div className={classes.grow}>
@@ -74,7 +89,7 @@ const Navbar = () => {
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="Show 17 new notifications" color="inherit">
               <Badge badgeContent={17} color="secondary">
-                <ShoppingCart />
+                <ShoppingCart onClick={toggleDrawer('right', true)} />
               </Badge>
             </IconButton>
           </div>
@@ -91,6 +106,13 @@ const Navbar = () => {
           </div>
         </Toolbar>
       </AppBar>
+      <Drawer
+        anchor="right"
+        open={state.right}
+        onClose={toggleDrawer('right', false)}
+      >
+        <Cart />
+      </Drawer>
       {/* {renderMobileMenu}
       {renderMenu} */}
     </div>
