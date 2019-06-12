@@ -7,8 +7,8 @@ const ItemQuantity = require('./itemQuantity')
 Order.belongsTo(User)
 User.hasMany(Order)
 
-Order.belongsToMany(Product, {through: 'order-products'})
-Product.belongsToMany(Order, {through: 'order-products'})
+// Order.belongsToMany(Product, {through: 'order-products'})
+// Product.belongsToMany(Order, {through: 'order-products'})
 
 module.exports = {
   User,

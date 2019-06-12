@@ -49,6 +49,15 @@ async function seed() {
     {price: 10.0, status: 'inCart', userId: 2}
   ])
 
+  await OrderProducts.bulkCreate([
+    {orderId: 1, productId: 1, groupId: 1},
+    {orderId: 1, productId: 2, groupId: 1},
+    {orderId: 1, productId: 3, groupId: 1},
+    {orderId: 1, productId: 1, groupId: 2},
+    {orderId: 1, productId: 2, groupId: 2},
+    {orderId: 1, productId: 3, groupId: 2}
+  ])
+
   console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
 }

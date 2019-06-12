@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {addToOrder} from '../store'
+import {Link} from 'react-router-dom'
 
 import {green} from '@material-ui/core/colors'
 import {withStyles} from '@material-ui/core/styles'
@@ -14,6 +15,7 @@ import Container from '@material-ui/core/Container'
 import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
+import Button from '@material-ui/core/Button'
 
 const styles = theme => ({
   root: {
@@ -40,6 +42,11 @@ const styles = theme => ({
   },
   title: {
     padding: theme.spacing(3, 2)
+  },
+  button: {
+    margin: theme.spacing(1),
+    backgroundColor: 'purple',
+    color: 'white'
   }
 })
 
@@ -138,6 +145,17 @@ class StartOrder extends React.Component {
                     ))}
                   </Grid>
                 </Container>
+              </div>
+              <div>
+                <Link to="/start-order">
+                  <Button
+                    onClick={() => getOrderId(userId)}
+                    variant="contained"
+                    className={classes.button}
+                  >
+                    Start Order
+                  </Button>
+                </Link>
               </div>
             </Paper>
           </Grid>
