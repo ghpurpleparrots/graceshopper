@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import {makeStyles} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import {Link} from 'react-router-dom'
+import {getOrderId} from '../store'
 
 /**
  * COMPONENT
@@ -22,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export const UserHome = props => {
-  const {email} = props
+  const {email, userId, getOrderId, isLoggedIn} = props
   const classes = useStyles()
 
   return (
@@ -47,14 +48,27 @@ export const UserHome = props => {
           <h3>Welcome, {email}</h3>
           <img src="/companylogo.jpg" />
         </Grid>
-        <Grid item>
-          {/* FIX LINK FOR ORDER */}
-          <Link to="/start-order">
-            <Button variant="contained" className={classes.button}>
-              Start Order
-            </Button>
-          </Link>
-        </Grid>
+        {isLoggedIn ? (
+          <Grid item>
+            <Link to="/start-order">
+              <Button
+                onClick={() => getOrderId(userId)}
+                variant="contained"
+                className={classes.button}
+              >
+                Start Order
+              </Button>
+            </Link>
+          </Grid>
+        ) : (
+          <Grid item>
+            <Link to="/sign-up">
+              <Button variant="contained" className={classes.button}>
+                Start Order
+              </Button>
+            </Link>
+          </Grid>
+        )}
       </Grid>
     </div>
   )
@@ -67,11 +81,16 @@ const mapState = state => {
   return {
     email: state.user.email,
     name: state.user.name,
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    userId: state.user.id
   }
 }
 
-export default connect(mapState)(UserHome)
+const mapDispatchToProps = dispatch => ({
+  getOrderId: userId => dispatch(getOrderId(userId))
+})
+
+export default connect(mapState, mapDispatchToProps)(UserHome)
 
 /**
  * PROP TYPES

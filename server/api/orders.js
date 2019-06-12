@@ -10,7 +10,26 @@ router.get('/:userId', async (req, res, next) => {
         status: 'inCart'
       }
     })
+    console.log(order)
     if (order) {
+      let orderId = order.id
+      let orderContent = await OrderProducts.findAll({
+        where: {
+          orderId: orderId
+        }
+      })
+      let example = orderContent[0].groupId
+      let groupArr = []
+
+      orderContent.forEach(item => {
+        if (!groupArr.includes(item.groupId)) {
+          groupArr.push(item.groupId)
+        }
+      })
+
+      console.log(groupArr)
+
+      console.log('HELLOOOOO', example)
       res.json(order.id)
     } else {
       const newOrder = await Order.create({
