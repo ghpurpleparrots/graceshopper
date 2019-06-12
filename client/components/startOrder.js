@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {addToOrder} from '../store'
-
+import {addToppings} from '../store'
 import {green} from '@material-ui/core/colors'
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
@@ -152,7 +151,7 @@ const mapStateToProps = state => ({
   currentOrder: state.order.currentOrder
 })
 const mapDispatchToProps = dispatch => ({
-  addToOrder: () => dispatch(addToOrder())
+  addToOrder: () => dispatch(addToppings())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(
