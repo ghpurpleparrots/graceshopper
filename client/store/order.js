@@ -1,20 +1,24 @@
 /**
  * ACTION TYPES
  */
-const ADD_TO_ORDER = 'ADD_TO_ORDER'
+const ADD_TOPPINGS = 'ADD_TOPPINGS'
 
 /**
  * INITIAL STATE
  */
 const initialState = {
   allOrders: [],
-  currentOrder: {}
+  currentItem: {
+    container: null,
+    flavor: null,
+    toppings: []
+  }
 }
 
 /**
  * ACTION CREATORS
  */
-const addToOrder = products => ({type: ADD_TO_ORDER, products})
+export const addToppings = toppings => ({type: ADD_TOPPINGS, toppings})
 
 /**
  * THUNK CREATORS
@@ -25,10 +29,10 @@ const addToOrder = products => ({type: ADD_TO_ORDER, products})
  */
 export default function(state = initialState, action) {
   switch (action.type) {
-    case ADD_TO_ORDER:
+    case ADD_TOPPINGS:
       return {
         ...state,
-        currentOrder: Object.assign(currentOrder, action.products)
+        currentItem: {...state.currentItem, toppings: action.toppings}
       }
     default:
       return state
