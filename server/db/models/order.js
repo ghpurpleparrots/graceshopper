@@ -11,9 +11,6 @@ const Order = db.define('order', {
   },
   status: {
     type: Sequelize.ENUM('inCart', 'ordered')
-  },
-  cart: {
-    type: Sequelize.ARRAY(Sequelize.JSON)
   }
 })
 
