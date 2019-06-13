@@ -4,6 +4,7 @@ import axios from 'axios'
  */
 const ADD_TOPPINGS = 'ADD_TOPPINGS'
 const GET_ORDER_ID = 'GET_ORDER_ID'
+const ADD_CONTAINER = 'ADD_CONTAINER'
 const ADD_TO_CART = 'ADD_TO_CART'
 
 /**
@@ -22,12 +23,17 @@ const initialState = {
 /**
  * ACTION CREATORS
  */
+
+export const addToppings = toppings => ({type: ADD_TOPPINGS, toppings})
+export const addContainer = container => ({type: ADD_CONTAINER, container})
+
 export const addToppings = (toppings, groupId) => ({
   type: ADD_TOPPINGS,
   toppings,
   groupId
 })
 export const addToCart = () => ({type: ADD_TO_CART})
+
 const gotOrderId = orderId => ({type: GET_ORDER_ID, orderId})
 
 /**
@@ -67,6 +73,15 @@ export default function(state = initialState, action) {
         ...state,
         currentItem: {...state.currentItem, orderId: action.orderId}
       }
+    case ADD_CONTAINER: {
+      return {
+        ...state,
+        currentItem: {
+          ...state.currentItem,
+          products: [...state.currentItem.products, action.container]
+        }
+      }
+    }
     default:
       return state
   }
