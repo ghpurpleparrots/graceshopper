@@ -24,7 +24,6 @@ const initialState = {
  * ACTION CREATORS
  */
 
-export const addToppings = toppings => ({type: ADD_TOPPINGS, toppings})
 export const addContainer = container => ({type: ADD_CONTAINER, container})
 
 export const addToppings = (toppings, groupId) => ({

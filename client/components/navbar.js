@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {logout} from '../store'
+import {logout, getProducts} from '../store'
 import {makeStyles} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -59,6 +59,9 @@ const Navbar = props => {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [state, setState] = React.useState({
     right: false
+  })
+  React.useEffect(() => {
+    props.getProducts()
   })
   function handleClick(event) {
     setAnchorEl(event.currentTarget)
@@ -123,20 +126,16 @@ const mapState = state => {
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    handleClick() {
-      dispatch(logout())
-    }
-  }
-}
+const mapDispatch = dispatch => ({
+  getProducts: () => dispatch(getProducts())
+})
 
 export default connect(mapState, mapDispatch)(Navbar)
 
 /**
  * PROP TYPES
  */
-Navbar.propTypes = {
-  handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
-}
+// Navbar.propTypes = {
+//   handleClick: PropTypes.func.isRequired,
+//   isLoggedIn: PropTypes.bool.isRequired
+// }

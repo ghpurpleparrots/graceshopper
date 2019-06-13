@@ -106,7 +106,7 @@ const startListening = () => {
 }
 
 const syncDb = () => {
-  db.sync({force: true})
+  db.sync()
   console.log('db synced')
 }
 
