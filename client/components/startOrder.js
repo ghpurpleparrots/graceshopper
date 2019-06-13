@@ -75,7 +75,24 @@ class StartOrder extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleSelectTopping(event) {}
+  handleSelectTopping(id) {
+    let oldState = this.state.currentToppings
+    //debugger
+    console.log('OLD STATE line 82', this.state.currentToppings)
+    if (!this.state.currentToppings.includes(id)) {
+      oldState.push(id)
+      this.setState({
+        currentToppings: oldState
+      })
+      console.log('new state line 88', oldState)
+    } else {
+      let newState = oldState.filter(el => el !== id)
+      this.setState({
+        currentToppings: newState
+      })
+      console.log('new state line 93', newState)
+    }
+  }
 
   handleSubmit(event) {}
 
@@ -132,9 +149,9 @@ class StartOrder extends React.Component {
                               <FormControlLabel
                                 control={
                                   <GreenSwitch
-                                  // checked={state.checkedA}
-                                  // onChange={this.handleSelectTopping(evt)}
-                                  // name={card.name}
+                                    onChange={() =>
+                                      this.handleSelectTopping(card.id)
+                                    }
                                   />
                                 }
                                 label="Select"

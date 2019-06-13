@@ -39,7 +39,7 @@ const Cart = props => {
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Typography variant="h6" className={classes.title}>
-            Your
+            Your Shopping Cart
           </Typography>
           <div className={classes.demo}>
             <List>
