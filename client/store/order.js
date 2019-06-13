@@ -6,7 +6,11 @@ const ADD_TOPPINGS = 'ADD_TOPPINGS'
 const GET_ORDER_ID = 'GET_ORDER_ID'
 const ADD_CONTAINER = 'ADD_CONTAINER'
 const ADD_TO_CART = 'ADD_TO_CART'
+
+const INCREMENT_QTY = 'INCREMENT_QTY'
+const DECREMENT_QTY = 'DECREMENT_QTY'
 const SUBMIT_ORDER = 'SUBMIT_ORDER'
+
 
 /**
  * INITIAL STATE
@@ -36,6 +40,10 @@ export const addToCart = () => ({type: ADD_TO_CART})
 export const submittedOrder = () => ({type: SUBMIT_ORDER})
 
 const gotOrderId = orderId => ({type: GET_ORDER_ID, orderId})
+
+export const incrementQty = groupId => ({type: INCREMENT_QTY, groupId})
+
+export const decrementQty = groupId => ({type: DECREMENT_QTY, groupId})
 
 /**
  * THUNK CREATORS
@@ -97,6 +105,32 @@ export default function(state = initialState, action) {
           ...state.currentItem,
           products: [...state.currentItem.products, action.container]
         }
+      }
+    }
+    case INCREMENT_QTY: {
+      let thisGroup = state.cart
+      thisGroup.map(item => {
+        if (item.groupId === action.groupId) {
+          item.qty += 1
+          return item
+        } else return item
+      })
+      return {
+        ...state,
+        cart: thisGroup
+      }
+    }
+    case DECREMENT_QTY: {
+      let thisGroup = state.cart
+      thisGroup.map(item => {
+        if (item.groupId === action.groupId) {
+          item.qty -= 1
+          return item
+        } else return item
+      })
+      return {
+        ...state,
+        cart: thisGroup
       }
     }
     default:

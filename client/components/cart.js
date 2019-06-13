@@ -11,6 +11,9 @@ import IconButton from '@material-ui/core/IconButton'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import DeleteIcon from '@material-ui/icons/Delete'
+import Button from '@material-ui/core/Button'
+import {incrementQty, decrementQty} from '../store/order'
+import Box from '@material-ui/core/Box'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -21,11 +24,25 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     margin: theme.spacing(4, 0, 2)
+  },
+  button: {
+    margin: theme.spacing(1)
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200
+  },
+  quantity: {
+    ...theme.typography.button,
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(1)
   }
 }))
 const Cart = props => {
   const {cart, products, user} = props
   const classes = useStyles
+
   return (
     <div className={classes.root}>
       <Grid container>
@@ -49,7 +66,23 @@ const Cart = props => {
                       secondary={products.filter(el => el.id === prod)[0].name}
                     />
                   ))}
-
+                  <Button
+                    onClick={() => props.incrementQty(item.groupId)}
+                    className={classes.button}
+                    color="primary"
+                  >
+                    +
+                  </Button>
+                  <Box border={1} className={classes.quantity}>
+                    {item.qty}
+                  </Box>
+                  <Button
+                    onClick={() => props.decrementQty(item.groupId)}
+                    className={classes.button}
+                    color="secondary"
+                  >
+                    -
+                  </Button>
                   <ListItemSecondaryAction>
                     <IconButton edge="end" aria-label="Delete">
                       <DeleteIcon />
@@ -71,4 +104,9 @@ const mapStateToProps = state => ({
   products: state.product
 })
 
-export default connect(mapStateToProps)(Cart)
+const mapDispatchToProps = dispatch => ({
+  incrementQty: groupId => dispatch(incrementQty(groupId)),
+  decrementQty: groupId => dispatch(decrementQty(groupId))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)
