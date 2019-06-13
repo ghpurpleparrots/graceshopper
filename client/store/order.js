@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import axios from 'axios'
 /**
  * ACTION TYPES
@@ -10,7 +11,7 @@ const ADD_TO_CART = 'ADD_TO_CART'
 const INCREMENT_QTY = 'INCREMENT_QTY'
 const DECREMENT_QTY = 'DECREMENT_QTY'
 const SUBMIT_ORDER = 'SUBMIT_ORDER'
-
+const DELETE_ITEM = 'DELETE_ITEM'
 
 /**
  * INITIAL STATE
@@ -45,6 +46,7 @@ export const incrementQty = groupId => ({type: INCREMENT_QTY, groupId})
 
 export const decrementQty = groupId => ({type: DECREMENT_QTY, groupId})
 
+export const deleteItem = groupId => ({type: DELETE_ITEM, groupId})
 /**
  * THUNK CREATORS
  */
@@ -107,7 +109,7 @@ export default function(state = initialState, action) {
       }
     }
     case INCREMENT_QTY: {
-      let thisGroup = state.cart
+      let thisGroup = [...state.cart]
       thisGroup.map(item => {
         if (item.groupId === action.groupId) {
           item.qty += 1
@@ -120,7 +122,7 @@ export default function(state = initialState, action) {
       }
     }
     case DECREMENT_QTY: {
-      let thisGroup = state.cart
+      let thisGroup = [...state.cart]
       thisGroup.map(item => {
         if (item.groupId === action.groupId) {
           item.qty -= 1
@@ -130,6 +132,16 @@ export default function(state = initialState, action) {
       return {
         ...state,
         cart: thisGroup
+      }
+    }
+    case DELETE_ITEM: {
+      let newCart = [...state.cart]
+      newCart = newCart.filter(item => {
+        return item.groupId !== action.groupId
+      })
+      return {
+        ...state,
+        cart: newCart
       }
     }
     default:
