@@ -145,7 +145,14 @@ class SelectContainer extends React.Component {
               </div>
               <div>
                 <Link to="/add-toppings">
-                  <Button variant="contained" className={classes.button}>
+                  <Button
+                    disabled={!this.state.currentContainer.length}
+                    variant="contained"
+                    className={classes.button}
+                    onClick={() =>
+                      this.props.addContainer(this.state.currentContainer)
+                    }
+                  >
                     Next
                   </Button>
                 </Link>

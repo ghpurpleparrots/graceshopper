@@ -33,7 +33,6 @@ const initialState = {
  */
 
 export const addContainer = container => ({type: ADD_CONTAINER, container})
-
 export const addToppings = (toppings, groupId) => ({
   type: ADD_TOPPINGS,
   toppings,
@@ -109,7 +108,7 @@ export default function(state = initialState, action) {
         ...state,
         currentItem: {
           ...state.currentItem,
-          products: [...state.currentItem.products, action.container]
+          products: [...state.currentItem.products, ...action.container]
         }
       }
     }

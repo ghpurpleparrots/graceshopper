@@ -38,11 +38,18 @@ const useStyles = makeStyles(theme => ({
     ...theme.typography.button,
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(1)
+  },
+  total: {
+    fontWeight: '700'
+  },
+  listItem: {
+    padding: theme.spacing(1, 0)
   }
 }))
 const Cart = props => {
   const {cart, products, user} = props
   const classes = useStyles
+  const total = cart.reduce((total, item) => (total += item.qty * 10), 0)
 
   return (
     <div className={classes.root}>
@@ -88,6 +95,7 @@ const Cart = props => {
                   >
                     -
                   </Button>
+                  <ListItemText>${10 * item.qty}.00</ListItemText>
                   <ListItemSecondaryAction>
                     <IconButton
                       onClick={() => {
@@ -101,14 +109,11 @@ const Cart = props => {
                   </ListItemSecondaryAction>
                 </ListItem>
               ))}
+              <ListItem>
+                <ListItemText primary="Total" />
+                <Typography variant="subtitle1">${total}.00</Typography>
+              </ListItem>
             </List>
-          </div>
-          <div>
-            <Link to="/checkout">
-              <Button variant="contained" className={classes.button}>
-                Checkout
-              </Button>
-            </Link>
           </div>
         </Grid>
       </Grid>
