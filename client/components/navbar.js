@@ -41,19 +41,20 @@ const useStyles = makeStyles(theme => ({
   },
   sectionDesktop: {
     display: 'none',
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('lg')]: {
       display: 'flex'
     }
   },
   sectionMobile: {
     display: 'flex',
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('lg')]: {
       display: 'none'
     }
   }
 }))
 
-const Navbar = () => {
+const Navbar = props => {
+  const {cart} = props
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [state, setState] = React.useState({
@@ -86,22 +87,15 @@ const Navbar = () => {
             </Typography>
           </Link>
           <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
+          <div>
             <IconButton aria-label="Show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
+              <Badge
+                badgeContent={cart.length ? cart.length : ''}
+                color="secondary"
+                invisible={!cart.length}
+              >
                 <ShoppingCart onClick={toggleDrawer('right', true)} />
               </Badge>
-            </IconButton>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="Show more"
-              // aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              // onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
             </IconButton>
           </div>
         </Toolbar>
@@ -124,7 +118,8 @@ const Navbar = () => {
  */
 const mapState = state => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    cart: state.order.cart
   }
 }
 

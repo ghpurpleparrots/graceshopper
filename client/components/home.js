@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid'
 import {makeStyles} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import {Link} from 'react-router-dom'
-import {getOrderId} from '../store'
+import {getOrderId, getProducts} from '../store'
 
 /**
  * COMPONENT
