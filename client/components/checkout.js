@@ -27,13 +27,11 @@ function MadeWithLove() {
 }
 
 const useStyles = makeStyles(theme => ({
-  appBar: {
-    position: 'relative'
-  },
   layout: {
     width: 'auto',
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
+    paddingTop: theme.spacing(4),
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
       width: 600,
       marginLeft: 'auto',
@@ -100,13 +98,6 @@ function Checkout(props) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar position="absolute" color="default" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Company name
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <main className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
@@ -174,7 +165,7 @@ function Checkout(props) {
 
 const mapStateToProps = state => ({
   cart: state.order.cart,
-  orderId: state.order.cart[0] ? state.order.cart[0].orderId : null
+  orderId: state.order.orderId
 })
 
 const mapDispatchToProps = dispatch => ({

@@ -13,10 +13,12 @@ const DECREMENT_QTY = 'DECREMENT_QTY'
 const SUBMIT_ORDER = 'SUBMIT_ORDER'
 const DELETE_ITEM = 'DELETE_ITEM'
 
+
 /**
  * INITIAL STATE
  */
 const initialState = {
+  orderId: null,
   cart: [],
   currentItem: {
     orderId: null,
@@ -92,12 +94,13 @@ export default function(state = initialState, action) {
         }
       }
     case SUBMIT_ORDER:
-      return initialState
+      return {...initialState, orderId: state.orderId}
 
     case GET_ORDER_ID:
       return {
         ...state,
-        currentItem: {...state.currentItem, orderId: action.orderId}
+        currentItem: {...state.currentItem, orderId: action.orderId},
+        orderId: action.orderId
       }
     case ADD_CONTAINER: {
       return {

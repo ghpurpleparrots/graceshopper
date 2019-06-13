@@ -5,10 +5,10 @@ import PropTypes from 'prop-types'
 import {
   Home,
   AllProducts,
-  StartOrder,
   Cart,
-  selectContainer,
-  Checkout
+  SelectContainer,
+  Checkout,
+  AddToppings
 } from './components'
 import {me} from './store'
 
@@ -30,9 +30,9 @@ class Routes extends Component {
 
         <Route exact path="/" component={Home} />
         <Route path="/products" component={AllProducts} />
-        <Route path="/start-order" component={StartOrder} />
+        <Route path="/start-order" component={SelectContainer} />
         <Route path="/cart" component={Cart} />
-        <Route path="/select-container" component={selectContainer} />
+        <Route path="/add-toppings" component={AddToppings} />
         <Route path="/checkout" component={Checkout} />
       </Switch>
     )
