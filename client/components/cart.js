@@ -12,8 +12,8 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import DeleteIcon from '@material-ui/icons/Delete'
 import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
-import {incrementQty} from '../store/order'
+import {incrementQty, decrementQty} from '../store/order'
+import Box from '@material-ui/core/Box'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,6 +32,11 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     width: 200
+  },
+  quantity: {
+    ...theme.typography.button,
+    backgroundColor: theme.palette.background.paper,
+    padding: theme.spacing(1)
   }
 }))
 const Cart = props => {
@@ -61,26 +66,23 @@ const Cart = props => {
                       secondary={products.filter(el => el.id === prod)[0].name}
                     />
                   ))}
-                  <div>
-                    <Button
-                      onClick={() => props.incrementQty(item.groupId)}
-                      className={classes.button}
-                      color="primary"
-                    >
-                      +
-                    </Button>
-                    <Button className={classes.button} color="secondary">
-                      -
-                    </Button>{' '}
-                    <TextField
-                      disabled
-                      id="standard-disabled"
-                      label="Quantity"
-                      defaultValue="1"
-                      className={classes.textField}
-                      margin="none"
-                    />
-                  </div>
+                  <Button
+                    onClick={() => props.incrementQty(item.groupId)}
+                    className={classes.button}
+                    color="primary"
+                  >
+                    +
+                  </Button>
+                  <Box border={1} className={classes.quantity}>
+                    {item.qty}
+                  </Box>
+                  <Button
+                    onClick={() => props.decrementQty(item.groupId)}
+                    className={classes.button}
+                    color="secondary"
+                  >
+                    -
+                  </Button>
                   <ListItemSecondaryAction>
                     <IconButton edge="end" aria-label="Delete">
                       <DeleteIcon />
@@ -103,7 +105,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  incrementQty: groupId => dispatch(incrementQty(groupId))
+  incrementQty: groupId => dispatch(incrementQty(groupId)),
+  decrementQty: groupId => dispatch(decrementQty(groupId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)

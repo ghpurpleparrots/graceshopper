@@ -40,6 +40,7 @@ const gotOrderId = orderId => ({type: GET_ORDER_ID, orderId})
 export const incrementQty = groupId => ({type: INCREMENT_QTY, groupId})
 
 export const decrementQty = groupId => ({type: DECREMENT_QTY, groupId})
+
 /**
  * THUNK CREATORS
  */
@@ -100,14 +101,16 @@ export default function(state = initialState, action) {
       }
     }
     case DECREMENT_QTY: {
-      let thisGroup = state.cart.map(item => {
+      let thisGroup = state.cart
+      thisGroup.map(item => {
         if (item.groupId === action.groupId) {
           item.qty -= 1
           return item
         } else return item
       })
       return {
-        thisGroup
+        ...state,
+        cart: thisGroup
       }
     }
     default:
