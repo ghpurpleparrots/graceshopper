@@ -6,6 +6,8 @@ const ADD_TOPPINGS = 'ADD_TOPPINGS'
 const GET_ORDER_ID = 'GET_ORDER_ID'
 const ADD_CONTAINER = 'ADD_CONTAINER'
 const ADD_TO_CART = 'ADD_TO_CART'
+const INCREMENT_QTY = 'INCREMENT_QTY'
+const DECREMENT_QTY = 'DECREMENT_QTY'
 
 /**
  * INITIAL STATE
@@ -24,7 +26,6 @@ const initialState = {
  * ACTION CREATORS
  */
 
-export const addToppings = toppings => ({type: ADD_TOPPINGS, toppings})
 export const addContainer = container => ({type: ADD_CONTAINER, container})
 
 export const addToppings = (toppings, groupId) => ({
@@ -36,6 +37,9 @@ export const addToCart = () => ({type: ADD_TO_CART})
 
 const gotOrderId = orderId => ({type: GET_ORDER_ID, orderId})
 
+export const incrementQty = groupId => ({type: INCREMENT_QTY, groupId})
+
+export const decrementQty = groupId => ({type: DECREMENT_QTY, groupId})
 /**
  * THUNK CREATORS
  */
@@ -80,6 +84,30 @@ export default function(state = initialState, action) {
           ...state.currentItem,
           products: [...state.currentItem.products, action.container]
         }
+      }
+    }
+    case INCREMENT_QTY: {
+      let thisGroup = state.cart
+      thisGroup.map(item => {
+        if (item.groupId === action.groupId) {
+          item.qty += 1
+          return item
+        } else return item
+      })
+      return {
+        ...state,
+        cart: thisGroup
+      }
+    }
+    case DECREMENT_QTY: {
+      let thisGroup = state.cart.map(item => {
+        if (item.groupId === action.groupId) {
+          item.qty -= 1
+          return item
+        } else return item
+      })
+      return {
+        thisGroup
       }
     }
     default:
