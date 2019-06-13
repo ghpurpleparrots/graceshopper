@@ -1,9 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-
 import {Link} from 'react-router-dom'
-import {addToppings} from '../store'
-
+import {addToppings, getProducts, addToCart} from '../store'
 import {green} from '@material-ui/core/colors'
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
@@ -73,28 +71,37 @@ class StartOrder extends React.Component {
     }
     this.handleSelectTopping = this.handleSelectTopping.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleCartAdd = this.handleCartAdd.bind(this)
+  }
+  componentDidMount() {
+    this.props.getProducts()
   }
 
   handleSelectTopping(id) {
     let oldState = this.state.currentToppings
-    //debugger
-    console.log('OLD STATE line 82', this.state.currentToppings)
     if (!this.state.currentToppings.includes(id)) {
       oldState.push(id)
       this.setState({
         currentToppings: oldState
       })
-      console.log('new state line 88', oldState)
     } else {
       let newState = oldState.filter(el => el !== id)
       this.setState({
         currentToppings: newState
       })
-      console.log('new state line 93', newState)
     }
   }
 
-  handleSubmit(event) {}
+  handleSubmit() {
+    this.props.addToOrder(this.state.currentToppings)
+  }
+  handleCartAdd() {
+    this.props.addToOrder(
+      this.state.currentToppings,
+      this.props.cart.length + 1
+    )
+    this.props.addToCart()
+  }
 
   render() {
     const {classes} = this.props
@@ -165,15 +172,23 @@ class StartOrder extends React.Component {
                 </Container>
               </div>
               <div>
-                <Link to="/start-order">
+                {this.state.currentToppings.length ? (
                   <Button
-                    onClick={() => getOrderId(userId)}
+                    variant="contained"
+                    className={classes.button}
+                    onClick={() => this.handleCartAdd()}
+                  >
+                    Add To Cart
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => this.handleSubmit()}
                     variant="contained"
                     className={classes.button}
                   >
                     Start Order
                   </Button>
-                </Link>
+                )}
               </div>
             </Paper>
           </Grid>
@@ -185,10 +200,13 @@ class StartOrder extends React.Component {
 
 const mapStateToProps = state => ({
   allProducts: state.product,
-  currentOrder: state.order.currentOrder
+  currentOrder: state.order.currentOrder,
+  cart: state.order.cart
 })
 const mapDispatchToProps = dispatch => ({
-  addToOrder: () => dispatch(addToppings())
+  addToOrder: (toppings, groupId) => dispatch(addToppings(toppings, groupId)),
+  getProducts: () => dispatch(getProducts()),
+  addToCart: () => dispatch(addToCart())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(
