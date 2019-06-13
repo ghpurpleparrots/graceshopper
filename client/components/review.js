@@ -2,8 +2,6 @@ import React from 'react'
 import {makeStyles} from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
 import Grid from '@material-ui/core/Grid'
 import {Cart} from '../components'
 
@@ -45,17 +43,8 @@ export default function Review() {
 
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Order summary
-      </Typography>
       <List disablePadding>
         <Cart />
-        <ListItem className={classes.listItem}>
-          <ListItemText primary="Total" />
-          <Typography variant="subtitle1" className={classes.total}>
-            $34.06
-          </Typography>
-        </ListItem>
       </List>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
