@@ -10,26 +10,21 @@ router.get('/:userId', async (req, res, next) => {
         status: 'inCart'
       }
     })
-    console.log(order)
     if (order) {
-      let orderId = order.id
-      let orderContent = await OrderProducts.findAll({
-        where: {
-          orderId: orderId
-        }
-      })
-      let example = orderContent[0].groupId
-      let groupArr = []
+      // let orderId = order.id
+      // let orderContent = await OrderProducts.findAll({
+      //   where: {
+      //     orderId: orderId
+      //   }
+      // })
+      // let example = orderContent[0].groupId
+      // let groupArr = []
 
-      orderContent.forEach(item => {
-        if (!groupArr.includes(item.groupId)) {
-          groupArr.push(item.groupId)
-        }
-      })
-
-      console.log(groupArr)
-
-      console.log('HELLOOOOO', example)
+      // orderContent.forEach(item => {
+      //   if (!groupArr.includes(item.groupId)) {
+      //     groupArr.push(item.groupId)
+      //   }
+      // })
       res.json(order.id)
     } else {
       const newOrder = await Order.create({
@@ -45,7 +40,6 @@ router.get('/:userId', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    console.log(req.body)
     let productId = req.body.productId
     let orderId = req.body.orderId
     let groupId = req.body.groupId
