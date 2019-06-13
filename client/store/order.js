@@ -6,8 +6,11 @@ const ADD_TOPPINGS = 'ADD_TOPPINGS'
 const GET_ORDER_ID = 'GET_ORDER_ID'
 const ADD_CONTAINER = 'ADD_CONTAINER'
 const ADD_TO_CART = 'ADD_TO_CART'
+
 const INCREMENT_QTY = 'INCREMENT_QTY'
 const DECREMENT_QTY = 'DECREMENT_QTY'
+const SUBMIT_ORDER = 'SUBMIT_ORDER'
+
 
 /**
  * INITIAL STATE
@@ -34,6 +37,7 @@ export const addToppings = (toppings, groupId) => ({
   groupId
 })
 export const addToCart = () => ({type: ADD_TO_CART})
+export const submittedOrder = () => ({type: SUBMIT_ORDER})
 
 const gotOrderId = orderId => ({type: GET_ORDER_ID, orderId})
 
@@ -53,6 +57,15 @@ export const getOrderId = userId => async dispatch => {
   }
 }
 
+export const submitOrder = (orderId, cart) => async dispatch => {
+  try {
+    let update = {orderId, cart}
+    await axios.put('/api/orders', update)
+    dispatch(submittedOrder())
+  } catch (err) {
+    console.error(err)
+  }
+}
 /**
  * REDUCER
  */
@@ -71,7 +84,14 @@ export default function(state = initialState, action) {
       return {
         ...state,
         cart: [...state.cart, state.currentItem],
-        currentItem: initialState.currentItem
+        currentItem: {
+          ...initialState.currentItem,
+          orderId: state.currentItem.orderId
+        }
+      }
+    case SUBMIT_ORDER:
+      return {
+        initialState
       }
     case GET_ORDER_ID:
       return {

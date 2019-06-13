@@ -73,9 +73,6 @@ class StartOrder extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleCartAdd = this.handleCartAdd.bind(this)
   }
-  componentDidMount() {
-    this.props.getProducts()
-  }
 
   handleSelectTopping(id) {
     let oldState = this.state.currentToppings
