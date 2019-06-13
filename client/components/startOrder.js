@@ -187,6 +187,13 @@ class StartOrder extends React.Component {
                   </Button>
                 )}
               </div>
+              <div>
+                <Link to="/checkout">
+                  <Button variant="contained" className={classes.button}>
+                    Review
+                  </Button>
+                </Link>
+              </div>
             </Paper>
           </Grid>
         </Grid>
