@@ -12,7 +12,7 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import DeleteIcon from '@material-ui/icons/Delete'
 import Button from '@material-ui/core/Button'
-import {incrementQty, decrementQty} from '../store/order'
+import {incrementQty, decrementQty, deleteItem} from '../store/order'
 import Box from '@material-ui/core/Box'
 
 const useStyles = makeStyles(theme => ({
@@ -77,14 +77,24 @@ const Cart = props => {
                     {item.qty}
                   </Box>
                   <Button
-                    onClick={() => props.decrementQty(item.groupId)}
+                    onClick={() =>
+                      item.qty > 1
+                        ? props.decrementQty(item.groupId)
+                        : props.deleteItem(item.groupId)
+                    }
                     className={classes.button}
                     color="secondary"
                   >
                     -
                   </Button>
                   <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="Delete">
+                    <IconButton
+                      onClick={() => {
+                        props.deleteItem(item.groupId)
+                      }}
+                      edge="end"
+                      aria-label="Delete"
+                    >
                       <DeleteIcon />
                     </IconButton>
                   </ListItemSecondaryAction>
@@ -106,7 +116,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   incrementQty: groupId => dispatch(incrementQty(groupId)),
-  decrementQty: groupId => dispatch(decrementQty(groupId))
+  decrementQty: groupId => dispatch(decrementQty(groupId)),
+  deleteItem: groupId => dispatch(deleteItem(groupId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)
