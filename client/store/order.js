@@ -90,9 +90,8 @@ export default function(state = initialState, action) {
         }
       }
     case SUBMIT_ORDER:
-      return {
-        initialState
-      }
+      return initialState
+
     case GET_ORDER_ID:
       return {
         ...state,
