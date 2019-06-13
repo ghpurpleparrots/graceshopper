@@ -7,7 +7,8 @@ import {
   AllProducts,
   StartOrder,
   Cart,
-  selectContainer
+  selectContainer,
+  Checkout
 } from './components'
 import {me} from './store'
 
@@ -32,6 +33,7 @@ class Routes extends Component {
         <Route path="/start-order" component={StartOrder} />
         <Route path="/cart" component={Cart} />
         <Route path="/select-container" component={selectContainer} />
+        <Route path="/checkout" component={Checkout} />
       </Switch>
     )
   }

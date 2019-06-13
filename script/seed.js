@@ -200,8 +200,30 @@ async function seed() {
   ])
 
   await Order.bulkCreate([
-    {price: 5.0, status: 'inCart', userId: 1},
-    {price: 10.0, status: 'inCart', userId: 2}
+    {
+      price: 5.0,
+      status: 'inCart',
+      userId: 1,
+      orderInfo: [
+        {orderId: 1, groupId: 1, qty: 1, products: [1, 3, 4]},
+        {orderId: 1, groupdId: 2, qty: 1, products: [2, 4, 6]}
+      ]
+    },
+    {
+      price: 10.0,
+      status: 'inCart',
+      userId: 2,
+      orderInfo: [
+        {orderId: 2, groupId: 1, qty: 1, products: [1, 5, 7, 8]},
+        {orderId: 2, groupdId: 2, qty: 1, products: [2, 4, 6]}
+      ]
+    },
+    {
+      price: 10.0,
+      status: 'inCart',
+      userId: 2,
+      orderInfo: []
+    }
   ])
 
   await OrderProducts.bulkCreate([

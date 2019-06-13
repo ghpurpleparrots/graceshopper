@@ -11,7 +11,14 @@ const Order = db.define('order', {
   },
   status: {
     type: Sequelize.ENUM('inCart', 'ordered')
+  },
+  orderInfo: {
+    type: Sequelize.ARRAY(Sequelize.JSON)
   }
+})
+
+Order.beforeCreate(order => {
+  order.orderInfo = JSON.stringify(order.orderInfo)
 })
 
 module.exports = Order
