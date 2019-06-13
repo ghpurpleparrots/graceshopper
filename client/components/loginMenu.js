@@ -13,7 +13,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle'
 import IconButton from '@material-ui/core/IconButton'
 import {Typography, TextField} from '@material-ui/core'
 import Link from '@material-ui/core/Link'
-import {auth, logout} from '../store/user'
+import {auth, logout, logOut} from '../store'
 
 const StyledMenu = withStyles({
   paper: {
@@ -48,7 +48,7 @@ const StyledMenuItem = withStyles(theme => ({
 }))(MenuItem)
 
 const LoginMenu = props => {
-  const {user, handleSubmit, logout} = props
+  const {user, handleSubmit, logoutUser, logoutCart} = props
   const [anchorEl, setAnchorEl] = React.useState(null)
 
   function handleClick(event) {
@@ -57,6 +57,11 @@ const LoginMenu = props => {
 
   function handleClose() {
     setAnchorEl(null)
+  }
+
+  function handleLogout() {
+    logoutUser()
+    logoutCart()
   }
 
   return (
@@ -86,7 +91,11 @@ const LoginMenu = props => {
             <ListItemText primary="Order History" />
           </StyledMenuItem>
           <StyledMenuItem>
-            <Button type="submit" variant="outlined" onClick={() => logout()}>
+            <Button
+              type="submit"
+              variant="outlined"
+              onClick={() => handleLogout()}
+            >
               Logout
             </Button>
           </StyledMenuItem>
@@ -119,12 +128,14 @@ const LoginMenu = props => {
   )
 }
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user,
+  cart: state.order.cart
 })
 
 const mapDispatchToProps = dispatch => {
   return {
-    logout: () => dispatch(logout()),
+    logoutUser: () => dispatch(logout()),
+    logoutCart: () => dispatch(logOut()),
     handleSubmit: async event => {
       event.preventDefault()
       const email = event.target.email.value
