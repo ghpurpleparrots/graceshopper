@@ -1,9 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-
 import {Link} from 'react-router-dom'
 import {addContainer} from '../store'
-
 import {green} from '@material-ui/core/colors'
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
@@ -65,7 +63,7 @@ const GreenRadio = withStyles({
   checked: {}
 })(props => <Radio color="default" {...props} />)
 
-class selectContainer extends React.Component {
+class SelectContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -146,13 +144,9 @@ class selectContainer extends React.Component {
                 </Container>
               </div>
               <div>
-                <Link to="/start-order">
-                  <Button
-                    onClick={() => getOrderId(userId)}
-                    variant="contained"
-                    className={classes.button}
-                  >
-                    Start Order
+                <Link to="/add-toppings">
+                  <Button variant="contained" className={classes.button}>
+                    Next
                   </Button>
                 </Link>
               </div>
@@ -173,5 +167,5 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(styles)(selectContainer)
+  withStyles(styles)(SelectContainer)
 )

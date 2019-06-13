@@ -4,7 +4,7 @@
  * having to figure out which file they belong to!
  */
 export {default as AllProducts} from './allProducts'
-export {default as StartOrder} from './startOrder'
+export {default as AddToppings} from './addToppings'
 export {default as selectContainer} from './selectContainer'
 export {default as Navbar} from './navbar'
 export {default as Home} from './home'
@@ -14,3 +14,4 @@ export {default as AddressForm} from './addressForm'
 export {default as PaymentForm} from './paymentForm'
 export {default as Review} from './review'
 export {default as Checkout} from './checkout'
+export {default as SelectContainer} from './selectContainer'

@@ -63,7 +63,7 @@ const GreenSwitch = withStyles({
   track: {}
 })(Switch)
 
-class StartOrder extends React.Component {
+class AddToppings extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -214,5 +214,5 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(styles)(StartOrder)
+  withStyles(styles)(AddToppings)
 )
