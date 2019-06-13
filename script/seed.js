@@ -186,7 +186,7 @@ async function seed() {
     }),
     Product.create({
       category: 'topping',
-      name: "Reese's Peices",
+      name: "Reese's Pieces",
       quantity: 1000,
       imageUrl:
         'https://i.pinimg.com/originals/b9/b2/1f/b9b21f3afca23bc34327388c9f748623.png'
