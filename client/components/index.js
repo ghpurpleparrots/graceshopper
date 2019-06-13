@@ -5,6 +5,7 @@
  */
 export {default as AllProducts} from './allProducts'
 export {default as StartOrder} from './startOrder'
+export {default as selectContainer} from './selectContainer'
 export {default as Navbar} from './navbar'
 export {default as Home} from './home'
 export {default as LoginMenu} from './loginMenu'
