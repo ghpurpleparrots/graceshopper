@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {addToppings, getProducts, addToCart} from '../store'
 import {green} from '@material-ui/core/colors'
 import {withStyles} from '@material-ui/core/styles'
@@ -186,13 +185,6 @@ class AddToppings extends React.Component {
                     Start Order
                   </Button>
                 )}
-              </div>
-              <div>
-                <Link to="/checkout">
-                  <Button variant="contained" className={classes.button}>
-                    Review
-                  </Button>
-                </Link>
               </div>
             </Paper>
           </Grid>

@@ -12,7 +12,7 @@ const INCREMENT_QTY = 'INCREMENT_QTY'
 const DECREMENT_QTY = 'DECREMENT_QTY'
 const SUBMIT_ORDER = 'SUBMIT_ORDER'
 const DELETE_ITEM = 'DELETE_ITEM'
-
+const LOG_OUT = 'LOG_OUT'
 
 /**
  * INITIAL STATE
@@ -49,6 +49,8 @@ export const incrementQty = groupId => ({type: INCREMENT_QTY, groupId})
 export const decrementQty = groupId => ({type: DECREMENT_QTY, groupId})
 
 export const deleteItem = groupId => ({type: DELETE_ITEM, groupId})
+
+export const logOut = () => ({type: LOG_OUT})
 /**
  * THUNK CREATORS
  */
@@ -146,6 +148,9 @@ export default function(state = initialState, action) {
         ...state,
         cart: newCart
       }
+    }
+    case LOG_OUT: {
+      return initialState
     }
     default:
       return state

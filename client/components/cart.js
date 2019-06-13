@@ -14,6 +14,7 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import Button from '@material-ui/core/Button'
 import {incrementQty, decrementQty, deleteItem} from '../store/order'
 import Box from '@material-ui/core/Box'
+import {Link} from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -101,6 +102,13 @@ const Cart = props => {
                 </ListItem>
               ))}
             </List>
+          </div>
+          <div>
+            <Link to="/checkout">
+              <Button variant="contained" className={classes.button}>
+                Checkout
+              </Button>
+            </Link>
           </div>
         </Grid>
       </Grid>
