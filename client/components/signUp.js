@@ -63,7 +63,7 @@ class SignUp extends React.Component {
     delete body.hasError
 
     try {
-      axios.post('/api/users', body)
+      await axios.post('/api/users', body)
       this.setState({
         name: '',
         email: '',
@@ -71,7 +71,7 @@ class SignUp extends React.Component {
         address: '',
         phoneNumber: ''
       })
-      await this.props.history.push('/sign-up-confirm')
+      this.props.history.push('/sign-up-confirm')
     } catch (error) {
       console.log(error)
       this.setState({
