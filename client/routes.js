@@ -9,6 +9,8 @@ import {
   SelectContainer,
   Checkout,
   AddToppings,
+  SignUp,
+  SignUpConfirmation,
   Flavors
 } from './components'
 import {me} from './store'
@@ -35,6 +37,8 @@ class Routes extends Component {
         <Route path="/cart" component={Cart} />
         <Route path="/add-toppings" component={AddToppings} />
         <Route path="/checkout" component={Checkout} />
+        <Route exact path="/sign-up" component={SignUp} />
+        <Route exact path="/sign-up-confirm" component={SignUpConfirmation} />
         <Route path="/flavors" component={Flavors} />
       </Switch>
     )

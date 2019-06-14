@@ -9,7 +9,9 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ShoppingBasket from '@material-ui/icons/ShoppingBasket'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import IconButton from '@material-ui/core/IconButton'
-import Link from '@material-ui/core/Link'
+import {Typography, TextField} from '@material-ui/core'
+import {Link} from 'react-router-dom'
+
 import {auth, logout, logOut} from '../store'
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator'
 import FormControl from '@material-ui/core/FormControl'
@@ -162,9 +164,11 @@ const LoginMenu = props => {
                 errorMessages={['this field is required']}
               />
             </StyledMenuItem>
-            <StyledMenuItem>
-              <Link variant="body2">"Don't have an account? Sign Up"</Link>
-            </StyledMenuItem>
+            <Link to="/sign-up">
+              <Typography align="center" variant="caption" component="p">
+                Don't have an account? Sign Up
+              </Typography>
+            </Link>
             <StyledMenuItem>
               <Button type="submit" variant="outlined">
                 Login
