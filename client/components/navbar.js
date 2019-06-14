@@ -50,19 +50,14 @@ const useStyles = makeStyles(theme => ({
 const Navbar = props => {
   const {cart} = props
   const classes = useStyles()
-  const [anchorEl, setAnchorEl] = React.useState(null)
+
   const [state, setState] = React.useState({
     right: false
   })
   React.useEffect(() => {
     props.getProducts()
   })
-  function handleClick(event) {
-    setAnchorEl(event.currentTarget)
-  }
-  function handleClose() {
-    setAnchorEl(null)
-  }
+
   const toggleDrawer = (side, open) => event => {
     if (
       event.type === 'keydown' &&
@@ -105,7 +100,11 @@ const Navbar = props => {
         <Cart />
         <div>
           <Link to="/checkout">
-            <Button variant="contained" className={classes.button}>
+            <Button
+              variant="contained"
+              className={classes.button}
+              onClick={toggleDrawer('right', false)}
+            >
               Checkout
             </Button>
           </Link>

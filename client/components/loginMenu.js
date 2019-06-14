@@ -7,13 +7,20 @@ import MenuItem from '@material-ui/core/MenuItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import ShoppingBasket from '@material-ui/icons/ShoppingBasket'
-import DraftsIcon from '@material-ui/icons/Drafts'
-import SendIcon from '@material-ui/icons/Send'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import IconButton from '@material-ui/core/IconButton'
 import {Typography, TextField} from '@material-ui/core'
 import {Link} from 'react-router-dom'
+
 import {auth, logout, logOut} from '../store'
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator'
+import FormControl from '@material-ui/core/FormControl'
+import Input from '@material-ui/core/Input'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import InputLabel from '@material-ui/core/InputLabel'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import TextField from '@material-ui/core/TextField'
 
 const StyledMenu = withStyles({
   paper: {
@@ -48,11 +55,30 @@ const StyledMenuItem = withStyles(theme => ({
 }))(MenuItem)
 
 const LoginMenu = props => {
-  const {user, handleSubmit, logoutUser, logoutCart} = props
+  const {user, login, logoutUser, logoutCart} = props
   const [anchorEl, setAnchorEl] = React.useState(null)
+  const [state, setState] = React.useState({
+    email: '',
+    password: ''
+  })
 
   function handleClick(event) {
     setAnchorEl(event.currentTarget)
+  }
+  function handleChange(event) {
+    if (event.target.name === 'email') {
+      setState({...state, email: event.target.value})
+    }
+    if (event.target.name === 'password') {
+      setState({...state, password: event.target.value})
+    }
+  }
+  function handleSubmit(event) {
+    event.preventDefault()
+    const email = event.target.email.value
+    const password = event.target.password.value
+    setState({email: '', password: ''})
+    login(email, password)
   }
 
   function handleClose() {
@@ -108,12 +134,35 @@ const LoginMenu = props => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <form onSubmit={handleSubmit}>
+          <ValidatorForm
+            onSubmit={handleSubmit}
+            onError={errors => console.log(errors)}
+          >
             <StyledMenuItem>
-              <TextField variant="outlined" label="Email" name="email" />
+              <TextValidator
+                variant="outlined"
+                label="Email"
+                onChange={handleChange}
+                name="email"
+                value={state.email}
+                validators={['required', 'isEmail']}
+                errorMessages={[
+                  'this field is required',
+                  'please enter a valid e-mail'
+                ]}
+              />
             </StyledMenuItem>
             <StyledMenuItem>
-              <TextField variant="outlined" label="Password" name="password" />
+              <TextValidator
+                variant="outlined"
+                label="Password"
+                type="password"
+                onChange={handleChange}
+                name="password"
+                value={state.password}
+                validators={['required']}
+                errorMessages={['this field is required']}
+              />
             </StyledMenuItem>
             <Link to="/sign-up">
               <Typography align="center" variant="caption" component="p">
@@ -125,7 +174,7 @@ const LoginMenu = props => {
                 Login
               </Button>
             </StyledMenuItem>
-          </form>
+          </ValidatorForm>
         </StyledMenu>
       )}
     </div>
@@ -140,12 +189,7 @@ const mapDispatchToProps = dispatch => {
   return {
     logoutUser: () => dispatch(logout()),
     logoutCart: () => dispatch(logOut()),
-    handleSubmit: async event => {
-      event.preventDefault()
-      const email = event.target.email.value
-      const password = event.target.password.value
-      await dispatch(auth(email, password, 'login'))
-    }
+    login: (email, password) => dispatch(auth(email, password, 'login'))
   }
 }
 

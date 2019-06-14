@@ -14,18 +14,6 @@ import Link from '@material-ui/core/Link'
 import Typography from '@material-ui/core/Typography'
 import {AddressForm, PaymentForm, Review} from '../components'
 
-function MadeWithLove() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Built with love by the '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Material-UI
-      </Link>
-      {' team.'}
-    </Typography>
-  )
-}
-
 const useStyles = makeStyles(theme => ({
   layout: {
     width: 'auto',
@@ -157,7 +145,6 @@ function Checkout(props) {
             )}
           </React.Fragment>
         </Paper>
-        <MadeWithLove />
       </main>
     </React.Fragment>
   )
