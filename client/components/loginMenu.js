@@ -12,7 +12,7 @@ import SendIcon from '@material-ui/icons/Send'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import IconButton from '@material-ui/core/IconButton'
 import {Typography, TextField} from '@material-ui/core'
-import Link from '@material-ui/core/Link'
+import {Link} from 'react-router-dom'
 import {auth, logout, logOut} from '../store'
 
 const StyledMenu = withStyles({
@@ -115,7 +115,11 @@ const LoginMenu = props => {
             <StyledMenuItem>
               <TextField variant="outlined" label="Password" name="password" />
             </StyledMenuItem>
-            <Link variant="body2">"Don't have an account? Sign Up"</Link>
+            <Link to="/sign-up">
+              <Typography align="center" variant="caption" component="p">
+                Don't have an account? Sign Up
+              </Typography>
+            </Link>
             <StyledMenuItem>
               <Button type="submit" variant="outlined">
                 Login
