@@ -1,26 +1,20 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {withStyles} from '@material-ui/core/styles'
-import Button from '@material-ui/core/Button'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
 import ShoppingBasket from '@material-ui/icons/ShoppingBasket'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import IconButton from '@material-ui/core/IconButton'
-import {Typography, TextField} from '@material-ui/core'
+import {
+  Typography,
+  Menu,
+  Button,
+  IconButton,
+  ListItemText,
+  ListItemIcon,
+  MenuItem
+} from '@material-ui/core'
 import {Link} from 'react-router-dom'
-
 import {auth, logout, logOut} from '../store'
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator'
-import FormControl from '@material-ui/core/FormControl'
-import Input from '@material-ui/core/Input'
-import InputAdornment from '@material-ui/core/InputAdornment'
-import InputLabel from '@material-ui/core/InputLabel'
-import Visibility from '@material-ui/icons/Visibility'
-import VisibilityOff from '@material-ui/icons/VisibilityOff'
-import TextField from '@material-ui/core/TextField'
 
 const StyledMenu = withStyles({
   paper: {
