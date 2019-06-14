@@ -12,6 +12,13 @@ import IconButton from '@material-ui/core/IconButton'
 import Link from '@material-ui/core/Link'
 import {auth, logout, logOut} from '../store'
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator'
+import FormControl from '@material-ui/core/FormControl'
+import Input from '@material-ui/core/Input'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import InputLabel from '@material-ui/core/InputLabel'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import TextField from '@material-ui/core/TextField'
 
 const StyledMenu = withStyles({
   paper: {
@@ -147,6 +154,7 @@ const LoginMenu = props => {
               <TextValidator
                 variant="outlined"
                 label="Password"
+                type="password"
                 onChange={handleChange}
                 name="password"
                 value={state.password}
