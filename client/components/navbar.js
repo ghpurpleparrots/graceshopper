@@ -50,19 +50,14 @@ const useStyles = makeStyles(theme => ({
 const Navbar = props => {
   const {cart} = props
   const classes = useStyles()
-  const [anchorEl, setAnchorEl] = React.useState(null)
+
   const [state, setState] = React.useState({
     right: false
   })
   React.useEffect(() => {
     props.getProducts()
   })
-  function handleClick(event) {
-    setAnchorEl(event.currentTarget)
-  }
-  function handleClose() {
-    setAnchorEl(null)
-  }
+
   const toggleDrawer = (side, open) => event => {
     if (
       event.type === 'keydown' &&
