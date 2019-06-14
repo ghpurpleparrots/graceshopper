@@ -100,7 +100,11 @@ const Navbar = props => {
         <Cart />
         <div>
           <Link to="/checkout">
-            <Button variant="contained" className={classes.button}>
+            <Button
+              variant="contained"
+              className={classes.button}
+              onClick={toggleDrawer('right', false)}
+            >
               Checkout
             </Button>
           </Link>
