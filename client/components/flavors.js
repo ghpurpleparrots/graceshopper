@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {addToppings, getProducts, addToCart} from '../store'
+import {Link} from 'react-router-dom'
+import {addContainer} from '../store'
 import {green} from '@material-ui/core/colors'
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
@@ -10,23 +11,39 @@ import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import Container from '@material-ui/core/Container'
-import FormGroup from '@material-ui/core/FormGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Switch from '@material-ui/core/Switch'
+import Radio from '@material-ui/core/Radio'
+import RadioGroup from '@material-ui/core/RadioGroup'
 import Button from '@material-ui/core/Button'
-import {Redirect} from 'react-router-dom'
 
 const styles = theme => ({
   root: {
-    padding: theme.spacing(3, 2)
+    width: 'auto',
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    paddingTop: theme.spacing(4),
+    [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
+      width: 600,
+      marginLeft: 'auto',
+      marginRight: 'auto'
+    }
   },
-  cardContainer: {
-    display: 'flex',
-    justifyContent: 'space-around'
+  paper: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    padding: theme.spacing(2),
+    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+      marginTop: theme.spacing(6),
+      marginBottom: theme.spacing(6),
+      padding: theme.spacing(3)
+    }
   },
   cardGrid: {
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8)
+  },
+  cardContainer: {
+    display: 'flex',
+    justifyContent: 'space-around'
   },
   card: {
     height: '100%',
@@ -37,7 +54,9 @@ const styles = theme => ({
     paddingTop: '56.25%' // 16:9
   },
   cardContent: {
-    flexGrow: 1
+    flexGrow: 0,
+    display: 'flex',
+    justifyContent: 'space-between'
   },
   title: {
     padding: theme.spacing(3, 2)
@@ -50,69 +69,47 @@ const styles = theme => ({
   buttons: {
     display: 'flex',
     justifyContent: 'flex-end'
+  },
+  itemName: {
+    marginTop: '5px'
   }
 })
 
-const GreenSwitch = withStyles({
-  switchBase: {
-    color: green[300],
+const GreenRadio = withStyles({
+  root: {
+    color: green[400],
     '&$checked': {
-      color: green[500]
-    },
-    '&$checked + $track': {
-      backgroundColor: green[500]
+      color: green[600]
     }
   },
-  checked: {},
-  track: {}
-})(Switch)
+  checked: {}
+})(props => <Radio color="default" {...props} />)
 
-class AddToppings extends React.Component {
+class Flavors extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentToppings: []
+      currentContainer: []
     }
-    this.handleSelectTopping = this.handleSelectTopping.bind(this)
+    this.handleSelectContainer = this.handleSelectContainer.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleCartAdd = this.handleCartAdd.bind(this)
   }
 
-  handleSelectTopping(id) {
-    let oldState = this.state.currentToppings
-    if (!this.state.currentToppings.includes(id)) {
-      oldState.push(id)
-      this.setState({
-        currentToppings: oldState
-      })
-    } else {
-      let newState = oldState.filter(el => el !== id)
-      this.setState({
-        currentToppings: newState
-      })
-    }
+  handleSelectContainer(id) {
+    this.setState({
+      currentContainer: [id]
+    })
   }
 
-  handleSubmit() {
-    this.props.addToOrder(this.state.currentToppings)
-  }
-  handleCartAdd() {
-    this.props.addToOrder(
-      this.state.currentToppings,
-      this.props.cart.length + 1
-    )
-    this.props.addToCart()
-    this.props.history.push('/start-order')
-  }
+  handleSubmit(event) {}
 
   render() {
     const {classes} = this.props
     const containers = this.props.allProducts.filter(product => {
-      return product.category === 'topping'
+      return product.category === 'flavor'
     })
-
     return (
-      <div className="component">
+      <div>
         <Grid
           container
           spacing={0}
@@ -121,8 +118,8 @@ class AddToppings extends React.Component {
           alignContent="center"
           style={{minHeight: '100vh'}}
         >
-          <Grid item xs={8}>
-            <Paper className={classes.root}>
+          <Grid item xs={8} className={classes.root}>
+            <Paper className={classes.paper}>
               <div>
                 <Typography
                   className={classes.title}
@@ -130,12 +127,12 @@ class AddToppings extends React.Component {
                   variant="h3"
                   component="h3"
                 >
-                  Choose Toppings ;)
+                  Choose 1 Flavor ;)
                 </Typography>
               </div>
               <div>
                 <Container className={classes.cardGrid} maxWidth="md">
-                  <Grid container spacing={4}>
+                  <Grid className={classes.cardContainer} container spacing={4}>
                     {containers.map(card => (
                       <Grid item key={card.id} xs={12} sm={6} md={4}>
                         <Card className={classes.card}>
@@ -146,26 +143,21 @@ class AddToppings extends React.Component {
                           />
                           <CardContent className={classes.cardContent}>
                             <Typography
-                              gutterBottom
+                              align="center"
                               variant="h5"
                               component="h2"
+                              className={classes.itemName}
                             >
                               {card.name}
                             </Typography>
-                          </CardContent>
-                          <CardContent>
-                            <FormGroup>
-                              <FormControlLabel
-                                control={
-                                  <GreenSwitch
-                                    onChange={() =>
-                                      this.handleSelectTopping(card.id)
-                                    }
-                                  />
-                                }
-                                label="Select"
-                              />
-                            </FormGroup>
+                            <input
+                              type="radio"
+                              onClick={() =>
+                                this.handleSelectContainer(card.id)
+                              }
+                              value={card.id}
+                              name="containers"
+                            />
                           </CardContent>
                         </Card>
                       </Grid>
@@ -174,13 +166,18 @@ class AddToppings extends React.Component {
                 </Container>
               </div>
               <div className={classes.buttons}>
-                <Button
-                  variant="contained"
-                  className={classes.button}
-                  onClick={() => this.handleCartAdd()}
-                >
-                  Add To Cart
-                </Button>
+                <Link to="/add-toppings">
+                  <Button
+                    disabled={!this.state.currentContainer.length}
+                    variant="contained"
+                    className={classes.button}
+                    onClick={() =>
+                      this.props.addContainer(this.state.currentContainer)
+                    }
+                  >
+                    Next
+                  </Button>
+                </Link>
               </div>
             </Paper>
           </Grid>
@@ -192,15 +189,12 @@ class AddToppings extends React.Component {
 
 const mapStateToProps = state => ({
   allProducts: state.product,
-  currentOrder: state.order.currentOrder,
-  cart: state.order.cart
+  currentItem: state.order.currentItem
 })
 const mapDispatchToProps = dispatch => ({
-  addToOrder: (toppings, groupId) => dispatch(addToppings(toppings, groupId)),
-  getProducts: () => dispatch(getProducts()),
-  addToCart: () => dispatch(addToCart())
+  addContainer: container => dispatch(addContainer(container))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withStyles(styles)(AddToppings)
+  withStyles(styles)(Flavors)
 )

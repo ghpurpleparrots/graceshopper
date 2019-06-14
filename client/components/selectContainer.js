@@ -17,7 +17,25 @@ import Button from '@material-ui/core/Button'
 
 const styles = theme => ({
   root: {
-    padding: theme.spacing(3, 2)
+    width: 'auto',
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    paddingTop: theme.spacing(4),
+    [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
+      width: 600,
+      marginLeft: 'auto',
+      marginRight: 'auto'
+    }
+  },
+  paper: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    padding: theme.spacing(2),
+    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+      marginTop: theme.spacing(6),
+      marginBottom: theme.spacing(6),
+      padding: theme.spacing(3)
+    }
   },
   cardGrid: {
     paddingTop: theme.spacing(8),
@@ -47,6 +65,10 @@ const styles = theme => ({
     margin: theme.spacing(1),
     backgroundColor: 'purple',
     color: 'white'
+  },
+  buttons: {
+    display: 'flex',
+    justifyContent: 'flex-end'
   },
   itemName: {
     marginTop: '5px'
@@ -87,7 +109,7 @@ class SelectContainer extends React.Component {
       return product.category === 'container'
     })
     return (
-      <div className="component">
+      <div>
         <Grid
           container
           spacing={0}
@@ -96,8 +118,8 @@ class SelectContainer extends React.Component {
           alignContent="center"
           style={{minHeight: '100vh'}}
         >
-          <Grid item xs={8}>
-            <Paper className={classes.root}>
+          <Grid item xs={8} className={classes.root}>
+            <Paper className={classes.paper}>
               <div>
                 <Typography
                   className={classes.title}
@@ -105,7 +127,7 @@ class SelectContainer extends React.Component {
                   variant="h3"
                   component="h3"
                 >
-                  Choose Toppings ;)
+                  Cone or Cup ?
                 </Typography>
               </div>
               <div>
@@ -143,8 +165,8 @@ class SelectContainer extends React.Component {
                   </Grid>
                 </Container>
               </div>
-              <div>
-                <Link to="/add-toppings">
+              <div className={classes.buttons}>
+                <Link to="/flavors">
                   <Button
                     disabled={!this.state.currentContainer.length}
                     variant="contained"
