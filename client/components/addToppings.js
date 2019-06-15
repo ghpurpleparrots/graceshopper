@@ -110,7 +110,9 @@ class AddToppings extends React.Component {
     const containers = this.props.allProducts.filter(product => {
       return product.category === 'topping'
     })
-
+    if (!this.props.location.fromFlavor) {
+      this.props.history.push('/start-order')
+    }
     return (
       <div className="component">
         <Grid

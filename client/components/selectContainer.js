@@ -14,6 +14,8 @@ import Container from '@material-ui/core/Container'
 import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import Button from '@material-ui/core/Button'
+import {getOrderId} from '../store'
+import {me} from '../store'
 
 const styles = theme => ({
   root: {
@@ -92,7 +94,10 @@ class SelectContainer extends React.Component {
       currentContainer: []
     }
     this.handleSelectContainer = this.handleSelectContainer.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+  async componentDidMount() {
+    await this.props.loadInitialData()
+    this.props.getOrderId(this.props.userId)
   }
 
   handleSelectContainer(id) {
@@ -100,8 +105,6 @@ class SelectContainer extends React.Component {
       currentContainer: [id]
     })
   }
-
-  handleSubmit(event) {}
 
   render() {
     const {classes} = this.props
@@ -166,7 +169,12 @@ class SelectContainer extends React.Component {
                 </Container>
               </div>
               <div className={classes.buttons}>
-                <Link to="/flavors">
+                <Link
+                  to={{
+                    pathname: '/flavors',
+                    fromContainer: true
+                  }}
+                >
                   <Button
                     disabled={!this.state.currentContainer.length}
                     variant="contained"
@@ -189,10 +197,13 @@ class SelectContainer extends React.Component {
 
 const mapStateToProps = state => ({
   allProducts: state.product,
-  currentItem: state.order.currentItem
+  currentItem: state.order.currentItem,
+  userId: state.user.id
 })
 const mapDispatchToProps = dispatch => ({
-  addContainer: container => dispatch(addContainer(container))
+  addContainer: container => dispatch(addContainer(container)),
+  getOrderId: userId => dispatch(getOrderId(userId)),
+  loadInitialData: () => dispatch(me())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(

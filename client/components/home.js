@@ -51,11 +51,7 @@ export const UserHome = props => {
         {isLoggedIn ? (
           <Grid item>
             <Link to="/start-order">
-              <Button
-                onClick={() => getOrderId(userId)}
-                variant="contained"
-                className={classes.button}
-              >
+              <Button variant="contained" className={classes.button}>
                 Start Order
               </Button>
             </Link>
