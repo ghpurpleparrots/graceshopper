@@ -108,6 +108,9 @@ class Flavors extends React.Component {
     const containers = this.props.allProducts.filter(product => {
       return product.category === 'flavor'
     })
+    if (!this.props.location.fromContainer) {
+      this.props.history.push('/start-order')
+    }
     return (
       <div>
         <Grid
@@ -166,7 +169,12 @@ class Flavors extends React.Component {
                 </Container>
               </div>
               <div className={classes.buttons}>
-                <Link to="/add-toppings">
+                <Link
+                  to={{
+                    pathname: '/add-toppings',
+                    fromFlavor: true
+                  }}
+                >
                   <Button
                     disabled={!this.state.currentContainer.length}
                     variant="contained"
