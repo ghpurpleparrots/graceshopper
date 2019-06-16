@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const {Order, OrderProducts, ItemQuantity} = require('../db/models')
+const auth = require('./authMiddleware')
+
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -7,7 +9,7 @@ router.get('/', async (req, res, next) => {
   res.send(allOrders)
 })
 
-router.get('/:userId', async (req, res, next) => {
+router.get('/:userId', auth.isAuthorized, async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {
@@ -38,6 +40,21 @@ router.get('/:userId', async (req, res, next) => {
       newOrder.setUser(req.params.userId)
       res.json(newOrder.id)
     }
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.get('/:userId/orders', auth.isAuthorized, async (req, res, next) => {
+  try {
+    const userOrders = await Order.findAll({
+      where: {
+        userId: req.params.userId,
+        status: 'ordered'
+      }
+    })
+
+    res.send(userOrders)
   } catch (error) {
     next(error)
   }
