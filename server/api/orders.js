@@ -21,11 +21,7 @@ router.get('/:userId', auth.isAuthorized, async (req, res, next) => {
     if (order) {
       res.json(order)
     } else {
-      const newOrder = await Order.create({
-        status: 'inCart'
-      })
-      newOrder.setUser(req.params.userId)
-      res.json(newOrder.id)
+      res.end()
     }
   } catch (error) {
     next(error)
