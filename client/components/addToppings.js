@@ -72,17 +72,11 @@ class AddToppings extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentToppings: [],
-      isLoaded: false
+      currentToppings: []
     }
     this.handleSelectTopping = this.handleSelectTopping.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleCartAdd = this.handleCartAdd.bind(this)
-  }
-
-  async componentDidMount() {
-    await this.props.loadInitialData()
-    this.setState({isLoaded: true})
   }
 
   handleSelectTopping(id) {
@@ -114,13 +108,11 @@ class AddToppings extends React.Component {
   }
 
   render() {
-    const {classes, allProducts, isLoggedIn} = this.props
+    const {classes, allProducts} = this.props
     const containers = allProducts.filter(product => {
       return product.category === 'topping'
     })
-    if (this.state.isLoaded === true && !isLoggedIn) {
-      this.props.history.push('/')
-    } else if (!this.props.location.fromFlavor) {
+    if (!this.props.location.fromFlavor) {
       this.props.history.push('/start-order')
     }
     return (
@@ -206,15 +198,13 @@ const mapStateToProps = state => ({
   allProducts: state.product,
   currentOrder: state.order.currentOrder,
   cart: state.order.cart,
-  orderId: state.order.orderId,
-  isLoggedIn: !!state.user.id
+  orderId: state.order.orderId
 })
 const mapDispatchToProps = dispatch => ({
   addToOrder: (toppings, groupId) => dispatch(addToppings(toppings, groupId)),
   getProducts: () => dispatch(getProducts()),
   addToCart: () => dispatch(addToCart()),
-  addToCartDB: (orderId, cart) => dispatch(addToCartDB(orderId, cart)),
-  loadInitialData: () => dispatch(me())
+  addToCartDB: (orderId, cart) => dispatch(addToCartDB(orderId, cart))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(

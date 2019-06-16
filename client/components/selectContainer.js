@@ -89,18 +89,14 @@ class SelectContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentContainer: null,
-      isLoaded: false
+      currentContainer: null
     }
     this.handleSelectContainer = this.handleSelectContainer.bind(this)
   }
   async componentDidMount() {
-    await this.props.loadInitialData()
     if (!this.props.orderId) {
       await this.props.getOrderId(this.props.userId)
     }
-
-    this.setState({isLoaded: true})
   }
 
   handleSelectContainer(id) {
@@ -110,13 +106,10 @@ class SelectContainer extends React.Component {
   }
 
   render() {
-    const {classes, isLoggedIn} = this.props
+    const {classes} = this.props
     const containers = this.props.allProducts.filter(product => {
       return product.category === 'container'
     })
-    if (this.state.isLoaded === true && !isLoggedIn) {
-      this.props.history.push('/')
-    }
     return (
       <div>
         <Grid
@@ -205,13 +198,11 @@ const mapStateToProps = state => ({
   allProducts: state.product,
   currentItem: state.order.currentItem,
   userId: state.user.id,
-  isLoggedIn: !!state.user.id,
   orderId: state.order.orderId
 })
 const mapDispatchToProps = dispatch => ({
   addContainer: container => dispatch(addContainer(container)),
-  getOrderId: userId => dispatch(getOrderId(userId)),
-  loadInitialData: () => dispatch(me())
+  getOrderId: userId => dispatch(getOrderId(userId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(

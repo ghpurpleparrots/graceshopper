@@ -36,18 +36,25 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
-        {/* <Route path="/signup" component={Signup} /> */}
-
         <Route exact path="/" component={Home} />
         <Route path="/products" component={AllProducts} />
-        <Route path="/start-order" component={SelectContainer} />
-        <Route path="/cart" component={Cart} />
-        <Route path="/add-toppings" component={AddToppings} />
-        <Route path="/checkout" component={Checkout} />
         <Route exact path="/sign-up" component={SignUp} />
         <Route exact path="/sign-up-confirm" component={SignUpConfirmation} />
-        <Route path="/flavors" component={Flavors} />
-        <Route exact path="/profile" component={Profile} />
+        <Route path="/cart" component={Cart} />
+
+        {/* Routes placed here are only available after logging in */}
+
+        {isLoggedIn && (
+          <Switch>
+            <Route path="/start-order" component={SelectContainer} />
+            <Route path="/add-toppings" component={AddToppings} />
+            <Route path="/checkout" component={Checkout} />
+            <Route path="/flavors" component={Flavors} />
+            <Route exact path="/profile" component={Profile} />
+          </Switch>
+        )}
+        {/* Displays our Login component as a fallback */}
+        <Route component={Home} />
       </Switch>
     )
   }

@@ -90,18 +90,9 @@ class Flavors extends React.Component {
     super(props)
     this.state = {
       currentFlavor: null,
-
-      currentContainer: [],
-      isLoaded: false
-
+      currentContainer: []
     }
     this.handleSelectFlavor = this.handleSelectFlavor.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
-
-  async componentDidMount() {
-    await this.props.loadInitialData()
-    this.setState({isLoaded: true})
   }
 
   handleSelectFlavor(id) {
@@ -110,16 +101,12 @@ class Flavors extends React.Component {
     })
   }
 
-  handleSubmit(event) {}
-
   render() {
-    const {classes, isLoggedIn} = this.props
+    const {classes} = this.props
     const containers = this.props.allProducts.filter(product => {
       return product.category === 'flavor'
     })
-    if (this.state.isLoaded === true && !isLoggedIn) {
-      this.props.history.push('/')
-    } else if (!this.props.location.fromContainer) {
+    if (!this.props.location.fromContainer) {
       this.props.history.push('/start-order')
     }
     return (
@@ -206,14 +193,11 @@ class Flavors extends React.Component {
 
 const mapStateToProps = state => ({
   allProducts: state.product,
-  currentItem: state.order.currentItem,
-  isLoggedIn: !!state.user.id
+  currentItem: state.order.currentItem
 })
 const mapDispatchToProps = dispatch => ({
   addFlavor: container => dispatch(addFlavor(container)),
-  addContainer: container => dispatch(addContainer(container)),
-  loadInitialData: () => dispatch(me())
-
+  addContainer: container => dispatch(addContainer(container))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(
