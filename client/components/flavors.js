@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {addContainer} from '../store'
+import {addFlavor} from '../store'
 import {green} from '@material-ui/core/colors'
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
@@ -12,7 +12,6 @@ import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import Container from '@material-ui/core/Container'
 import Radio from '@material-ui/core/Radio'
-import RadioGroup from '@material-ui/core/RadioGroup'
 import Button from '@material-ui/core/Button'
 
 const styles = theme => ({
@@ -89,15 +88,15 @@ class Flavors extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentContainer: []
+      currentFlavor: null
     }
-    this.handleSelectContainer = this.handleSelectContainer.bind(this)
+    this.handleSelectFlavor = this.handleSelectFlavor.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleSelectContainer(id) {
+  handleSelectFlavor(id) {
     this.setState({
-      currentContainer: [id]
+      currentFlavor: id
     })
   }
 
@@ -155,9 +154,7 @@ class Flavors extends React.Component {
                             </Typography>
                             <input
                               type="radio"
-                              onClick={() =>
-                                this.handleSelectContainer(card.id)
-                              }
+                              onClick={() => this.handleSelectFlavor(card.id)}
                               value={card.id}
                               name="containers"
                             />
@@ -176,11 +173,11 @@ class Flavors extends React.Component {
                   }}
                 >
                   <Button
-                    disabled={!this.state.currentContainer.length}
+                    disabled={!this.state.currentFlavor}
                     variant="contained"
                     className={classes.button}
                     onClick={() =>
-                      this.props.addContainer(this.state.currentContainer)
+                      this.props.addFlavor(this.state.currentFlavor)
                     }
                   >
                     Next
@@ -200,7 +197,7 @@ const mapStateToProps = state => ({
   currentItem: state.order.currentItem
 })
 const mapDispatchToProps = dispatch => ({
-  addContainer: container => dispatch(addContainer(container))
+  addFlavor: container => dispatch(addFlavor(container))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(

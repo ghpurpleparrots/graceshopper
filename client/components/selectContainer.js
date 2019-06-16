@@ -91,7 +91,7 @@ class SelectContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentContainer: []
+      currentContainer: null
     }
     this.handleSelectContainer = this.handleSelectContainer.bind(this)
   }
@@ -102,7 +102,7 @@ class SelectContainer extends React.Component {
 
   handleSelectContainer(id) {
     this.setState({
-      currentContainer: [id]
+      currentContainer: id
     })
   }
 
@@ -176,7 +176,7 @@ class SelectContainer extends React.Component {
                   }}
                 >
                   <Button
-                    disabled={!this.state.currentContainer.length}
+                    disabled={!this.state.currentContainer}
                     variant="contained"
                     className={classes.button}
                     onClick={() =>

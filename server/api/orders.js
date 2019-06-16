@@ -16,6 +16,20 @@ router.get('/:userId', async (req, res, next) => {
       }
     })
     if (order) {
+      // let orderId = order.id
+      // let orderContent = await OrderProducts.findAll({
+      //   where: {
+      //     orderId: orderId
+      //   }
+      // })
+      // let example = orderContent[0].groupId
+      // let groupArr = []
+
+      // orderContent.forEach(item => {
+      //   if (!groupArr.includes(item.groupId)) {
+      //     groupArr.push(item.groupId)
+      //   }
+      // })
       res.json(order.id)
     } else {
       const newOrder = await Order.create({
@@ -37,7 +51,8 @@ router.put('/', async (req, res, next) => {
     } else {
       await order.update({
         status: 'ordered',
-        orderInfo: req.body.cart
+        orderInfo: req.body.cart,
+        price: req.body.price
       })
       res.sendStatus(200)
     }

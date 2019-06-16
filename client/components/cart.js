@@ -68,12 +68,25 @@ const Cart = props => {
                       src="icecream_icon.png"
                     />
                   </ListItemAvatar>
-                  {item.products.map((prod, i) => (
-                    <ListItemText
-                      key={i}
-                      secondary={products.filter(el => el.id === prod)[0].name}
-                    />
-                  ))}
+                  <ListItemText>
+                    <ul id="cart-list">
+                      <li>
+                        {
+                          products.filter(el => el.id === item.container)[0]
+                            .name
+                        }
+                      </li>
+                      <li>
+                        {products.filter(el => el.id === item.flavor)[0].name}
+                      </li>
+                      {item.toppings.map((topping, i) => (
+                        <li key={i}>
+                          {products.filter(el => el.id === topping)[0].name}
+                        </li>
+                      ))}
+                    </ul>
+                  </ListItemText>
+
                   <Button
                     onClick={() => props.incrementQty(item.groupId)}
                     className={classes.button}
