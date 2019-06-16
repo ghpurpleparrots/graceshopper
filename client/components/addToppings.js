@@ -15,6 +15,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import Button from '@material-ui/core/Button'
 import {Redirect} from 'react-router-dom'
+import {me} from '../store'
 
 const styles = theme => ({
   root: {
@@ -71,11 +72,17 @@ class AddToppings extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentToppings: []
+      currentToppings: [],
+      isLoaded: false
     }
     this.handleSelectTopping = this.handleSelectTopping.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleCartAdd = this.handleCartAdd.bind(this)
+  }
+
+  async componentDidMount() {
+    await this.props.loadInitialData()
+    this.setState({isLoaded: true})
   }
 
   handleSelectTopping(id) {
@@ -107,11 +114,13 @@ class AddToppings extends React.Component {
   }
 
   render() {
-    const {classes, allProducts} = this.props
+    const {classes, allProducts, isLoggedIn} = this.props
     const containers = allProducts.filter(product => {
       return product.category === 'topping'
     })
-    if (!this.props.location.fromFlavor) {
+    if (this.state.isLoaded === true && !isLoggedIn) {
+      this.props.history.push('/')
+    } else if (!this.props.location.fromFlavor) {
       this.props.history.push('/start-order')
     }
     return (
@@ -197,13 +206,15 @@ const mapStateToProps = state => ({
   allProducts: state.product,
   currentOrder: state.order.currentOrder,
   cart: state.order.cart,
-  orderId: state.order.orderId
+  orderId: state.order.orderId,
+  isLoggedIn: !!state.user.id
 })
 const mapDispatchToProps = dispatch => ({
   addToOrder: (toppings, groupId) => dispatch(addToppings(toppings, groupId)),
   getProducts: () => dispatch(getProducts()),
   addToCart: () => dispatch(addToCart()),
-  addToCartDB: (orderId, cart) => dispatch(addToCartDB(orderId, cart))
+  addToCartDB: (orderId, cart) => dispatch(addToCartDB(orderId, cart)),
+  loadInitialData: () => dispatch(me())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(
