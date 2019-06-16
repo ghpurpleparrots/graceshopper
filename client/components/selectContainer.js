@@ -91,13 +91,16 @@ class SelectContainer extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentContainer: []
+      currentContainer: [],
+      isLoaded: false
     }
     this.handleSelectContainer = this.handleSelectContainer.bind(this)
   }
   async componentDidMount() {
     await this.props.loadInitialData()
-    this.props.getOrderId(this.props.userId)
+    await this.props.getOrderId(this.props.userId)
+
+    this.setState({isLoaded: true})
   }
 
   handleSelectContainer(id) {
@@ -107,10 +110,13 @@ class SelectContainer extends React.Component {
   }
 
   render() {
-    const {classes} = this.props
+    const {classes, isLoggedIn} = this.props
     const containers = this.props.allProducts.filter(product => {
       return product.category === 'container'
     })
+    if (this.state.isLoaded === true && !isLoggedIn) {
+      this.props.history.push('/')
+    }
     return (
       <div>
         <Grid
@@ -198,7 +204,8 @@ class SelectContainer extends React.Component {
 const mapStateToProps = state => ({
   allProducts: state.product,
   currentItem: state.order.currentItem,
-  userId: state.user.id
+  userId: state.user.id,
+  isLoggedIn: !!state.user.id
 })
 const mapDispatchToProps = dispatch => ({
   addContainer: container => dispatch(addContainer(container)),
