@@ -57,7 +57,12 @@ router.put('/add', async (req, res, next) => {
       })
       res.sendStatus(200)
     }
-    
+  } catch (error) {
+    next(error)
+  }
+})
+
+//get all 'ordered' orders from an user
 router.get('/:userId/orders', auth.isAuthorized, async (req, res, next) => {
   try {
     const userOrders = await Order.findAll({
