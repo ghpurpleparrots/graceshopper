@@ -67,8 +67,7 @@ function getStepContent(step) {
 function Checkout(props) {
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
-
-  const orderNumber = props.orderId ? props.orderId : orderNumber
+  const total = props.cart.reduce((total, item) => (total += item.qty * 10), 0)
 
   const handleNext = () => {
     setActiveStep(activeStep + 1)
@@ -80,7 +79,7 @@ function Checkout(props) {
 
   const handleSubmit = () => {
     handleNext()
-    props.submitOrder(props.orderId, props.cart)
+    props.submitOrder(props.orderId, props.cart, total)
   }
 
   return (
@@ -156,7 +155,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  submitOrder: (orderId, cart) => dispatch(submitOrder(orderId, cart))
+  submitOrder: (orderId, cart, price) =>
+    dispatch(submitOrder(orderId, cart, price))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout)

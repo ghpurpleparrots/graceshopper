@@ -18,6 +18,10 @@ nav a {
 .component {
   padding-top: 70px;
 }
+#cart-list {
+  list-style: none;
+  font-size: 0.8rem;
+}
 
 /* form div {
   margin: 1em;

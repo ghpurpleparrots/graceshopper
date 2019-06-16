@@ -3,9 +3,11 @@ import axios from 'axios'
 /**
  * ACTION TYPES
  */
+const ADD_CONTAINER = 'ADD_CONTAINER'
+const ADD_FLAVOR = 'ADD_FLAVOR'
 const ADD_TOPPINGS = 'ADD_TOPPINGS'
 const GET_ORDER_ID = 'GET_ORDER_ID'
-const ADD_CONTAINER = 'ADD_CONTAINER'
+
 const ADD_TO_CART = 'ADD_TO_CART'
 
 const INCREMENT_QTY = 'INCREMENT_QTY'
@@ -24,7 +26,9 @@ const initialState = {
     orderId: null,
     groupId: null,
     qty: 1,
-    products: []
+    container: null,
+    flavor: null,
+    toppings: []
   }
 }
 
@@ -33,6 +37,7 @@ const initialState = {
  */
 
 export const addContainer = container => ({type: ADD_CONTAINER, container})
+export const addFlavor = flavor => ({type: ADD_FLAVOR, flavor})
 export const addToppings = (toppings, groupId) => ({
   type: ADD_TOPPINGS,
   toppings,
@@ -62,9 +67,9 @@ export const getOrderId = userId => async dispatch => {
   }
 }
 
-export const submitOrder = (orderId, cart) => async dispatch => {
+export const submitOrder = (orderId, cart, price) => async dispatch => {
   try {
-    let update = {orderId, cart}
+    let update = {orderId, cart, price}
     await axios.put('/api/orders', update)
     dispatch(submittedOrder())
   } catch (err) {
@@ -76,12 +81,26 @@ export const submitOrder = (orderId, cart) => async dispatch => {
  */
 export default function(state = initialState, action) {
   switch (action.type) {
+    case ADD_CONTAINER: {
+      return {
+        ...state,
+        currentItem: {
+          ...state.currentItem,
+          container: action.container
+        }
+      }
+    }
+    case ADD_FLAVOR:
+      return {
+        ...state,
+        currentItem: {...state.currentItem, flavor: action.flavor}
+      }
     case ADD_TOPPINGS:
       return {
         ...state,
         currentItem: {
           ...state.currentItem,
-          products: [...state.currentItem.products, ...action.toppings],
+          toppings: action.toppings,
           groupId: action.groupId
         }
       }
@@ -103,15 +122,7 @@ export default function(state = initialState, action) {
         currentItem: {...state.currentItem, orderId: action.orderId},
         orderId: action.orderId
       }
-    case ADD_CONTAINER: {
-      return {
-        ...state,
-        currentItem: {
-          ...state.currentItem,
-          products: [...state.currentItem.products, ...action.container]
-        }
-      }
-    }
+
     case INCREMENT_QTY: {
       let thisGroup = [...state.cart]
       thisGroup.map(item => {
