@@ -57,6 +57,8 @@ router.put('/add', async (req, res, next) => {
   }
 })
 
+//get all 'ordered' orders from an user
+
 router.get('/:userId/orders', auth.isAuthorized, async (req, res, next) => {
   try {
     const userOrders = await Order.findAll({

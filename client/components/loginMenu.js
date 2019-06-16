@@ -104,12 +104,14 @@ const LoginMenu = props => {
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <StyledMenuItem>
-            <ListItemIcon>
-              <ShoppingBasket />
-            </ListItemIcon>
-            <ListItemText primary="Order History" />
-          </StyledMenuItem>
+          <Link to="/profile">
+            <StyledMenuItem>
+              <ListItemIcon>
+                <ShoppingBasket />
+              </ListItemIcon>
+              <ListItemText primary="Profile" />
+            </StyledMenuItem>
+          </Link>
           <StyledMenuItem>
             <Button
               type="submit"

@@ -11,7 +11,8 @@ import {
   AddToppings,
   SignUp,
   SignUpConfirmation,
-  Flavors
+  Flavors,
+  Profile
 } from './components'
 import {me, getCart, getProducts} from './store'
 
@@ -46,6 +47,7 @@ class Routes extends Component {
         <Route exact path="/sign-up" component={SignUp} />
         <Route exact path="/sign-up-confirm" component={SignUpConfirmation} />
         <Route path="/flavors" component={Flavors} />
+        <Route exact path="/profile" component={Profile} />
       </Switch>
     )
   }
