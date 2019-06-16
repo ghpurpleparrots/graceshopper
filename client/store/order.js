@@ -8,6 +8,7 @@ const ADD_CONTAINER = 'ADD_CONTAINER'
 const ADD_FLAVOR = 'ADD_FLAVOR'
 const ADD_TOPPINGS = 'ADD_TOPPINGS'
 const GET_ORDER_ID = 'GET_ORDER_ID'
+const GOT_CART = 'GOT_CART'
 
 const ADD_TO_CART = 'ADD_TO_CART'
 
@@ -46,6 +47,7 @@ export const addToppings = (toppings, groupId) => ({
 })
 export const addToCart = () => ({type: ADD_TO_CART})
 export const submittedOrder = () => ({type: SUBMIT_ORDER})
+const gotCart = (cart, orderId) => ({type: GOT_CART, cart, orderId})
 
 const gotOrderId = orderId => ({type: GET_ORDER_ID, orderId})
 
@@ -62,7 +64,15 @@ export const logOut = () => ({type: LOG_OUT})
 export const getOrderId = userId => async dispatch => {
   try {
     const {data} = await axios.get(`/api/orders/${userId}`)
-    dispatch(gotOrderId(data))
+    dispatch(gotOrderId(data.id))
+  } catch (err) {
+    console.error(err)
+  }
+}
+export const getCart = userId => async dispatch => {
+  try {
+    const {data} = await axios.get(`/api/orders/${userId}`)
+    dispatch(gotCart(data.orderInfo, data.id))
   } catch (err) {
     console.error(err)
   }
@@ -131,7 +141,13 @@ export default function(state = initialState, action) {
         currentItem: {...state.currentItem, orderId: action.orderId},
         orderId: action.orderId
       }
-
+    case GOT_CART:
+      return {
+        ...state,
+        cart: action.cart,
+        orderId: action.orderId,
+        currentItem: {...state.currentItem, orderId: action.orderId}
+      }
     case INCREMENT_QTY: {
       let thisGroup = [...state.cart]
       thisGroup.map(item => {

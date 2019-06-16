@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export const UserHome = props => {
-  const {email, userId, getOrderId, isLoggedIn} = props
+  const {email, userId, cart, isLoggedIn} = props
   const classes = useStyles()
 
   return (
@@ -52,7 +52,7 @@ export const UserHome = props => {
           <Grid item>
             <Link to="/start-order">
               <Button variant="contained" className={classes.button}>
-                Start Order
+                {cart.length ? 'Add To Order' : 'Start Order'}
               </Button>
             </Link>
           </Grid>
@@ -78,7 +78,8 @@ const mapState = state => {
     email: state.user.email,
     name: state.user.name,
     isLoggedIn: !!state.user.id,
-    userId: state.user.id
+    userId: state.user.id,
+    cart: state.order.cart
   }
 }
 

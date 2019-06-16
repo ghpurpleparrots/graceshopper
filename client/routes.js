@@ -13,14 +13,20 @@ import {
   SignUpConfirmation,
   Flavors
 } from './components'
-import {me} from './store'
+import {me, getCart, getProducts} from './store'
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
-  componentDidMount() {
-    this.props.loadInitialData()
+  async componentDidMount() {
+    await this.props.loadInitialData()
+    await this.props.getProducts()
+  }
+  componentDidUpdate() {
+    if (this.props.userId) {
+      this.props.getCart(this.props.userId)
+    }
   }
 
   render() {
@@ -52,17 +58,16 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    userId: state.user.id
   }
 }
 
-const mapDispatch = dispatch => {
-  return {
-    loadInitialData() {
-      dispatch(me())
-    }
-  }
-}
+const mapDispatch = dispatch => ({
+  loadInitialData: () => dispatch(me()),
+  getCart: id => dispatch(getCart(id)),
+  getProducts: () => dispatch(getProducts())
+})
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
@@ -72,6 +77,5 @@ export default withRouter(connect(mapState, mapDispatch)(Routes))
  * PROP TYPES
  */
 Routes.propTypes = {
-  loadInitialData: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired
 }

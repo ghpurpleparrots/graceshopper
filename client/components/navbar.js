@@ -54,9 +54,6 @@ const Navbar = props => {
   const [state, setState] = React.useState({
     right: false
   })
-  React.useEffect(() => {
-    props.getProducts()
-  })
 
   const toggleDrawer = (side, open) => event => {
     if (
