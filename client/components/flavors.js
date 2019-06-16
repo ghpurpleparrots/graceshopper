@@ -14,6 +14,7 @@ import Container from '@material-ui/core/Container'
 import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import Button from '@material-ui/core/Button'
+import {me} from '../store'
 
 const styles = theme => ({
   root: {
@@ -89,10 +90,16 @@ class Flavors extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentContainer: []
+      currentContainer: [],
+      isLoaded: false
     }
     this.handleSelectContainer = this.handleSelectContainer.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  async componentDidMount() {
+    await this.props.loadInitialData()
+    this.setState({isLoaded: true})
   }
 
   handleSelectContainer(id) {
@@ -104,11 +111,13 @@ class Flavors extends React.Component {
   handleSubmit(event) {}
 
   render() {
-    const {classes} = this.props
+    const {classes, isLoggedIn} = this.props
     const containers = this.props.allProducts.filter(product => {
       return product.category === 'flavor'
     })
-    if (!this.props.location.fromContainer) {
+    if (this.state.isLoaded === true && !isLoggedIn) {
+      this.props.history.push('/')
+    } else if (!this.props.location.fromContainer) {
       this.props.history.push('/start-order')
     }
     return (
@@ -197,10 +206,12 @@ class Flavors extends React.Component {
 
 const mapStateToProps = state => ({
   allProducts: state.product,
-  currentItem: state.order.currentItem
+  currentItem: state.order.currentItem,
+  isLoggedIn: !!state.user.id
 })
 const mapDispatchToProps = dispatch => ({
-  addContainer: container => dispatch(addContainer(container))
+  addContainer: container => dispatch(addContainer(container)),
+  loadInitialData: () => dispatch(me())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(
