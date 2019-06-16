@@ -12,7 +12,12 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import DeleteIcon from '@material-ui/icons/Delete'
 import Button from '@material-ui/core/Button'
-import {incrementQty, decrementQty, deleteItem} from '../store/order'
+import {
+  incrementQty,
+  decrementQty,
+  deleteItem,
+  addToCartDB
+} from '../store/order'
 import Box from '@material-ui/core/Box'
 import {Link} from 'react-router-dom'
 
@@ -47,9 +52,20 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 const Cart = props => {
-  const {cart, products, user} = props
+  const {cart, products, user, orderId} = props
   const classes = useStyles
   const total = cart.reduce((total, item) => (total += item.qty * 10), 0)
+
+  const handleIncrement = async groupId => {
+    await props.incrementQty(groupId)
+    props.addToCartDB(orderId, cart)
+  }
+  const handleDecrement = async (groupId, qty) => {
+    qty > 1
+      ? await props.decrementQty(groupId)
+      : await props.deleteItem(groupId)
+    props.addToCartDB(orderId, cart)
+  }
 
   return (
     <div className={classes.root}>
@@ -88,7 +104,7 @@ const Cart = props => {
                   </ListItemText>
 
                   <Button
-                    onClick={() => props.incrementQty(item.groupId)}
+                    onClick={() => handleIncrement(item.groupId)}
                     className={classes.button}
                     color="primary"
                   >
@@ -98,11 +114,7 @@ const Cart = props => {
                     {item.qty}
                   </Box>
                   <Button
-                    onClick={() =>
-                      item.qty > 1
-                        ? props.decrementQty(item.groupId)
-                        : props.deleteItem(item.groupId)
-                    }
+                    onClick={() => handleDecrement(item.groupId, item.qty)}
                     className={classes.button}
                     color="secondary"
                   >
@@ -137,13 +149,15 @@ const Cart = props => {
 const mapStateToProps = state => ({
   user: state.user,
   cart: state.order.cart,
-  products: state.product
+  products: state.product,
+  orderId: state.order.orderId
 })
 
 const mapDispatchToProps = dispatch => ({
   incrementQty: groupId => dispatch(incrementQty(groupId)),
   decrementQty: groupId => dispatch(decrementQty(groupId)),
-  deleteItem: groupId => dispatch(deleteItem(groupId))
+  deleteItem: groupId => dispatch(deleteItem(groupId)),
+  addToCartDB: (orderId, cart) => dispatch(addToCartDB(orderId, cart))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)

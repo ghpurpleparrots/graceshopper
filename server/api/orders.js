@@ -45,6 +45,19 @@ router.get('/:userId', auth.isAuthorized, async (req, res, next) => {
   }
 })
 
+//add to cart route
+router.put('/add', async (req, res, next) => {
+  try {
+    let order = await Order.findByPk(req.body.orderId)
+    if (!order) {
+      next()
+    } else {
+      await order.update({
+        orderInfo: req.body.cart
+      })
+      res.sendStatus(200)
+    }
+    
 router.get('/:userId/orders', auth.isAuthorized, async (req, res, next) => {
   try {
     const userOrders = await Order.findAll({
@@ -60,7 +73,8 @@ router.get('/:userId/orders', auth.isAuthorized, async (req, res, next) => {
   }
 })
 
-router.put('/', async (req, res, next) => {
+//submit order route
+router.put('/submit', async (req, res, next) => {
   try {
     let order = await Order.findByPk(req.body.orderId)
     if (!order) {
