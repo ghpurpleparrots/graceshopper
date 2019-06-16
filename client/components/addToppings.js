@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {addToppings, getProducts, addToCart} from '../store'
+import {addToppings, getProducts, addToCartDB, addToCart} from '../store'
 import {green} from '@material-ui/core/colors'
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
@@ -96,18 +96,19 @@ class AddToppings extends React.Component {
   handleSubmit() {
     this.props.addToOrder(this.state.currentToppings)
   }
-  handleCartAdd() {
+  async handleCartAdd() {
     this.props.addToOrder(
       this.state.currentToppings,
       this.props.cart.length + 1
     )
-    this.props.addToCart()
+    await this.props.addToCart()
+    this.props.addToCartDB(this.props.orderId, this.props.cart)
     this.props.history.push('/start-order')
   }
 
   render() {
-    const {classes} = this.props
-    const containers = this.props.allProducts.filter(product => {
+    const {classes, allProducts} = this.props
+    const containers = allProducts.filter(product => {
       return product.category === 'topping'
     })
     if (!this.props.location.fromFlavor) {
@@ -195,12 +196,14 @@ class AddToppings extends React.Component {
 const mapStateToProps = state => ({
   allProducts: state.product,
   currentOrder: state.order.currentOrder,
-  cart: state.order.cart
+  cart: state.order.cart,
+  orderId: state.order.orderId
 })
 const mapDispatchToProps = dispatch => ({
   addToOrder: (toppings, groupId) => dispatch(addToppings(toppings, groupId)),
   getProducts: () => dispatch(getProducts()),
-  addToCart: () => dispatch(addToCart())
+  addToCart: () => dispatch(addToCart()),
+  addToCartDB: (orderId, cart) => dispatch(addToCartDB(orderId, cart))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(

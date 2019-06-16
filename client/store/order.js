@@ -1,5 +1,6 @@
 /* eslint-disable complexity */
 import axios from 'axios'
+import cart from '../components/cart'
 /**
  * ACTION TYPES
  */
@@ -66,11 +67,19 @@ export const getOrderId = userId => async dispatch => {
     console.error(err)
   }
 }
+export const addToCartDB = (orderId, cart) => async dispatch => {
+  try {
+    let update = {orderId, cart}
+    await axios.put('/api/orders/add', update)
+  } catch (err) {
+    console.error(err)
+  }
+}
 
 export const submitOrder = (orderId, cart, price) => async dispatch => {
   try {
     let update = {orderId, cart, price}
-    await axios.put('/api/orders', update)
+    await axios.put('/api/orders/submit', update)
     dispatch(submittedOrder())
   } catch (err) {
     console.error(err)

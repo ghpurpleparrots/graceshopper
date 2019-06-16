@@ -43,7 +43,25 @@ router.get('/:userId', async (req, res, next) => {
   }
 })
 
-router.put('/', async (req, res, next) => {
+//add to cart route
+router.put('/add', async (req, res, next) => {
+  try {
+    let order = await Order.findByPk(req.body.orderId)
+    if (!order) {
+      next()
+    } else {
+      await order.update({
+        orderInfo: req.body.cart
+      })
+      res.sendStatus(200)
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+//submit order route
+router.put('/submit', async (req, res, next) => {
   try {
     let order = await Order.findByPk(req.body.orderId)
     if (!order) {
