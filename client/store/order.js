@@ -61,14 +61,16 @@ export const logOut = () => ({type: LOG_OUT})
 /**
  * THUNK CREATORS
  */
+//get orderId for a NEW ORDER
 export const getOrderId = userId => async dispatch => {
   try {
-    const {data} = await axios.get(`/api/orders/${userId}`)
-    dispatch(gotOrderId(data.id))
+    const {data} = await axios.post(`/api/orders/${userId}`)
+    dispatch(gotOrderId(data))
   } catch (err) {
     console.error(err)
   }
 }
+//get cart & Id for EXISTING ORDER
 export const getCart = userId => async dispatch => {
   try {
     const {data} = await axios.get(`/api/orders/${userId}`)
@@ -144,11 +146,19 @@ export default function(state = initialState, action) {
         orderId: action.orderId
       }
     case GOT_CART:
-      return {
-        ...state,
-        cart: action.cart,
-        orderId: action.orderId,
-        currentItem: {...state.currentItem, orderId: action.orderId}
+      if (action.cart) {
+        return {
+          ...state,
+          cart: action.cart,
+          orderId: action.orderId,
+          currentItem: {...state.currentItem, orderId: action.orderId}
+        }
+      } else {
+        return {
+          ...state,
+          orderId: action.orderId,
+          currentItem: {...state.currentItem, orderId: action.orderId}
+        }
       }
     case INCREMENT_QTY: {
       let thisGroup = [...state.cart]

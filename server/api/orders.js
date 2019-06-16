@@ -27,14 +27,18 @@ router.get('/:userId', auth.isAuthorized, async (req, res, next) => {
     next(error)
   }
 })
-//create a new order
-// router.post('/:userId', async (req, res, next) => {
-//   const newOrder = await Order.create({
-//     status: 'inCart'
-//   })
-//   newOrder.setUser(req.params.userId)
-//   res.json(newOrder.id)
-// })
+// create a new order
+router.post('/:userId', async (req, res, next) => {
+  try {
+    const newOrder = await Order.create({
+      status: 'inCart'
+    })
+    newOrder.setUser(req.params.userId || req.sessionID)
+    res.json(newOrder.id)
+  } catch (err) {
+    next(err)
+  }
+})
 
 //add to cart route
 router.put('/add', async (req, res, next) => {
