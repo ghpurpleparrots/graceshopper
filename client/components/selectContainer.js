@@ -96,7 +96,9 @@ class SelectContainer extends React.Component {
   }
   async componentDidMount() {
     await this.props.loadInitialData()
-    await this.props.getOrderId(this.props.userId)
+    if (!this.props.orderId) {
+      await this.props.getOrderId(this.props.userId)
+    }
 
     this.setState({isLoaded: true})
   }
@@ -203,7 +205,8 @@ const mapStateToProps = state => ({
   allProducts: state.product,
   currentItem: state.order.currentItem,
   userId: state.user.id,
-  isLoggedIn: !!state.user.id
+  isLoggedIn: !!state.user.id,
+  orderId: state.order.orderId
 })
 const mapDispatchToProps = dispatch => ({
   addContainer: container => dispatch(addContainer(container)),
