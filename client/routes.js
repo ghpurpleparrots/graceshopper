@@ -20,9 +20,15 @@ import {me, getCart, getProducts} from './store'
  * COMPONENT
  */
 class Routes extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {isLoaded: false}
+  }
   async componentDidMount() {
     await this.props.loadInitialData()
     await this.props.getProducts()
+    await this.props.getCart(this.props.userId)
+    this.setState({isLoaded: true})
   }
   componentDidUpdate() {
     if (this.props.userId) {
@@ -31,31 +37,40 @@ class Routes extends Component {
   }
 
   render() {
+    console.log(this.props.userId)
     const {isLoggedIn} = this.props
-
+    const {isLoaded} = this.state
     return (
-      <Switch>
-        {/* Routes placed here are available to all visitors */}
-        <Route exact path="/" component={Home} />
-        <Route path="/products" component={AllProducts} />
-        <Route exact path="/sign-up" component={SignUp} />
-        <Route exact path="/sign-up-confirm" component={SignUpConfirmation} />
-        <Route path="/cart" component={Cart} />
-
-        {/* Routes placed here are only available after logging in */}
-
-        {isLoggedIn && (
+      <div>
+        {isLoaded && (
           <Switch>
-            <Route path="/start-order" component={SelectContainer} />
-            <Route path="/add-toppings" component={AddToppings} />
-            <Route path="/checkout" component={Checkout} />
-            <Route path="/flavors" component={Flavors} />
-            <Route exact path="/profile" component={Profile} />
+            {/* Routes placed here are available to all visitors */}
+            <Route exact path="/" component={Home} />
+            <Route path="/products" component={AllProducts} />
+            <Route exact path="/sign-up" component={SignUp} />
+            <Route
+              exact
+              path="/sign-up-confirm"
+              component={SignUpConfirmation}
+            />
+            <Route path="/cart" component={Cart} />
+
+            {/* Routes placed here are only available after logging in */}
+
+            {isLoggedIn && (
+              <Switch>
+                <Route path="/start-order" component={SelectContainer} />
+                <Route path="/add-toppings" component={AddToppings} />
+                <Route path="/checkout" component={Checkout} />
+                <Route path="/flavors" component={Flavors} />
+                <Route exact path="/profile" component={Profile} />
+              </Switch>
+            )}
+            {/* Displays our Login component as a fallback */}
+            <Route component={Home} />
           </Switch>
         )}
-        {/* Displays our Login component as a fallback */}
-        <Route component={Home} />
-      </Switch>
+      </div>
     )
   }
 }
