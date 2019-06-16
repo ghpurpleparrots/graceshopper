@@ -9,6 +9,7 @@ router.get('/', async (req, res, next) => {
   res.send(allOrders)
 })
 
+//get a user's 'inCart' order
 router.get('/:userId', auth.isAuthorized, async (req, res, next) => {
   try {
     const order = await Order.findOne({
@@ -18,21 +19,7 @@ router.get('/:userId', auth.isAuthorized, async (req, res, next) => {
       }
     })
     if (order) {
-      // let orderId = order.id
-      // let orderContent = await OrderProducts.findAll({
-      //   where: {
-      //     orderId: orderId
-      //   }
-      // })
-      // let example = orderContent[0].groupId
-      // let groupArr = []
-
-      // orderContent.forEach(item => {
-      //   if (!groupArr.includes(item.groupId)) {
-      //     groupArr.push(item.groupId)
-      //   }
-      // })
-      res.json(order.id)
+      res.json(order)
     } else {
       const newOrder = await Order.create({
         status: 'inCart'
@@ -44,6 +31,14 @@ router.get('/:userId', auth.isAuthorized, async (req, res, next) => {
     next(error)
   }
 })
+//create a new order
+// router.post('/:userId', async (req, res, next) => {
+//   const newOrder = await Order.create({
+//     status: 'inCart'
+//   })
+//   newOrder.setUser(req.params.userId)
+//   res.json(newOrder.id)
+// })
 
 //add to cart route
 router.put('/add', async (req, res, next) => {
@@ -63,6 +58,7 @@ router.put('/add', async (req, res, next) => {
 })
 
 //get all 'ordered' orders from an user
+
 router.get('/:userId/orders', auth.isAuthorized, async (req, res, next) => {
   try {
     const userOrders = await Order.findAll({
