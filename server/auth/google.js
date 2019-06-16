@@ -22,9 +22,10 @@ if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
   console.log('Google client ID / secret not found. Skipping Google OAuth.')
 } else {
   const googleConfig = {
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: process.env.GOOGLE_CALLBACK
+    clientID:
+      '513724626995-j7upv65q1h55tq7tmgp4cubka8cc7b7b.apps.googleusercontent.com',
+    clientSecret: 'ir9ACHw1cNS9rgUixUcSFvS-',
+    callbackURL: 'https://purple-parrots.herokuapp.com/auth/google/callback'
   }
 
   const strategy = new GoogleStrategy(

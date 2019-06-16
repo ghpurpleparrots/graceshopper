@@ -46,7 +46,8 @@ const User = db.define('user', {
   imageUrl: {
     type: Sequelize.STRING,
     defaultValue: 'user-default-image.png'
-  }
+  },
+  googleId: Sequelize.STRING
 })
 
 module.exports = User
