@@ -1,7 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {addContainer} from '../store'
 import {green} from '@material-ui/core/colors'
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
@@ -14,8 +13,7 @@ import Container from '@material-ui/core/Container'
 import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import Button from '@material-ui/core/Button'
-import {getOrderId} from '../store'
-import {me} from '../store'
+import {getOrderId, me, addContainer} from '../store'
 
 const styles = theme => ({
   root: {

@@ -56,16 +56,9 @@ const Cart = props => {
   const classes = useStyles
   const total = cart.reduce((total, item) => (total += item.qty * 10), 0)
 
-  const handleIncrement = async groupId => {
-    await props.incrementQty(groupId)
+  React.useEffect(() => {
     props.addToCartDB(orderId, cart)
-  }
-  const handleDecrement = async (groupId, qty) => {
-    qty > 1
-      ? await props.decrementQty(groupId)
-      : await props.deleteItem(groupId)
-    props.addToCartDB(orderId, cart)
-  }
+  })
 
   return (
     <div className={classes.root}>
@@ -104,7 +97,7 @@ const Cart = props => {
                   </ListItemText>
 
                   <Button
-                    onClick={() => handleIncrement(item.groupId)}
+                    onClick={() => props.incrementQty(item.groupId)}
                     className={classes.button}
                     color="primary"
                   >
@@ -114,7 +107,11 @@ const Cart = props => {
                     {item.qty}
                   </Box>
                   <Button
-                    onClick={() => handleDecrement(item.groupId, item.qty)}
+                    onClick={() =>
+                      item.qty > 1
+                        ? props.decrementQty(item.groupId)
+                        : props.deleteItem(item.groupId)
+                    }
                     className={classes.button}
                     color="secondary"
                   >
