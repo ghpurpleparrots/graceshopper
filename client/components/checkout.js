@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
 import Typography from '@material-ui/core/Typography'
 import {AddressForm, PaymentForm, Review} from '../components'
+import {Elements, StripeProvider} from 'react-stripe-elements'
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -56,7 +57,13 @@ function getStepContent(step) {
     case 0:
       return <AddressForm />
     case 1:
-      return <PaymentForm />
+      return (
+        <StripeProvider apiKey="pk_test_zeUVD7wJ1mOt0JVwm2ftX2fV00CCtghTqr">
+          <Elements>
+            <PaymentForm />
+          </Elements>
+        </StripeProvider>
+      )
     case 2:
       return <Review />
     default:

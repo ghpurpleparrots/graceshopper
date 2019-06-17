@@ -4,8 +4,9 @@ import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
+import {CardElement, injectStripe} from 'react-stripe-elements'
 
-export default function PaymentForm() {
+function PaymentForm() {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -13,22 +14,7 @@ export default function PaymentForm() {
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
-          <TextField required id="cardName" label="Name on card" fullWidth />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField required id="cardNumber" label="Card number" fullWidth />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField required id="expDate" label="Expiry date" fullWidth />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            required
-            id="cvv"
-            label="CVV"
-            helperText="Last three digits on signature strip"
-            fullWidth
-          />
+          <CardElement />
         </Grid>
         <Grid item xs={12}>
           <FormControlLabel
@@ -40,3 +26,5 @@ export default function PaymentForm() {
     </React.Fragment>
   )
 }
+
+export default injectStripe(PaymentForm)
