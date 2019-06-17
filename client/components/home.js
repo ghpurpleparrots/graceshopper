@@ -58,7 +58,7 @@ export const UserHome = props => {
           </Grid>
         ) : (
           <Grid item>
-            <Link to="/sign-up">
+            <Link to="/login">
               <Button variant="contained" className={classes.button}>
                 Start Order
               </Button>
