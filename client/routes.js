@@ -12,7 +12,8 @@ import {
   SignUp,
   SignUpConfirmation,
   Flavors,
-  Profile
+  Profile,
+  LoginPage
 } from './components'
 import {me, getCart, getProducts, getAllCompletedOrders} from './store'
 
@@ -54,12 +55,13 @@ class Routes extends Component {
               component={SignUpConfirmation}
             />
             <Route path="/cart" component={Cart} />
+            <Route path="/login" component={LoginPage} />
+            <Route path="/start-order" component={SelectContainer} />
 
             {/* Routes placed here are only available after logging in */}
 
             {isLoggedIn && (
               <Switch>
-                <Route path="/start-order" component={SelectContainer} />
                 <Route path="/add-toppings" component={AddToppings} />
                 <Route path="/checkout" component={Checkout} />
                 <Route path="/flavors" component={Flavors} />
