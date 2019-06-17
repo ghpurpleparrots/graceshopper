@@ -2,6 +2,8 @@ const router = require('express').Router()
 const User = require('../db/models/user')
 module.exports = router
 
+router.use('/google', require('./google'))
+
 router.post('/login', async (req, res, next) => {
   try {
     const user = await User.findOne({where: {email: req.body.email}})
@@ -40,16 +42,9 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', (req, res, next) => {
-  try {
-    if (!req.session.userId) {
-      next()
-    } else {
-      User.findByPk(req.session.userId)
-      res.json(req.user)
-    }
-  } catch (error) {
-    next(error)
+  if (!req.user) {
+    res.sendStatus(404)
+  } else {
+    res.send(req.user)
   }
 })
-
-router.use('/google', require('./google'))
