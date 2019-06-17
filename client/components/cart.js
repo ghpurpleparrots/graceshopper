@@ -57,7 +57,9 @@ const Cart = props => {
   const total = cart.reduce((total, item) => (total += item.qty * 10), 0)
 
   React.useEffect(() => {
-    props.addToCartDB(orderId, cart)
+    if (cart.length) {
+      props.addToCartDB(orderId, cart)
+    }
   })
 
   return (
