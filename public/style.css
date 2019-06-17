@@ -23,6 +23,11 @@ nav a {
   font-size: 0.8rem;
 }
 
+.profileLink {
+  text-decoration: none;
+  color: gray;
+}
+
 /* form div {
   margin: 1em;
   display: inline-block;
