@@ -24,3 +24,17 @@ router.post('/', async (req, res, next) => {
     next(error)
   }
 })
+
+router.put('/:userId', async (req, res, next) => {
+  try {
+    let user = await User.findByPk(req.params.userId)
+    if (!user) {
+      next()
+    } else {
+      let updatedUser = await user.update(req.body)
+      res.send(updatedUser)
+    }
+  } catch (error) {
+    next(error)
+  }
+})

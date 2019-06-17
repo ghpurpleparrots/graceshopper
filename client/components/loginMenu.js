@@ -109,7 +109,7 @@ const LoginMenu = props => {
               <ListItemIcon>
                 <ShoppingBasket />
               </ListItemIcon>
-              <ListItemText primary="Profile" />
+              <ListItemText className="profileLink"> Profile </ListItemText>
             </StyledMenuItem>
           </Link>
           <StyledMenuItem>

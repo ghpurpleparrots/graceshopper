@@ -14,7 +14,7 @@ import {
   Flavors,
   Profile
 } from './components'
-import {me, getCart, getProducts} from './store'
+import {me, getCart, getProducts, getAllCompletedOrders} from './store'
 
 /**
  * COMPONENT
@@ -28,6 +28,7 @@ class Routes extends Component {
     await this.props.loadInitialData()
     await this.props.getProducts()
     await this.props.getCart(this.props.userId)
+    await this.props.getCompletedOrders(this.props.userId)
     this.setState({isLoaded: true})
   }
   componentDidUpdate() {
@@ -37,7 +38,6 @@ class Routes extends Component {
   }
 
   render() {
-    console.log(this.props.userId)
     const {isLoggedIn} = this.props
     const {isLoaded} = this.state
     return (
@@ -90,7 +90,8 @@ const mapState = state => {
 const mapDispatch = dispatch => ({
   loadInitialData: () => dispatch(me()),
   getCart: id => dispatch(getCart(id)),
-  getProducts: () => dispatch(getProducts())
+  getProducts: () => dispatch(getProducts()),
+  getCompletedOrders: id => dispatch(getAllCompletedOrders(id))
 })
 
 // The `withRouter` wrapper makes sure that updates are not blocked

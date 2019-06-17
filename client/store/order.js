@@ -17,6 +17,7 @@ const DECREMENT_QTY = 'DECREMENT_QTY'
 const SUBMIT_ORDER = 'SUBMIT_ORDER'
 const DELETE_ITEM = 'DELETE_ITEM'
 const LOG_OUT = 'LOG_OUT'
+const GET_ALL_COMPLETED_ORDERS = 'GET_ALL_COMPLETED_ORDERS'
 
 /**
  * INITIAL STATE
@@ -31,7 +32,8 @@ const initialState = {
     container: null,
     flavor: null,
     toppings: []
-  }
+  },
+  completedOrders: []
 }
 
 /**
@@ -58,6 +60,11 @@ export const decrementQty = groupId => ({type: DECREMENT_QTY, groupId})
 export const deleteItem = groupId => ({type: DELETE_ITEM, groupId})
 
 export const logOut = () => ({type: LOG_OUT})
+
+export const gotAllCompletedOrders = orders => ({
+  type: GET_ALL_COMPLETED_ORDERS,
+  orders
+})
 /**
  * THUNK CREATORS
  */
@@ -99,6 +106,17 @@ export const submitOrder = (orderId, cart, price) => async dispatch => {
     console.error(err)
   }
 }
+
+//get all completed orders from a single user
+export const getAllCompletedOrders = userId => async dispatch => {
+  try {
+    const {data} = await axios.get(`/api/orders/${userId}/ordered`)
+    dispatch(gotAllCompletedOrders(data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 /**
  * REDUCER
  */
@@ -195,6 +213,10 @@ export default function(state = initialState, action) {
         ...state,
         cart: newCart
       }
+    }
+    case GET_ALL_COMPLETED_ORDERS: {
+      console.log(action.orders)
+      return {...state, completedOrders: action.orders}
     }
     case LOG_OUT: {
       return initialState

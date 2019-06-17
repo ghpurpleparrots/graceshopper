@@ -27,6 +27,23 @@ router.get('/:userId', auth.isAuthorized, async (req, res, next) => {
     next(error)
   }
 })
+
+//get a list of an User's completed orders
+
+router.get('/:userId/ordered', async (req, res, next) => {
+  try {
+    const allCompletedOrders = await Order.findAll({
+      where: {
+        userId: req.params.userId,
+        status: 'ordered'
+      }
+    })
+    res.send(allCompletedOrders)
+  } catch (error) {
+    next(error)
+  }
+})
+
 // create a new order
 router.post('/:userId', async (req, res, next) => {
   try {
