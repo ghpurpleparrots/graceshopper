@@ -16,6 +16,7 @@ import Switch from '@material-ui/core/Switch'
 import Button from '@material-ui/core/Button'
 import {Redirect, Link} from 'react-router-dom'
 import {me} from '../store'
+import user from '../store/user'
 
 const styles = theme => ({
   root: {
@@ -103,7 +104,11 @@ class AddToppings extends React.Component {
       this.props.cart.length + 1
     )
     await this.props.addToCart()
-    this.props.addToCartDB(this.props.orderId, this.props.cart)
+    if (this.props.userId) {
+      this.props.addToCartDB(this.props.orderId, this.props.cart)
+    } else {
+      localStorage.setItem('cart', JSON.stringify(this.props.cart))
+    }
   }
 
   render() {
@@ -197,7 +202,8 @@ const mapStateToProps = state => ({
   allProducts: state.product,
   currentOrder: state.order.currentOrder,
   cart: state.order.cart,
-  orderId: state.order.orderId
+  orderId: state.order.orderId,
+  userId: state.user.id
 })
 const mapDispatchToProps = dispatch => ({
   addToOrder: (toppings, groupId) => dispatch(addToppings(toppings, groupId)),

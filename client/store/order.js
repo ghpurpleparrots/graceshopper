@@ -18,6 +18,7 @@ const SUBMIT_ORDER = 'SUBMIT_ORDER'
 const DELETE_ITEM = 'DELETE_ITEM'
 const LOG_OUT = 'LOG_OUT'
 const GET_ALL_COMPLETED_ORDERS = 'GET_ALL_COMPLETED_ORDERS'
+const GET_GUEST_CART = 'GET_GUEST_CART'
 
 /**
  * INITIAL STATE
@@ -65,6 +66,12 @@ export const gotAllCompletedOrders = orders => ({
   type: GET_ALL_COMPLETED_ORDERS,
   orders
 })
+
+export const getGuestCart = (cart, orderId) => ({
+  type: GET_GUEST_CART,
+  cart,
+  orderId
+})
 /**
  * THUNK CREATORS
  */
@@ -72,6 +79,14 @@ export const gotAllCompletedOrders = orders => ({
 export const getOrderId = userId => async dispatch => {
   try {
     const {data} = await axios.post(`/api/orders/${userId}`)
+    dispatch(gotOrderId(data))
+  } catch (err) {
+    console.error(err)
+  }
+}
+export const getGuestOrderId = () => async dispatch => {
+  try {
+    const {data} = await axios.post(`/api/orders/guest`)
     dispatch(gotOrderId(data))
   } catch (err) {
     console.error(err)
@@ -177,6 +192,13 @@ export default function(state = initialState, action) {
           orderId: action.orderId,
           currentItem: {...state.currentItem, orderId: action.orderId}
         }
+      }
+    case GET_GUEST_CART:
+      return {
+        ...state,
+        cart: action.cart,
+        orderId: action.orderId,
+        currentItem: {...state.currentItem, orderId: action.orderId}
       }
     case INCREMENT_QTY: {
       let thisGroup = [...state.cart]
