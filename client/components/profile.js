@@ -1,16 +1,9 @@
 import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
-import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import TextField from '@material-ui/core/TextField'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
-import Link from '@material-ui/core/Link'
 import Grid from '@material-ui/core/Grid'
-import Box from '@material-ui/core/Box'
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
-import Typography from '@material-ui/core/Typography'
 import {makeStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import {updateUser} from '../store'
@@ -26,13 +19,8 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'space-between'
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-    padding: theme.spacing(3, 0, 2)
-  },
   form: {
-    width: '80%', // Fix IE 11 issue.
+    width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
     display: 'flex',
     flexDirection: 'column',
@@ -48,7 +36,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Profile = props => {
-  const {user} = props
+  const {user, completedOrders} = props
   const [state, setState] = useState({
     name: '',
     email: '',
@@ -100,8 +88,6 @@ const Profile = props => {
 
   const classes = useStyles()
   const {name, email, address, phoneNumber, disabled} = state
-
-  console.log(state)
 
   return (
     <Container className="component" component="main" maxWidth="md">
@@ -195,7 +181,8 @@ const Profile = props => {
 }
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user,
+  completedOrders: state.order.completedOrders
 })
 
 const mapDispatchToProps = dispatch => ({
