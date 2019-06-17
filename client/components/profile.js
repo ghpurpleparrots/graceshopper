@@ -7,6 +7,7 @@ import Grid from '@material-ui/core/Grid'
 import {makeStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import {updateUser} from '../store'
+import {OrderHistory} from './index'
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -176,6 +177,7 @@ const Profile = props => {
           </form>
         </div>
       </div>
+      <OrderHistory />
     </Container>
   )
 }
