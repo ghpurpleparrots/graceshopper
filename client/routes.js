@@ -27,8 +27,10 @@ class Routes extends Component {
   async componentDidMount() {
     await this.props.loadInitialData()
     await this.props.getProducts()
-    await this.props.getCart(this.props.userId)
-    await this.props.getCompletedOrders(this.props.userId)
+    if (this.props.userId) {
+      await this.props.getCart(this.props.userId)
+      await this.props.getCompletedOrders(this.props.userId)
+    }
     this.setState({isLoaded: true})
   }
   componentDidUpdate() {
@@ -64,6 +66,7 @@ class Routes extends Component {
                 <Route path="/checkout" component={Checkout} />
                 <Route path="/flavors" component={Flavors} />
                 <Route exact path="/profile" component={Profile} />
+                <Route path="/added-to-cart" component={Home} />
               </Switch>
             )}
             {/* Displays our Login component as a fallback */}

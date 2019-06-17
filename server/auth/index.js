@@ -43,7 +43,7 @@ router.post('/logout', (req, res) => {
 
 router.get('/me', (req, res, next) => {
   if (!req.user) {
-    res.sendStatus(404)
+    res.status(200).end()
   } else {
     res.send(req.user)
   }
