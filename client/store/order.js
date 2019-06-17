@@ -215,7 +215,6 @@ export default function(state = initialState, action) {
       }
     }
     case GET_ALL_COMPLETED_ORDERS: {
-      console.log(action.orders)
       return {...state, completedOrders: action.orders}
     }
     case LOG_OUT: {

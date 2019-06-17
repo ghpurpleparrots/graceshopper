@@ -14,7 +14,7 @@ import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import Button from '@material-ui/core/Button'
-import {Redirect} from 'react-router-dom'
+import {Redirect, Link} from 'react-router-dom'
 import {me} from '../store'
 
 const styles = theme => ({
@@ -104,7 +104,6 @@ class AddToppings extends React.Component {
     )
     await this.props.addToCart()
     this.props.addToCartDB(this.props.orderId, this.props.cart)
-    this.props.history.push('/start-order')
   }
 
   render() {
