@@ -15,6 +15,7 @@ import {
 import {Link} from 'react-router-dom'
 import {auth, logout, logOut} from '../store'
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator'
+import OauthLoginForm from './oath-login-form'
 
 const StyledMenu = withStyles({
   paper: {
@@ -171,6 +172,9 @@ const LoginMenu = props => {
               </Button>
             </StyledMenuItem>
           </ValidatorForm>
+          <StyledMenuItem>
+            <OauthLoginForm />
+          </StyledMenuItem>
         </StyledMenu>
       )}
     </div>
