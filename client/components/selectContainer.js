@@ -92,6 +92,7 @@ class SelectContainer extends React.Component {
       currentContainer: null
     }
     this.handleSelectContainer = this.handleSelectContainer.bind(this)
+    this.handleRadioClick = this.handleRadioClick.bind(this)
   }
   async componentDidMount() {
     if (!this.props.userId && !this.props.orderId) {
@@ -100,6 +101,12 @@ class SelectContainer extends React.Component {
     if (!this.props.orderId) {
       await this.props.getOrderId(this.props.userId)
     }
+  }
+
+  handleRadioClick(cardId) {
+    let thisCard = document.getElementById(cardId)
+    let radio = thisCard.getElementsByTagName('input')[0]
+    radio.click()
   }
 
   handleSelectContainer(id) {
@@ -140,7 +147,11 @@ class SelectContainer extends React.Component {
                   <Grid className={classes.cardContainer} container spacing={4}>
                     {containers.map(card => (
                       <Grid item key={card.id} xs={12} sm={6} md={4}>
-                        <Card className={classes.card}>
+                        <Card
+                          id={card.id}
+                          className={classes.card}
+                          onClick={() => this.handleRadioClick(card.id)}
+                        >
                           <CardMedia
                             className={classes.cardMedia}
                             image={card.imageUrl}
