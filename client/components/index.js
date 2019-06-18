@@ -3,6 +3,7 @@
  * This way, we can import all of our components from the same place, rather than
  * having to figure out which file they belong to!
  */
+export {default as AddedToCartSnackbar} from './addToCartSnackbar'
 export {default as AddressForm} from './addressForm'
 export {default as AllProducts} from './allProducts'
 export {default as AddToppings} from './addToppings'
