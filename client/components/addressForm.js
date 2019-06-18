@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import {connect} from 'react-redux'
+import {setShippingAddress} from '../store'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import TextField from '@material-ui/core/TextField'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
-import {setShippingAddress} from '../store'
 
 class AddressForm extends React.Component {
   constructor() {
@@ -53,11 +53,9 @@ class AddressForm extends React.Component {
           <Grid item xs={12}>
             <TextField
               required
-              id="Name"
               name="name"
               label="Name"
               fullWidth
-              autoComplete="fname"
               onChange={this.handleChange}
               defaultValue={user.id ? user.name : ''}
             />
@@ -65,11 +63,9 @@ class AddressForm extends React.Component {
           <Grid item xs={12}>
             <TextField
               required
-              id="address"
               name="address"
               label="Address"
               fullWidth
-              autoComplete="billing address-line1"
               onChange={this.handleChange}
               defaultValue={user.id ? user.address : ''}
             />
@@ -77,18 +73,16 @@ class AddressForm extends React.Component {
           <Grid item xs={12} sm={6}>
             <TextField
               required
-              id="city"
               name="city"
               label="City"
               fullWidth
-              autoComplete="billing address-level2"
               onChange={this.handleChange}
               defaultValue={user.id ? user.city : ''}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              id="state"
+              required
               name="state"
               label="State/Province/Region"
               fullWidth
@@ -99,11 +93,9 @@ class AddressForm extends React.Component {
           <Grid item xs={12} sm={6}>
             <TextField
               required
-              id="zip"
               name="zipCode"
               label="Zip / Postal code"
               fullWidth
-              autoComplete="billing postal-code"
               onChange={this.handleChange}
               defaultValue={user.id ? user.zipCode : ''}
             />
@@ -111,11 +103,9 @@ class AddressForm extends React.Component {
           <Grid item xs={12} sm={6}>
             <TextField
               required
-              id="country"
               name="country"
               label="Country"
               fullWidth
-              autoComplete="billing country"
               onChange={this.handleChange}
               defaultValue="USA"
             />
@@ -137,6 +127,7 @@ class AddressForm extends React.Component {
 const mapStateToProps = state => ({
   user: state.user
 })
+
 const mapDispatchToProps = dispatch => ({
   setShipAddress: address => dispatch(setShippingAddress(address))
 })

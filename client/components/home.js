@@ -1,29 +1,20 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import Grid from '@material-ui/core/Grid'
 import {makeStyles} from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
-import {Link} from 'react-router-dom'
-import {getOrderId, getProducts} from '../store'
-
-/**
- * COMPONENT
- */
 
 const useStyles = makeStyles(theme => ({
   button: {
     margin: theme.spacing(1),
     backgroundColor: 'purple',
     color: 'white'
-  },
-  input: {
-    display: 'none'
   }
 }))
 
 export const UserHome = props => {
-  const {email, userId, cart, isLoggedIn} = props
+  const {name, cart, isLoggedIn} = props
   const classes = useStyles()
 
   return (
@@ -44,9 +35,9 @@ export const UserHome = props => {
             </Button>
           </Link>
         </Grid>
-        <Grid item>
-          <h3>Welcome, {email || 'Friend!'}</h3>
+        <Grid id="home-img-container" item>
           <img src="/companylogo.jpg" />
+          <h3 className="img-text">Welcome, {name || 'Friend'}!</h3>
         </Grid>
         {isLoggedIn ? (
           <Grid item>
@@ -70,12 +61,8 @@ export const UserHome = props => {
   )
 }
 
-/**
- * CONTAINER
- */
-const mapState = state => {
+const mapStateToProps = state => {
   return {
-    email: state.user.email,
     name: state.user.name,
     isLoggedIn: !!state.user.id,
     userId: state.user.id,
@@ -83,15 +70,4 @@ const mapState = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  getOrderId: userId => dispatch(getOrderId(userId))
-})
-
-export default connect(mapState, mapDispatchToProps)(UserHome)
-
-/**
- * PROP TYPES
- */
-UserHome.propTypes = {
-  email: PropTypes.string
-}
+export default connect(mapStateToProps)(UserHome)

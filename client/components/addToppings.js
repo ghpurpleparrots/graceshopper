@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {addToppings, getProducts, addToCartDB, addToCart} from '../store'
+import {addToppings, addToCartDB, addToCart} from '../store'
 import {green} from '@material-ui/core/colors'
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
@@ -14,9 +14,6 @@ import FormGroup from '@material-ui/core/FormGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Switch from '@material-ui/core/Switch'
 import Button from '@material-ui/core/Button'
-import {Redirect, Link} from 'react-router-dom'
-import {me} from '../store'
-import user from '../store/user'
 
 const styles = theme => ({
   root: {
@@ -82,7 +79,6 @@ class AddToppings extends React.Component {
   }
 
   handleSelectTopping(id) {
-    console.log('clicking')
     let oldState = this.state.currentToppings
     if (!this.state.currentToppings.includes(id)) {
       oldState.push(id)
@@ -101,15 +97,13 @@ class AddToppings extends React.Component {
     this.props.addToOrder(this.state.currentToppings)
   }
   async handleCartAdd() {
-    this.props.addToOrder(
-      this.state.currentToppings,
-      this.props.cart.length + 1
-    )
+    const {cart, userId, orderId} = this.props
+    this.props.addToOrder(this.state.currentToppings, cart.length + 1)
     await this.props.addToCart()
-    if (this.props.userId) {
-      this.props.addToCartDB(this.props.orderId, this.props.cart)
+    if (userId) {
+      this.props.addToCartDB(orderId, cart)
     } else {
-      localStorage.setItem('cart', JSON.stringify(this.props.cart))
+      localStorage.setItem('cart', JSON.stringify(cart))
     }
   }
 
@@ -131,6 +125,7 @@ class AddToppings extends React.Component {
       <div className="component">
         <Grid
           container
+          className={classes.cardContainer}
           spacing={0}
           alignItems="center"
           justify="center"
@@ -157,7 +152,7 @@ class AddToppings extends React.Component {
                         <Card
                           id={card.id}
                           className={classes.card}
-                          onClick={() => this.handleGreenSwitch(card.id, event)}
+                          onClick={() => this.handleGreenSwitch(card.id)}
                         >
                           <CardMedia
                             className={classes.cardMedia}
@@ -215,14 +210,12 @@ class AddToppings extends React.Component {
 
 const mapStateToProps = state => ({
   allProducts: state.product,
-  currentOrder: state.order.currentOrder,
   cart: state.order.cart,
   orderId: state.order.orderId,
   userId: state.user.id
 })
 const mapDispatchToProps = dispatch => ({
   addToOrder: (toppings, groupId) => dispatch(addToppings(toppings, groupId)),
-  getProducts: () => dispatch(getProducts()),
   addToCart: () => dispatch(addToCart()),
   addToCartDB: (orderId, cart) => dispatch(addToCartDB(orderId, cart))
 })
