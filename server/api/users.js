@@ -16,22 +16,20 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-router.post('/', async (req, res, next) => {
-  try {
-    await User.create(req.body)
-    res.sendStatus(201)
-  } catch (error) {
-    next(error)
-  }
-})
-
+//update user info
 router.put('/:userId', async (req, res, next) => {
   try {
     let user = await User.findByPk(req.params.userId)
     if (!user) {
       next()
     } else {
-      let updatedUser = await user.update(req.body)
+      let updatedUser = await user.update({
+        name: req.body.name,
+        email: req.body.email,
+        address: req.body.address,
+        phoneNumber: req.body.phoneNumber,
+        admin: false
+      })
       res.send(updatedUser)
     }
   } catch (error) {

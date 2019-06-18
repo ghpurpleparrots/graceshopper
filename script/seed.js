@@ -205,8 +205,22 @@ async function seed() {
       status: 'inCart',
       userId: 1,
       orderInfo: [
-        {orderId: 1, groupId: 1, qty: 1, products: [1, 3, 4]},
-        {orderId: 1, groupdId: 2, qty: 1, products: [2, 4, 6]}
+        {
+          orderId: 1,
+          groupId: 1,
+          qty: 1,
+          container: 2,
+          flavor: 11,
+          toppings: [12, 16, 22]
+        },
+        {
+          orderId: 1,
+          groupdId: 2,
+          qty: 1,
+          container: 2,
+          flavor: 6,
+          toppings: [12, 16, 18]
+        }
       ]
     },
     {
@@ -214,8 +228,22 @@ async function seed() {
       status: 'inCart',
       userId: 2,
       orderInfo: [
-        {orderId: 2, groupId: 1, qty: 1, products: [1, 5, 7, 8]},
-        {orderId: 2, groupdId: 2, qty: 1, products: [2, 4, 6]}
+        {
+          orderId: 2,
+          groupId: 1,
+          qty: 1,
+          container: 2,
+          flavor: 6,
+          toppings: [12, 16, 18]
+        },
+        {
+          orderId: 2,
+          groupdId: 2,
+          qty: 1,
+          container: 2,
+          flavor: 3,
+          toppings: [12, 15, 18, 19]
+        }
       ]
     },
     {

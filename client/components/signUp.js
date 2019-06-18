@@ -63,7 +63,7 @@ class SignUp extends React.Component {
     delete body.hasError
 
     try {
-      await axios.post('/api/users', body)
+      await axios.post('/auth/signup', body)
       this.setState({
         name: '',
         email: '',
