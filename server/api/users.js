@@ -28,6 +28,9 @@ router.put('/:userId', auth.isAuthorized, async (req, res, next) => {
         name: req.body.name,
         email: req.body.email,
         address: req.body.address,
+        city: req.body.city,
+        state: req.body.state,
+        zipCode: req.body.zipCode,
         phoneNumber: req.body.phoneNumber,
         admin: false
       })

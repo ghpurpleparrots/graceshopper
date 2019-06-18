@@ -35,6 +35,25 @@ const User = db.define('user', {
     type: Sequelize.STRING,
     allowNull: false
   },
+  city: {
+    type: Sequelize.STRING
+  },
+  state: {
+    type: Sequelize.STRING,
+    validate: {
+      len: 2
+    },
+    set(val) {
+      this.setDataValue('state', val.toUpperCase())
+    }
+  },
+  zipCode: {
+    type: Sequelize.STRING,
+    validate: {
+      isNumeric: true,
+      len: 5
+    }
+  },
   phoneNumber: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -47,7 +66,11 @@ const User = db.define('user', {
     type: Sequelize.STRING,
     defaultValue: 'user-default-image.png'
   },
-  googleId: Sequelize.STRING
+  googleId: Sequelize.STRING,
+  admin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  }
 })
 
 module.exports = User

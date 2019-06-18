@@ -14,11 +14,15 @@ const Order = db.define('order', {
   },
   orderInfo: {
     type: Sequelize.ARRAY(Sequelize.JSON)
+  },
+  shippingAddress: {
+    type: Sequelize.JSON
   }
 })
 
 Order.beforeCreate(order => {
   order.orderInfo = JSON.stringify(order.orderInfo)
+  order.shippingAddress = JSON.stringify(order.shippingAddress)
 })
 
 module.exports = Order
