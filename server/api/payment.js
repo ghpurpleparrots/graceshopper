@@ -1,6 +1,6 @@
 const router = require('express').Router()
 module.exports = router
-const STRIPE_SECRET_KEY = require('../../secrets')
+const STRIPE_SECRET_KEY = process.env.STRIPE_SECRET_KEY
 const stripe = require('stripe')(STRIPE_SECRET_KEY)
 
 const stripeChargeCallback = res => (stripeErr, stripeRes) => {

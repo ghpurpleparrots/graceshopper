@@ -14,7 +14,7 @@ import {
   Flavors,
   Profile,
   LoginPage,
-  AddedToCartSnackbar
+  NoMatch
 } from './components'
 import {
   me,
@@ -60,7 +60,6 @@ class Routes extends Component {
         {isLoaded && (
           <Switch>
             {/* Routes placed here are available to all visitors */}
-            <Route path="/snackbar" component={AddedToCartSnackbar} />
             <Route exact path="/" component={Home} />
             <Route path="/products" component={AllProducts} />
             <Route exact path="/sign-up" component={SignUp} />
@@ -75,6 +74,11 @@ class Routes extends Component {
             <Route path="/add-toppings" component={AddToppings} />
             <Route path="/checkout" component={Checkout} />
             <Route path="/flavors" component={Flavors} />
+            <Route component={NoMatch} />
+            {/* <Route
+              path='/flavor-from-container'
+              component={Flavors}
+            /> */}
 
             {/* Routes placed here are only available after logging in */}
 

@@ -16,7 +16,7 @@ nav a {
 }
 
 .component {
-  padding-top: 70px;
+  padding-top: 85px;
 }
 #cart-list {
   list-style: none;
@@ -27,8 +27,29 @@ nav a {
   text-decoration: none;
   color: gray;
 }
-#stripe-btn {
-  color: purple !important;
+
+#home-img-container {
+  position: relative;
+  text-align: center;
+}
+.img-text {
+  position: absolute;
+  top: 0px;
+  left: 16px;
+}
+.avatar {
+  height: 100;
+  width: 60;
+}
+
+.icon {
+  width: 35px !important;
+  height: 35px !important;
+}
+
+.noMatchImg {
+  width: 400px;
+  height: 400px;
 }
 /* form div {
   margin: 1em;
