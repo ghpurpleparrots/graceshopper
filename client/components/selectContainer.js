@@ -1,7 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {green} from '@material-ui/core/colors'
+import {getOrderId, addContainer, getGuestOrderId} from '../store'
+
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
@@ -10,10 +11,7 @@ import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import Container from '@material-ui/core/Container'
-import Radio from '@material-ui/core/Radio'
-import RadioGroup from '@material-ui/core/RadioGroup'
 import Button from '@material-ui/core/Button'
-import {getOrderId, me, addContainer, getGuestOrderId} from '../store'
 
 const styles = theme => ({
   root: {
@@ -74,16 +72,6 @@ const styles = theme => ({
     marginTop: '5px'
   }
 })
-
-const GreenRadio = withStyles({
-  root: {
-    color: green[400],
-    '&$checked': {
-      color: green[600]
-    }
-  },
-  checked: {}
-})(props => <Radio color="default" {...props} />)
 
 class SelectContainer extends React.Component {
   constructor(props) {
@@ -182,12 +170,25 @@ class SelectContainer extends React.Component {
                 </Container>
               </div>
               <div className={classes.buttons}>
-                <Link
-                  to={{
-                    pathname: '/flavors',
-                    fromContainer: true
-                  }}
-                >
+                {this.state.currentContainer ? (
+                  <Link
+                    to={{
+                      pathname: '/flavors',
+                      fromContainer: true
+                    }}
+                  >
+                    <Button
+                      disabled={!this.state.currentContainer}
+                      variant="contained"
+                      className={classes.button}
+                      onClick={() =>
+                        this.props.addContainer(this.state.currentContainer)
+                      }
+                    >
+                      Next
+                    </Button>
+                  </Link>
+                ) : (
                   <Button
                     disabled={!this.state.currentContainer}
                     variant="contained"
@@ -198,7 +199,7 @@ class SelectContainer extends React.Component {
                   >
                     Next
                   </Button>
-                </Link>
+                )}
               </div>
             </Paper>
           </Grid>

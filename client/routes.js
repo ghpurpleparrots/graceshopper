@@ -73,6 +73,10 @@ class Routes extends Component {
             <Route path="/add-toppings" component={AddToppings} />
             <Route path="/checkout" component={Checkout} />
             <Route path="/flavors" component={Flavors} />
+            {/* <Route
+              path='/flavor-from-container'
+              component={Flavors}
+            /> */}
 
             {/* Routes placed here are only available after logging in */}
 

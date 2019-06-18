@@ -174,12 +174,25 @@ class Flavors extends React.Component {
                 </Container>
               </div>
               <div className={classes.buttons}>
-                <Link
-                  to={{
-                    pathname: '/add-toppings',
-                    fromFlavor: true
-                  }}
-                >
+                {this.state.currentFlavor ? (
+                  <Link
+                    to={{
+                      pathname: '/add-toppings',
+                      fromFlavor: true
+                    }}
+                  >
+                    <Button
+                      disabled={!this.state.currentFlavor}
+                      variant="contained"
+                      className={classes.button}
+                      onClick={() =>
+                        this.props.addFlavor(this.state.currentFlavor)
+                      }
+                    >
+                      Next
+                    </Button>
+                  </Link>
+                ) : (
                   <Button
                     disabled={!this.state.currentFlavor}
                     variant="contained"
@@ -190,7 +203,7 @@ class Flavors extends React.Component {
                   >
                     Next
                   </Button>
-                </Link>
+                )}
               </div>
             </Paper>
           </Grid>
