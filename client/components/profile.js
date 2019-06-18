@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import {connect} from 'react-redux'
+import {updateUser} from '../store'
+import {OrderHistory} from './index'
+
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
 import {makeStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
-import {updateUser} from '../store'
-import {OrderHistory} from './index'
 
 const useStyles = makeStyles(theme => ({
   '@global': {
@@ -37,7 +38,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Profile = props => {
-  const {user, completedOrders} = props
+  const {user} = props
   const [state, setState] = useState({
     name: '',
     email: '',
@@ -258,8 +259,7 @@ const Profile = props => {
 }
 
 const mapStateToProps = state => ({
-  user: state.user,
-  completedOrders: state.order.completedOrders
+  user: state.user
 })
 
 const mapDispatchToProps = dispatch => ({
