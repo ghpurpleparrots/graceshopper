@@ -101,13 +101,15 @@ class AddToppings extends React.Component {
     this.props.addToOrder(this.state.currentToppings)
   }
   async handleCartAdd() {
-    const {cart, userId, orderId} = this.props
-    this.props.addToOrder(this.state.currentToppings, cart.length + 1)
+    await this.props.addToOrder(
+      this.state.currentToppings,
+      this.props.cart.length + 1
+    )
     await this.props.addToCart()
-    if (userId) {
-      this.props.addToCartDB(orderId, cart)
+    if (this.props.userId) {
+      await this.props.addToCartDB(this.props.orderId, this.props.cart)
     } else {
-      localStorage.setItem('cart', JSON.stringify(cart))
+      await localStorage.setItem('cart', JSON.stringify(this.props.cart))
     }
 
     this.setState({open: true})

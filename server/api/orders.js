@@ -10,7 +10,7 @@ router.get('/', async (req, res, next) => {
 })
 
 //get a user's 'inCart' order
-router.get('/:userId', auth.isAuthorized, async (req, res, next) => {
+router.get('/:userId', async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {
