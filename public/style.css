@@ -46,6 +46,11 @@ nav a {
   width: 35px !important;
   height: 35px !important;
 }
+
+.noMatchImg {
+  width: 400px;
+  height: 400px;
+}
 /* form div {
   margin: 1em;
   display: inline-block;
