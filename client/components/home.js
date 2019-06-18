@@ -45,7 +45,7 @@ export const UserHome = props => {
           </Link>
         </Grid>
         <Grid item>
-          <h3>Welcome, {email}</h3>
+          <h3>Welcome, {email || 'Friend!'}</h3>
           <img src="/companylogo.jpg" />
         </Grid>
         {isLoggedIn ? (
