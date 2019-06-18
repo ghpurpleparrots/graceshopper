@@ -17,7 +17,6 @@ import Button from '@material-ui/core/Button'
 import Snackbar from '@material-ui/core/Snackbar'
 import {AddedToCartSnackbar} from '../components'
 
-
 const styles = theme => ({
   root: {
     padding: theme.spacing(3, 2)
@@ -105,8 +104,6 @@ class AddToppings extends React.Component {
     const {cart, userId, orderId} = this.props
     this.props.addToOrder(this.state.currentToppings, cart.length + 1)
     await this.props.addToCart()
-    this.renderSnackBar()
-
     if (userId) {
       this.props.addToCartDB(orderId, cart)
     } else {
