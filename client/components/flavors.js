@@ -93,6 +93,7 @@ class Flavors extends React.Component {
       currentContainer: []
     }
     this.handleSelectFlavor = this.handleSelectFlavor.bind(this)
+    this.handleRadioClick = this.handleRadioClick.bind(this)
   }
 
   handleSelectFlavor(id) {
@@ -100,7 +101,11 @@ class Flavors extends React.Component {
       currentFlavor: id
     })
   }
-
+  handleRadioClick(cardId) {
+    let thisCard = document.getElementById(cardId)
+    let radio = thisCard.getElementsByTagName('input')[0]
+    radio.click()
+  }
   render() {
     const {classes} = this.props
     const containers = this.props.allProducts.filter(product => {
@@ -136,7 +141,11 @@ class Flavors extends React.Component {
                   <Grid className={classes.cardContainer} container spacing={4}>
                     {containers.map(card => (
                       <Grid item key={card.id} xs={12} sm={6} md={4}>
-                        <Card className={classes.card}>
+                        <Card
+                          id={card.id}
+                          className={classes.card}
+                          onClick={() => this.handleRadioClick(card.id)}
+                        >
                           <CardMedia
                             className={classes.cardMedia}
                             image={card.imageUrl}

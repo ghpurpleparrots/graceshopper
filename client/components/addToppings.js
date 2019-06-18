@@ -78,9 +78,11 @@ class AddToppings extends React.Component {
     this.handleSelectTopping = this.handleSelectTopping.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleCartAdd = this.handleCartAdd.bind(this)
+    this.handleGreenSwitch = this.handleGreenSwitch.bind(this)
   }
 
   handleSelectTopping(id) {
+    console.log('clicking')
     let oldState = this.state.currentToppings
     if (!this.state.currentToppings.includes(id)) {
       oldState.push(id)
@@ -109,6 +111,12 @@ class AddToppings extends React.Component {
     } else {
       localStorage.setItem('cart', JSON.stringify(this.props.cart))
     }
+  }
+
+  handleGreenSwitch(cardId) {
+    let thisCard = document.getElementById(cardId)
+    let greenSwitch = thisCard.getElementsByTagName('input')[0]
+    greenSwitch.click()
   }
 
   render() {
@@ -146,7 +154,11 @@ class AddToppings extends React.Component {
                   <Grid container spacing={4}>
                     {containers.map(card => (
                       <Grid item key={card.id} xs={12} sm={6} md={4}>
-                        <Card className={classes.card}>
+                        <Card
+                          id={card.id}
+                          className={classes.card}
+                          onClick={() => this.handleGreenSwitch(card.id, event)}
+                        >
                           <CardMedia
                             className={classes.cardMedia}
                             image={card.imageUrl}
@@ -166,6 +178,9 @@ class AddToppings extends React.Component {
                               <FormControlLabel
                                 control={
                                   <GreenSwitch
+                                    onClick={event => {
+                                      event.stopPropagation()
+                                    }}
                                     onChange={() =>
                                       this.handleSelectTopping(card.id)
                                     }

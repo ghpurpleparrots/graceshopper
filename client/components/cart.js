@@ -67,7 +67,7 @@ const Cart = props => {
       <Grid container>
         <Grid item className={classes.root}>
           <Typography variant="h6" className={classes.title}>
-            {user.name}'s Cart
+            {user.id ? `${user.name}'s` : 'Guest'} Cart
           </Typography>
           <div className={classes.demo}>
             <List>
