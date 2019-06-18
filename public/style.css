@@ -28,6 +28,20 @@ nav a {
   color: gray;
 }
 
+#home-img-container {
+  position: relative;
+  text-align: center;
+}
+.img-text {
+  position: absolute;
+  top: 0px;
+  left: 16px;
+}
+.avatar {
+  height: 100;
+  width: 60;
+}
+
 .icon {
   width: 35px !important;
   height: 35px !important;

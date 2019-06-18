@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {incrementQty, decrementQty, deleteItem, addToCartDB} from '../store'
 import {makeStyles} from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -12,18 +13,12 @@ import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import DeleteIcon from '@material-ui/icons/Delete'
 import Button from '@material-ui/core/Button'
-import {
-  incrementQty,
-  decrementQty,
-  deleteItem,
-  addToCartDB
-} from '../store/order'
 import Box from '@material-ui/core/Box'
-import {Link} from 'react-router-dom'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '500px'
+    width: '500px',
+    padding: 100
   },
   demo: {
     backgroundColor: theme.palette.background.paper
@@ -51,6 +46,7 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1, 0)
   }
 }))
+
 const Cart = props => {
   const {cart, products, user, orderId} = props
   const classes = useStyles
@@ -74,10 +70,7 @@ const Cart = props => {
               {cart.map((item, i) => (
                 <ListItem key={i}>
                   <ListItemAvatar>
-                    <Avatar
-                      className={classes.avatar}
-                      src="icecream_icon.png"
-                    />
+                    <Avatar src="icecream_icon.png" />
                   </ListItemAvatar>
                   <ListItemText>
                     <ul id="cart-list">

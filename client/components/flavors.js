@@ -2,7 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {addFlavor} from '../store'
-import {green} from '@material-ui/core/colors'
 import {withStyles} from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import Typography from '@material-ui/core/Typography'
@@ -11,9 +10,7 @@ import Card from '@material-ui/core/Card'
 import CardMedia from '@material-ui/core/CardMedia'
 import CardContent from '@material-ui/core/CardContent'
 import Container from '@material-ui/core/Container'
-import Radio from '@material-ui/core/Radio'
 import Button from '@material-ui/core/Button'
-import {me} from '../store'
 
 const styles = theme => ({
   root: {
@@ -75,22 +72,11 @@ const styles = theme => ({
   }
 })
 
-const GreenRadio = withStyles({
-  root: {
-    color: green[400],
-    '&$checked': {
-      color: green[600]
-    }
-  },
-  checked: {}
-})(props => <Radio color="default" {...props} />)
-
 class Flavors extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentFlavor: null,
-      currentContainer: []
+      currentFlavor: null
     }
     this.handleSelectFlavor = this.handleSelectFlavor.bind(this)
     this.handleRadioClick = this.handleRadioClick.bind(this)
@@ -218,8 +204,7 @@ const mapStateToProps = state => ({
   currentItem: state.order.currentItem
 })
 const mapDispatchToProps = dispatch => ({
-  addFlavor: container => dispatch(addFlavor(container)),
-  addContainer: container => dispatch(addContainer(container))
+  addFlavor: container => dispatch(addFlavor(container))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(

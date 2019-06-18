@@ -1,7 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
+import {auth, logout, logOut} from '../store'
+import {OauthLoginForm} from '../components'
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator'
 import {withStyles} from '@material-ui/core/styles'
-import ShoppingBasket from '@material-ui/icons/ShoppingBasket'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import {
   Typography,
@@ -9,13 +12,10 @@ import {
   Button,
   IconButton,
   ListItemText,
-  ListItemIcon,
-  MenuItem
+  ListItemAvatar,
+  MenuItem,
+  Avatar
 } from '@material-ui/core'
-import {Link} from 'react-router-dom'
-import {auth, logout, logOut} from '../store'
-import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator'
-import OauthLoginForm from './oath-login-form'
 
 const StyledMenu = withStyles({
   paper: {
@@ -107,9 +107,9 @@ const LoginMenu = props => {
         >
           <Link to="/profile">
             <StyledMenuItem>
-              <ListItemIcon>
-                <ShoppingBasket />
-              </ListItemIcon>
+              <ListItemAvatar>
+                <Avatar src="/user-default-image.png" className="avatar" />
+              </ListItemAvatar>
               <ListItemText className="profileLink"> Profile </ListItemText>
             </StyledMenuItem>
           </Link>
@@ -181,8 +181,7 @@ const LoginMenu = props => {
   )
 }
 const mapStateToProps = state => ({
-  user: state.user,
-  cart: state.order.cart
+  user: state.user
 })
 
 const mapDispatchToProps = dispatch => {
