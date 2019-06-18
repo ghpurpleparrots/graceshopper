@@ -78,23 +78,6 @@ router.put('/add', async (req, res, next) => {
   }
 })
 
-//get all 'ordered' orders from an user
-
-router.get('/:userId/orders', auth.isAuthorized, async (req, res, next) => {
-  try {
-    const userOrders = await Order.findAll({
-      where: {
-        userId: req.params.userId,
-        status: 'ordered'
-      }
-    })
-
-    res.send(userOrders)
-  } catch (error) {
-    next(error)
-  }
-})
-
 //submit order route
 router.put('/submit', async (req, res, next) => {
   try {
@@ -114,6 +97,7 @@ router.put('/submit', async (req, res, next) => {
   }
 })
 
+//un-used post route, association tables
 router.post('/', async (req, res, next) => {
   try {
     let productId = req.body.productId
