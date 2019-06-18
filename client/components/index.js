@@ -22,4 +22,4 @@ export {default as Profile} from './profile'
 export {default as OrderHistory} from './orderHistory'
 export {default as StripeBtn} from './StripeBtn'
 export {default as LoginPage} from './loginPage'
-
+export {default as NoMatch} from './noMatch'
