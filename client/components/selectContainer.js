@@ -159,12 +159,25 @@ class SelectContainer extends React.Component {
                 </Container>
               </div>
               <div className={classes.buttons}>
-                <Link
-                  to={{
-                    pathname: '/flavors',
-                    fromContainer: true
-                  }}
-                >
+                {this.state.currentContainer ? (
+                  <Link
+                    to={{
+                      pathname: '/flavors',
+                      fromContainer: true
+                    }}
+                  >
+                    <Button
+                      disabled={!this.state.currentContainer}
+                      variant="contained"
+                      className={classes.button}
+                      onClick={() =>
+                        this.props.addContainer(this.state.currentContainer)
+                      }
+                    >
+                      Next
+                    </Button>
+                  </Link>
+                ) : (
                   <Button
                     disabled={!this.state.currentContainer}
                     variant="contained"
@@ -175,7 +188,7 @@ class SelectContainer extends React.Component {
                   >
                     Next
                   </Button>
-                </Link>
+                )}
               </div>
             </Paper>
           </Grid>
