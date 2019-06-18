@@ -82,6 +82,7 @@ class AddToppings extends React.Component {
   }
 
   handleSelectTopping(id) {
+    console.log('clicking')
     let oldState = this.state.currentToppings
     if (!this.state.currentToppings.includes(id)) {
       oldState.push(id)
@@ -156,7 +157,7 @@ class AddToppings extends React.Component {
                         <Card
                           id={card.id}
                           className={classes.card}
-                          onClick={() => this.handleGreenSwitch(card.id)}
+                          onClick={() => this.handleGreenSwitch(card.id, event)}
                         >
                           <CardMedia
                             className={classes.cardMedia}
@@ -177,6 +178,9 @@ class AddToppings extends React.Component {
                               <FormControlLabel
                                 control={
                                   <GreenSwitch
+                                    onClick={event => {
+                                      event.stopPropagation()
+                                    }}
                                     onChange={() =>
                                       this.handleSelectTopping(card.id)
                                     }

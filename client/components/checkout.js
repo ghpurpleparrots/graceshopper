@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import axios from 'axios'
 import {connect} from 'react-redux'
 import {submitOrder} from '../store'
@@ -64,9 +64,10 @@ function getStepContent(step) {
   }
 }
 
-function Checkout(props) {
+const Checkout = props => {
   const classes = useStyles()
   const [activeStep, setActiveStep] = React.useState(0)
+
   const total = props.cart.reduce((total, item) => (total += item.qty * 10), 0)
 
   const handleNext = () => {
@@ -79,7 +80,7 @@ function Checkout(props) {
 
   const handleSubmit = () => {
     handleNext()
-    props.submitOrder(props.orderId, props.cart, total)
+    props.submitOrder(props.orderId, props.cart, total, props.shippingAddress)
     localStorage.removeItem('cart')
   }
 
@@ -122,7 +123,10 @@ function Checkout(props) {
 
                   {activeStep === steps.length - 1 ? (
                     <div>
-                      <StripeBtn handleClose={() => handleNext} total={total} />
+                      <StripeBtn
+                        handleClose={() => handleSubmit}
+                        total={total}
+                      />
                     </div>
                   ) : (
                     <Button
@@ -148,12 +152,13 @@ function Checkout(props) {
 const mapStateToProps = state => ({
   cart: state.order.cart,
   orderId: state.order.orderId,
-  user: state.user
+  user: state.user,
+  shippingAddress: state.order.shippingAddress
 })
 
 const mapDispatchToProps = dispatch => ({
-  submitOrder: (orderId, cart, price) =>
-    dispatch(submitOrder(orderId, cart, price))
+  submitOrder: (orderId, cart, price, shippingAddress) =>
+    dispatch(submitOrder(orderId, cart, price, shippingAddress))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout)

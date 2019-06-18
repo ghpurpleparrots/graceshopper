@@ -42,6 +42,9 @@ const Profile = props => {
     name: '',
     email: '',
     address: '',
+    city: '',
+    state: '',
+    zipCode: '',
     phoneNumber: '',
     disabled: true
   })
@@ -51,6 +54,9 @@ const Profile = props => {
       name: user.name,
       email: user.email,
       address: user.address,
+      city: user.city,
+      state: user.state,
+      zipCode: user.zipCode,
       phoneNumber: user.phoneNumber,
       disabled: true
     })
@@ -76,6 +82,15 @@ const Profile = props => {
     if (event.target.name === 'phoneNumber') {
       setState({...state, phoneNumber: event.target.value})
     }
+    if (event.target.name === 'zipCode') {
+      setState({...state, zipCode: event.target.value})
+    }
+    if (event.target.name === 'city') {
+      setState({...state, city: event.target.value})
+    }
+    if (event.target.name === 'state') {
+      setState({...state, state: event.target.value})
+    }
   }
 
   function handleSubmit(event) {
@@ -88,7 +103,7 @@ const Profile = props => {
   }
 
   const classes = useStyles()
-  const {name, email, address, phoneNumber, disabled} = state
+  const {name, email, address, city, zipCode, phoneNumber, disabled} = state
 
   return (
     <Container className="component" component="main" maxWidth="md">
@@ -100,80 +115,140 @@ const Profile = props => {
         <div> </div>
         <div className={classes.form}>
           <form noValidate onSubmit={handleSubmit}>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="name"
-              label="Name"
-              name="name"
-              autoComplete="name"
-              autoFocus
-              disabled={disabled}
-              value={name}
-              onChange={handleChange}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              disabled={disabled}
-              value={email}
-              onChange={handleChange}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="address"
-              label="Address"
-              type="address"
-              id="address"
-              autoComplete="address"
-              disabled={disabled}
-              value={address}
-              onChange={handleChange}
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="phoneNumber"
-              label="Phone Number"
-              type="phoneNumber"
-              id="phoneNumber"
-              autoComplete="phoneNumber"
-              disabled={disabled}
-              value={phoneNumber}
-              onChange={handleChange}
-            />
-            <div className={classes.btnContainer}>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onClick={() => enableEdit()}
-              >
-                Edit Your Profile
-              </Button>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                disabled={disabled}
-              >
-                Save Your Edits
-              </Button>
-            </div>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="name"
+                  label="Name"
+                  name="name"
+                  autoComplete="name"
+                  autoFocus
+                  disabled={disabled}
+                  value={name}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  disabled={disabled}
+                  value={email}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="address"
+                  label="Address"
+                  type="address"
+                  id="address"
+                  autoComplete="address"
+                  disabled={disabled}
+                  value={address}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="city"
+                  label="City"
+                  type="city"
+                  id="city"
+                  autoComplete="city"
+                  disabled={disabled}
+                  value={city}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="state"
+                  label="State"
+                  type="state"
+                  id="state"
+                  autoComplete="city"
+                  disabled={disabled}
+                  value={state.state}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="zipCode"
+                  label="Zipcode"
+                  type="zipCode"
+                  id="zipCode"
+                  autoComplete="zipCode"
+                  disabled={disabled}
+                  value={zipCode}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="phoneNumber"
+                  label="Phone Number"
+                  type="phoneNumber"
+                  id="phoneNumber"
+                  autoComplete="phoneNumber"
+                  disabled={disabled}
+                  value={phoneNumber}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <div className={classes.btnContainer}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick={() => enableEdit()}
+                  >
+                    Edit Your Profile
+                  </Button>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    disabled={disabled}
+                  >
+                    Save Your Edits
+                  </Button>
+                </div>
+              </Grid>
+            </Grid>
           </form>
         </div>
       </div>

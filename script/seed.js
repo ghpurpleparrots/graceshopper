@@ -19,6 +19,9 @@ async function seed() {
       email: 'cody@email.com',
       password: '123',
       address: '1 Main St',
+      city: 'New York',
+      state: 'NY',
+      zipCode: '10004',
       phoneNumber: '1234567891'
     }),
     User.create({
@@ -26,13 +29,19 @@ async function seed() {
       email: 'murphy@email.com',
       password: '123',
       address: '1 Main St',
+      city: 'New York',
+      state: 'ny',
+      zipCode: '10004',
       phoneNumber: '1234567891'
     }),
     User.create({
       name: 'Lars',
       email: 'lars@email.com',
       password: '123',
-      address: '1 Main St',
+      address: '1 Dean St',
+      city: 'Brooklyn',
+      state: 'ny',
+      zipCode: '11217',
       phoneNumber: '1234567891'
     }),
     User.create({
@@ -40,6 +49,9 @@ async function seed() {
       email: 'potato@email.com',
       password: '123',
       address: '1 Main St',
+      city: 'New York',
+      state: 'ny',
+      zipCode: '10004',
       phoneNumber: '1234567891'
     })
   ])

@@ -139,7 +139,7 @@ class SelectContainer extends React.Component {
                   variant="h3"
                   component="h3"
                 >
-                  Cone or Cup ?
+                  Cone or Cup?
                 </Typography>
               </div>
               <div>
