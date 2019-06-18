@@ -4,7 +4,6 @@ import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
-import {CardElement, injectStripe} from 'react-stripe-elements'
 
 function PaymentForm() {
   return (
@@ -13,9 +12,7 @@ function PaymentForm() {
         Payment method
       </Typography>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
-          <CardElement />
-        </Grid>
+        <Grid item xs={12} md={6} />
         <Grid item xs={12}>
           <FormControlLabel
             control={<Checkbox color="secondary" name="saveCard" value="yes" />}
@@ -27,4 +24,4 @@ function PaymentForm() {
   )
 }
 
-export default injectStripe(PaymentForm)
+export default PaymentForm

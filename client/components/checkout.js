@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import {connect} from 'react-redux'
 import {submitOrder} from '../store'
 import {makeStyles} from '@material-ui/core/styles'
@@ -12,8 +13,7 @@ import StepLabel from '@material-ui/core/StepLabel'
 import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
 import Typography from '@material-ui/core/Typography'
-import {AddressForm, PaymentForm, Review} from '../components'
-import {Elements, StripeProvider} from 'react-stripe-elements'
+import {AddressForm, PaymentForm, Review, StripeBtn} from '../components'
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -50,22 +50,15 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const steps = ['Shipping address', 'Payment details', 'Review your order']
+const steps = ['Shipping address', 'Review your order']
 
 function getStepContent(step) {
   switch (step) {
     case 0:
       return <AddressForm />
     case 1:
-      return (
-        <StripeProvider apiKey="pk_test_zeUVD7wJ1mOt0JVwm2ftX2fV00CCtghTqr">
-          <Elements>
-            <PaymentForm />
-          </Elements>
-        </StripeProvider>
-      )
-    case 2:
       return <Review />
+
     default:
       throw new Error('Unknown step')
   }
@@ -127,14 +120,9 @@ function Checkout(props) {
                   )}
 
                   {activeStep === steps.length - 1 ? (
-                    <Button
-                      variant="contained"
-                      onClick={handleSubmit}
-                      color="primary"
-                      className={classes.button}
-                    >
-                      Place Order
-                    </Button>
+                    <div>
+                      <StripeBtn handleClose={() => handleNext} total={total} />
+                    </div>
                   ) : (
                     <Button
                       variant="contained"
@@ -158,7 +146,8 @@ function Checkout(props) {
 
 const mapStateToProps = state => ({
   cart: state.order.cart,
-  orderId: state.order.orderId
+  orderId: state.order.orderId,
+  user: state.user
 })
 
 const mapDispatchToProps = dispatch => ({
