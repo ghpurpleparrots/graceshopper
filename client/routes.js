@@ -13,7 +13,8 @@ import {
   SignUpConfirmation,
   Flavors,
   Profile,
-  LoginPage
+  LoginPage,
+  AddedToCartSnackbar
 } from './components'
 import {
   me,
@@ -59,6 +60,7 @@ class Routes extends Component {
         {isLoaded && (
           <Switch>
             {/* Routes placed here are available to all visitors */}
+            <Route path="/snackbar" component={AddedToCartSnackbar} />
             <Route exact path="/" component={Home} />
             <Route path="/products" component={AllProducts} />
             <Route exact path="/sign-up" component={SignUp} />

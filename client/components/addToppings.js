@@ -17,6 +17,8 @@ import Button from '@material-ui/core/Button'
 import {Redirect, Link} from 'react-router-dom'
 import {me} from '../store'
 import user from '../store/user'
+import Snackbar from '@material-ui/core/Snackbar'
+import {AddedToCartSnackbar} from '../components'
 
 const styles = theme => ({
   root: {
@@ -73,16 +75,17 @@ class AddToppings extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      currentToppings: []
+      currentToppings: [],
+      open: false
     }
     this.handleSelectTopping = this.handleSelectTopping.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleCartAdd = this.handleCartAdd.bind(this)
     this.handleGreenSwitch = this.handleGreenSwitch.bind(this)
+    this.handleClose = this.handleClose.bind(this)
   }
 
   handleSelectTopping(id) {
-    console.log('clicking')
     let oldState = this.state.currentToppings
     if (!this.state.currentToppings.includes(id)) {
       oldState.push(id)
@@ -106,17 +109,31 @@ class AddToppings extends React.Component {
       this.props.cart.length + 1
     )
     await this.props.addToCart()
+    this.renderSnackBar()
     if (this.props.userId) {
       this.props.addToCartDB(this.props.orderId, this.props.cart)
     } else {
       localStorage.setItem('cart', JSON.stringify(this.props.cart))
     }
+
+    this.setState({open: true})
+  }
+
+  renderSnackBar() {
+    return <Snackbar />
   }
 
   handleGreenSwitch(cardId) {
     let thisCard = document.getElementById(cardId)
     let greenSwitch = thisCard.getElementsByTagName('input')[0]
     greenSwitch.click()
+  }
+
+  handleClose(event, reason) {
+    if (reason === 'clickaway') {
+      return
+    }
+    this.setState({open: false})
   }
 
   render() {
@@ -197,6 +214,23 @@ class AddToppings extends React.Component {
                 </Container>
               </div>
               <div className={classes.buttons}>
+                <div>
+                  <Snackbar
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left'
+                    }}
+                    open={this.state.open}
+                    autoHideDuration={6000}
+                    onClose={this.handleClose}
+                  >
+                    <AddedToCartSnackbar
+                      onClose={this.handleClose}
+                      variant="success"
+                      message="Added to Cart!"
+                    />
+                  </Snackbar>
+                </div>
                 <Button
                   variant="contained"
                   className={classes.button}
