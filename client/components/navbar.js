@@ -21,7 +21,8 @@ const useStyles = makeStyles(theme => ({
   },
   appbar: {
     backgroundColor: 'purple',
-    minHeight: '85px'
+    minHeight: '85px',
+    maxHeight: '10vw'
   },
   title: {
     display: 'center',
@@ -47,6 +48,9 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'space-between',
     minHeight: '85px'
+  },
+  logo: {
+    maxHeight: '7vw'
   }
 }))
 
@@ -74,9 +78,11 @@ const Navbar = props => {
         <Toolbar className={classes.toolbar}>
           <LoginMenu />
           <Link to="/">
-            <Typography className={classes.title} variant="h5" noWrap>
-              Purple Parrots
-            </Typography>
+            <img
+              src="/purpleparrotlogo.jpg"
+              height="10%"
+              className={classes.logo}
+            />
           </Link>
           <div>
             <IconButton aria-label="new notifications" color="inherit">
