@@ -13,7 +13,7 @@ import Container from '@material-ui/core/Container'
 import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import Button from '@material-ui/core/Button'
-import {getOrderId, me, addContainer} from '../store'
+import {getOrderId, me, addContainer, getGuestOrderId} from '../store'
 
 const styles = theme => ({
   root: {
@@ -94,6 +94,9 @@ class SelectContainer extends React.Component {
     this.handleSelectContainer = this.handleSelectContainer.bind(this)
   }
   async componentDidMount() {
+    if (!this.props.userId && !this.props.orderId) {
+      await this.props.getGuestOrderId()
+    }
     if (!this.props.orderId) {
       await this.props.getOrderId(this.props.userId)
     }
@@ -202,7 +205,8 @@ const mapStateToProps = state => ({
 })
 const mapDispatchToProps = dispatch => ({
   addContainer: container => dispatch(addContainer(container)),
-  getOrderId: userId => dispatch(getOrderId(userId))
+  getOrderId: userId => dispatch(getOrderId(userId)),
+  getGuestOrderId: () => dispatch(getGuestOrderId())
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(

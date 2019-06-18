@@ -50,8 +50,12 @@ router.post('/:userId', async (req, res, next) => {
     const newOrder = await Order.create({
       status: 'inCart'
     })
-    newOrder.setUser(req.params.userId || req.sessionID)
-    res.json(newOrder.id)
+    if (req.params.userId === 'guest') {
+      res.json(newOrder.id)
+    } else {
+      newOrder.setUser(req.params.userId)
+      res.json(newOrder.id)
+    }
   } catch (err) {
     next(err)
   }

@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import {makeStyles} from '@material-ui/core/styles'
 import {auth} from '../store'
 import {connect} from 'react-redux'
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -79,8 +80,12 @@ function LoginPage(props) {
           <Typography component="h1" variant="h5">
             Sign in to Continue
           </Typography>
-          <form onSubmit={handleSubmit} className={classes.form} noValidate>
-            <TextField
+          <ValidatorForm
+            onSubmit={handleSubmit}
+            className={classes.form}
+            noValidate
+          >
+            <TextValidator
               variant="outlined"
               margin="normal"
               required
@@ -96,7 +101,7 @@ function LoginPage(props) {
               ]}
               autoFocus
             />
-            <TextField
+            <TextValidator
               variant="outlined"
               margin="normal"
               required
@@ -123,7 +128,7 @@ function LoginPage(props) {
                 <Link to="/sign-up">Don't have an account? Sign Up</Link>
               </Grid>
             </Grid>
-          </form>
+          </ValidatorForm>
           <Link to="/start-order">
             <Button fullWidth variant="contained" className={classes.guest}>
               Continue As Guest

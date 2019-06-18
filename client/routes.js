@@ -15,7 +15,13 @@ import {
   Profile,
   LoginPage
 } from './components'
-import {me, getCart, getProducts, getAllCompletedOrders} from './store'
+import {
+  me,
+  getCart,
+  getProducts,
+  getAllCompletedOrders,
+  getGuestCart
+} from './store'
 
 /**
  * COMPONENT
@@ -31,6 +37,11 @@ class Routes extends Component {
     if (this.props.userId) {
       await this.props.getCart(this.props.userId)
       await this.props.getCompletedOrders(this.props.userId)
+    } else if (localStorage.getItem('cart')) {
+      let thisCart = await localStorage.getItem('cart')
+      thisCart = JSON.parse(thisCart)
+      let orderId = thisCart[0].orderId
+      this.props.getGuestCart(thisCart, orderId)
     }
     this.setState({isLoaded: true})
   }
@@ -59,14 +70,14 @@ class Routes extends Component {
             <Route path="/cart" component={Cart} />
             <Route path="/login" component={LoginPage} />
             <Route path="/start-order" component={SelectContainer} />
+            <Route path="/add-toppings" component={AddToppings} />
+            <Route path="/checkout" component={Checkout} />
+            <Route path="/flavors" component={Flavors} />
 
             {/* Routes placed here are only available after logging in */}
 
             {isLoggedIn && (
               <Switch>
-                <Route path="/add-toppings" component={AddToppings} />
-                <Route path="/checkout" component={Checkout} />
-                <Route path="/flavors" component={Flavors} />
                 <Route exact path="/profile" component={Profile} />
                 <Route path="/added-to-cart" component={Home} />
               </Switch>
@@ -96,7 +107,8 @@ const mapDispatch = dispatch => ({
   loadInitialData: () => dispatch(me()),
   getCart: id => dispatch(getCart(id)),
   getProducts: () => dispatch(getProducts()),
-  getCompletedOrders: id => dispatch(getAllCompletedOrders(id))
+  getCompletedOrders: id => dispatch(getAllCompletedOrders(id)),
+  getGuestCart: (cart, orderId) => dispatch(getGuestCart(cart, orderId))
 })
 
 // The `withRouter` wrapper makes sure that updates are not blocked
