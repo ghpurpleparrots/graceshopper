@@ -45,7 +45,7 @@ router.get('/:userId/ordered', auth.isAuthorized, async (req, res, next) => {
 })
 
 // create a new order
-router.post('/:userId', auth.isAuthorized, async (req, res, next) => {
+router.post('/:userId', async (req, res, next) => {
   try {
     const newOrder = await Order.create({
       status: 'inCart'
