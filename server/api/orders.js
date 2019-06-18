@@ -88,7 +88,8 @@ router.put('/submit', async (req, res, next) => {
       await order.update({
         status: 'ordered',
         orderInfo: req.body.cart,
-        price: req.body.price
+        price: req.body.price,
+        shippingAddress: req.body.shippingAddress
       })
       res.sendStatus(200)
     }

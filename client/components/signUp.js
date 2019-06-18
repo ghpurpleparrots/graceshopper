@@ -10,6 +10,7 @@ import {withStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import axios from 'axios'
 import {Link, withRouter} from 'react-router-dom'
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator'
 
 const styles = theme => ({
   '@global': {
@@ -50,7 +51,14 @@ class SignUp extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
-
+  componentDidMount() {
+    ValidatorForm.addValidationRule('isZip', value => {
+      if (value.length === 5) {
+        return true
+      }
+      return false
+    })
+  }
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
@@ -69,6 +77,9 @@ class SignUp extends React.Component {
         email: '',
         password: '',
         address: '',
+        city: '',
+        state: '',
+        zipCode: '',
         phoneNumber: ''
       })
       this.props.history.push('/sign-up-confirm')
@@ -82,7 +93,16 @@ class SignUp extends React.Component {
 
   render() {
     const {classes} = this.props
-    const {name, email, password, address, phoneNumber} = this.state
+    const {
+      name,
+      email,
+      password,
+      address,
+      phoneNumber,
+      city,
+      state,
+      zipCode
+    } = this.state
     return (
       <Container className="component" component="main" maxWidth="xs">
         <CssBaseline />
@@ -100,7 +120,7 @@ class SignUp extends React.Component {
           ) : (
             <div />
           )}
-          <form className={classes.form} onSubmit={this.handleSubmit}>
+          <ValidatorForm className={classes.form} onSubmit={this.handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
@@ -115,13 +135,18 @@ class SignUp extends React.Component {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                <TextValidator
                   variant="outlined"
                   required
                   fullWidth
                   label="Email Address"
                   name="email"
                   value={email}
+                  validators={['required', 'isEmail']}
+                  errorMessages={[
+                    'this field is required',
+                    'please enter a valid e-mail'
+                  ]}
                   onChange={this.handleChange}
                 />
               </Grid>
@@ -136,7 +161,40 @@ class SignUp extends React.Component {
                   onChange={this.handleChange}
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="City"
+                  name="city"
+                  value={city}
+                  onChange={this.handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="State"
+                  name="state"
+                  value={state}
+                  onChange={this.handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextValidator
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Zipcode"
+                  name="zipCode"
+                  value={zipCode}
+                  onChange={this.handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   variant="outlined"
                   required
@@ -173,7 +231,7 @@ class SignUp extends React.Component {
             </Button>
 
             <Grid container justify="flex-end" />
-          </form>
+          </ValidatorForm>
         </div>
       </Container>
     )

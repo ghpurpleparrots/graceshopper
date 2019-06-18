@@ -36,13 +36,7 @@ const initialState = {
     toppings: []
   },
   completedOrders: [],
-  shippingAddress: {
-    address: '',
-    city: '',
-    state: '',
-    zip: null,
-    country: ''
-  }
+  shippingAddress: {}
 }
 
 /**
@@ -125,9 +119,14 @@ export const addToCartDB = (orderId, cart) => async dispatch => {
   }
 }
 
-export const submitOrder = (orderId, cart, price) => async dispatch => {
+export const submitOrder = (
+  orderId,
+  cart,
+  price,
+  shippingAddress
+) => async dispatch => {
   try {
-    let update = {orderId, cart, price}
+    let update = {orderId, cart, price, shippingAddress}
     await axios.put('/api/orders/submit', update)
     dispatch(submittedOrder())
   } catch (err) {
