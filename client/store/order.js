@@ -1,26 +1,23 @@
 /* eslint-disable complexity */
 import axios from 'axios'
-import cart from '../components/cart'
+
 /**
  * ACTION TYPES
  */
+const GET_ORDER_ID = 'GET_ORDER_ID'
+const GOT_CART = 'GOT_CART'
+const GET_GUEST_CART = 'GET_GUEST_CART'
 const ADD_CONTAINER = 'ADD_CONTAINER'
 const ADD_FLAVOR = 'ADD_FLAVOR'
 const ADD_TOPPINGS = 'ADD_TOPPINGS'
-const GET_ORDER_ID = 'GET_ORDER_ID'
-const GOT_CART = 'GOT_CART'
-
 const ADD_TO_CART = 'ADD_TO_CART'
-
 const INCREMENT_QTY = 'INCREMENT_QTY'
 const DECREMENT_QTY = 'DECREMENT_QTY'
-const SUBMIT_ORDER = 'SUBMIT_ORDER'
 const DELETE_ITEM = 'DELETE_ITEM'
 const SET_SHIPPING_ADDRESS = 'SET_SHIPPING_ADDRESS'
+const SUBMIT_ORDER = 'SUBMIT_ORDER'
 const LOG_OUT = 'LOG_OUT'
 const GET_ALL_COMPLETED_ORDERS = 'GET_ALL_COMPLETED_ORDERS'
-const GET_GUEST_CART = 'GET_GUEST_CART'
-
 /**
  * INITIAL STATE
  */
@@ -42,7 +39,13 @@ const initialState = {
 /**
  * ACTION CREATORS
  */
-
+const gotOrderId = orderId => ({type: GET_ORDER_ID, orderId})
+const gotCart = (cart, orderId) => ({type: GOT_CART, cart, orderId})
+export const getGuestCart = (cart, orderId) => ({
+  type: GET_GUEST_CART,
+  cart,
+  orderId
+})
 export const addContainer = container => ({type: ADD_CONTAINER, container})
 export const addFlavor = flavor => ({type: ADD_FLAVOR, flavor})
 export const addToppings = (toppings, groupId) => ({
@@ -51,34 +54,20 @@ export const addToppings = (toppings, groupId) => ({
   groupId
 })
 export const addToCart = () => ({type: ADD_TO_CART})
-export const submittedOrder = () => ({type: SUBMIT_ORDER})
-const gotCart = (cart, orderId) => ({type: GOT_CART, cart, orderId})
-
-const gotOrderId = orderId => ({type: GET_ORDER_ID, orderId})
-
 export const incrementQty = groupId => ({type: INCREMENT_QTY, groupId})
-
 export const decrementQty = groupId => ({type: DECREMENT_QTY, groupId})
-
 export const deleteItem = groupId => ({type: DELETE_ITEM, groupId})
-
 export const setShippingAddress = address => ({
   type: SET_SHIPPING_ADDRESS,
   address
 })
-
+export const submittedOrder = () => ({type: SUBMIT_ORDER})
 export const logOut = () => ({type: LOG_OUT})
-
 export const gotAllCompletedOrders = orders => ({
   type: GET_ALL_COMPLETED_ORDERS,
   orders
 })
 
-export const getGuestCart = (cart, orderId) => ({
-  type: GET_GUEST_CART,
-  cart,
-  orderId
-})
 /**
  * THUNK CREATORS
  */
@@ -91,6 +80,7 @@ export const getOrderId = userId => async dispatch => {
     console.error(err)
   }
 }
+//get orderId for NEW ORDER when using guest checkout
 export const getGuestOrderId = () => async dispatch => {
   try {
     const {data} = await axios.post(`/api/orders/guest`)
@@ -110,6 +100,7 @@ export const getCart = userId => async dispatch => {
     console.error(err)
   }
 }
+//adds current cart to DB
 export const addToCartDB = (orderId, cart) => async dispatch => {
   try {
     let update = {orderId, cart}
@@ -118,7 +109,7 @@ export const addToCartDB = (orderId, cart) => async dispatch => {
     console.error(err)
   }
 }
-
+//changes order status to ordered
 export const submitOrder = (
   orderId,
   cart,
@@ -133,7 +124,6 @@ export const submitOrder = (
     console.error(err)
   }
 }
-
 //get all completed orders from a single user
 export const getAllCompletedOrders = userId => async dispatch => {
   try {
@@ -149,6 +139,34 @@ export const getAllCompletedOrders = userId => async dispatch => {
  */
 export default function(state = initialState, action) {
   switch (action.type) {
+    case GET_ORDER_ID:
+      return {
+        ...state,
+        currentItem: {...state.currentItem, orderId: action.orderId},
+        orderId: action.orderId
+      }
+    case GOT_CART:
+      if (action.cart) {
+        return {
+          ...state,
+          cart: action.cart,
+          orderId: action.orderId,
+          currentItem: {...state.currentItem, orderId: action.orderId}
+        }
+      } else {
+        return {
+          ...state,
+          orderId: action.orderId,
+          currentItem: {...state.currentItem, orderId: action.orderId}
+        }
+      }
+    case GET_GUEST_CART:
+      return {
+        ...state,
+        cart: action.cart,
+        orderId: action.orderId,
+        currentItem: {...state.currentItem, orderId: action.orderId}
+      }
     case ADD_CONTAINER: {
       return {
         ...state,
@@ -180,37 +198,6 @@ export default function(state = initialState, action) {
           ...initialState.currentItem,
           orderId: state.currentItem.orderId
         }
-      }
-    case SUBMIT_ORDER:
-      return {...initialState, orderId: state.orderId}
-
-    case GET_ORDER_ID:
-      return {
-        ...state,
-        currentItem: {...state.currentItem, orderId: action.orderId},
-        orderId: action.orderId
-      }
-    case GOT_CART:
-      if (action.cart) {
-        return {
-          ...state,
-          cart: action.cart,
-          orderId: action.orderId,
-          currentItem: {...state.currentItem, orderId: action.orderId}
-        }
-      } else {
-        return {
-          ...state,
-          orderId: action.orderId,
-          currentItem: {...state.currentItem, orderId: action.orderId}
-        }
-      }
-    case GET_GUEST_CART:
-      return {
-        ...state,
-        cart: action.cart,
-        orderId: action.orderId,
-        currentItem: {...state.currentItem, orderId: action.orderId}
       }
     case INCREMENT_QTY: {
       let thisGroup = [...state.cart]
@@ -248,17 +235,18 @@ export default function(state = initialState, action) {
         cart: newCart
       }
     }
-    case GET_ALL_COMPLETED_ORDERS: {
-      return {...state, completedOrders: action.orders}
-    }
     case SET_SHIPPING_ADDRESS:
       return {
         ...state,
         shippingAddress: action.address
       }
+    case SUBMIT_ORDER:
+      return {...initialState, orderId: state.orderId}
     case LOG_OUT: {
       return initialState
     }
+    case GET_ALL_COMPLETED_ORDERS:
+      return {...state, completedOrders: action.orders}
     default:
       return state
   }

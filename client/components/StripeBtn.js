@@ -1,7 +1,6 @@
 import React from 'react'
 import StripeCheckout from 'react-stripe-checkout'
 import axios from 'axios'
-import Button from '@material-ui/core/Button'
 
 const StripeBtn = props => {
   const publishableKey = 'pk_test_zeUVD7wJ1mOt0JVwm2ftX2fV00CCtghTqr'

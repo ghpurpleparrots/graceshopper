@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography'
 import {withStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import axios from 'axios'
-import {Link, withRouter} from 'react-router-dom'
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator'
 
 const styles = theme => ({
@@ -213,8 +212,6 @@ class SignUp extends React.Component {
                   name="password"
                   label="Password"
                   type="password"
-                  id="password"
-                  autoComplete="current-password"
                   value={password}
                   onChange={this.handleChange}
                 />
