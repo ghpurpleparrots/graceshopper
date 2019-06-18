@@ -95,7 +95,7 @@ const LoginMenu = props => {
         onClick={handleClick}
         color="inherit"
       >
-        <AccountCircle />
+        <AccountCircle className="icon" />
       </IconButton>
       {user.id ? (
         <StyledMenu

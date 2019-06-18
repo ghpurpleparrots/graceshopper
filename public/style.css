@@ -16,7 +16,7 @@ nav a {
 }
 
 .component {
-  padding-top: 70px;
+  padding-top: 85px;
 }
 #cart-list {
   list-style: none;
@@ -27,8 +27,10 @@ nav a {
   text-decoration: none;
   color: gray;
 }
-#stripe-btn {
-  color: purple !important;
+
+.icon {
+  width: 35px !important;
+  height: 35px !important;
 }
 /* form div {
   margin: 1em;
