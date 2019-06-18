@@ -50,8 +50,12 @@ router.post('/:userId', async (req, res, next) => {
     const newOrder = await Order.create({
       status: 'inCart'
     })
-    newOrder.setUser(req.params.userId || req.sessionID)
-    res.json(newOrder.id)
+    if (req.params.userId === 'guest') {
+      res.json(newOrder.id)
+    } else {
+      newOrder.setUser(req.params.userId)
+      res.json(newOrder.id)
+    }
   } catch (err) {
     next(err)
   }
@@ -69,23 +73,6 @@ router.put('/add', async (req, res, next) => {
       })
       res.sendStatus(200)
     }
-  } catch (error) {
-    next(error)
-  }
-})
-
-//get all 'ordered' orders from an user
-
-router.get('/:userId/orders', auth.isAuthorized, async (req, res, next) => {
-  try {
-    const userOrders = await Order.findAll({
-      where: {
-        userId: req.params.userId,
-        status: 'ordered'
-      }
-    })
-
-    res.send(userOrders)
   } catch (error) {
     next(error)
   }
@@ -110,6 +97,7 @@ router.put('/submit', async (req, res, next) => {
   }
 })
 
+//un-used post route, association tables
 router.post('/', async (req, res, next) => {
   try {
     let productId = req.body.productId

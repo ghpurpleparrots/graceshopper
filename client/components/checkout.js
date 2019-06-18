@@ -80,6 +80,7 @@ function Checkout(props) {
   const handleSubmit = () => {
     handleNext()
     props.submitOrder(props.orderId, props.cart, total)
+    localStorage.removeItem('cart')
   }
 
   return (

@@ -63,7 +63,7 @@ class SignUp extends React.Component {
     delete body.hasError
 
     try {
-      await axios.post('/api/users', body)
+      await axios.post('/auth/signup', body)
       this.setState({
         name: '',
         email: '',
@@ -81,7 +81,6 @@ class SignUp extends React.Component {
   }
 
   render() {
-    console.log(this.state)
     const {classes} = this.props
     const {name, email, password, address, phoneNumber} = this.state
     return (
