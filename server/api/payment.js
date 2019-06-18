@@ -1,33 +1,35 @@
 const router = require('express').Router()
 module.exports = router
-const stripe = require('stripe')('sk_test_muHAkmt4AqOwsr60imrUZhyR00dXLeIDNs')
+const STRIPE_SECRET_KEY = require('/Users/rachel/GH/SR/graceshopper/secrets.js')
+const stripe = require('stripe')(STRIPE_SECRET_KEY)
+
+const stripeChargeCallback = res => (stripeErr, stripeRes) => {
+  if (stripeErr) {
+    res.status(500).send({error: stripeErr})
+  } else {
+    res.status(200).send({success: stripeRes})
+  }
+}
 
 router.get('/', async (req, res, next) => {
   try {
-    {
-      const charge = await stripe.charges.create({
-        amount: 999,
-        currency: 'usd',
-        source: 'tok_visa',
-        receipt_email: 'jenny.rosen@example.com'
-      })
-      res.json(charge)
-    }
+    res.send({
+      message: 'Hello Stripe Checkout server!',
+      timestamp: new Date().toISOString()
+    })
   } catch (err) {
     next(err)
   }
 })
 
-router.post('/charge', async (req, res) => {
+router.post('/', (req, res) => {
   try {
-    let {status} = await stripe.charges.create({
-      amount: 2000,
-      currency: 'usd',
-      description: 'An example charge',
-      source: req.body
-    })
-
-    res.json({status})
+    const body = {
+      source: req.body.token.id,
+      amount: req.body.amount,
+      currency: 'usd'
+    }
+    stripe.charges.create(body, stripeChargeCallback(res))
   } catch (err) {
     res.status(500).end()
   }

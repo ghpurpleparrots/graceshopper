@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const compression = require('compression')
 const session = require('express-session')
 const passport = require('passport')
+// const cors = require('cors')
 const SequelizeStore = require('connect-session-sequelize')(session.Store)
 const db = require('./db')
 const sessionStore = new SequelizeStore({db})
@@ -47,6 +48,9 @@ const createApp = () => {
   // body parsing middleware
   app.use(express.json())
   app.use(express.urlencoded({extended: true}))
+
+  //cross resource
+  // app.use(cors())
 
   // compression middleware
   app.use(compression())

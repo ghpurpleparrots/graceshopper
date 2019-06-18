@@ -16,6 +16,7 @@ const INCREMENT_QTY = 'INCREMENT_QTY'
 const DECREMENT_QTY = 'DECREMENT_QTY'
 const SUBMIT_ORDER = 'SUBMIT_ORDER'
 const DELETE_ITEM = 'DELETE_ITEM'
+const SET_SHIPPING_ADDRESS = 'SET_SHIPPING_ADDRESS'
 const LOG_OUT = 'LOG_OUT'
 const GET_ALL_COMPLETED_ORDERS = 'GET_ALL_COMPLETED_ORDERS'
 const GET_GUEST_CART = 'GET_GUEST_CART'
@@ -34,7 +35,14 @@ const initialState = {
     flavor: null,
     toppings: []
   },
-  completedOrders: []
+  completedOrders: [],
+  shippingAddress: {
+    address: '',
+    city: '',
+    state: '',
+    zip: null,
+    country: ''
+  }
 }
 
 /**
@@ -59,6 +67,11 @@ export const incrementQty = groupId => ({type: INCREMENT_QTY, groupId})
 export const decrementQty = groupId => ({type: DECREMENT_QTY, groupId})
 
 export const deleteItem = groupId => ({type: DELETE_ITEM, groupId})
+
+export const setShippingAddress = address => ({
+  type: SET_SHIPPING_ADDRESS,
+  address
+})
 
 export const logOut = () => ({type: LOG_OUT})
 
@@ -239,6 +252,11 @@ export default function(state = initialState, action) {
     case GET_ALL_COMPLETED_ORDERS: {
       return {...state, completedOrders: action.orders}
     }
+    case SET_SHIPPING_ADDRESS:
+      return {
+        ...state,
+        shippingAddress: action.address
+      }
     case LOG_OUT: {
       return initialState
     }

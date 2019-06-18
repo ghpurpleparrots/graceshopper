@@ -27,7 +27,9 @@ nav a {
   text-decoration: none;
   color: gray;
 }
-
+#stripe-btn {
+  color: purple !important;
+}
 /* form div {
   margin: 1em;
   display: inline-block;
