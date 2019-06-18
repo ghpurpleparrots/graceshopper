@@ -30,7 +30,7 @@ router.get('/:userId', auth.isAuthorized, async (req, res, next) => {
 
 //get a list of an User's completed orders
 
-router.get('/:userId/ordered', async (req, res, next) => {
+router.get('/:userId/ordered', auth.isAuthorized, async (req, res, next) => {
   try {
     const allCompletedOrders = await Order.findAll({
       where: {
@@ -45,7 +45,7 @@ router.get('/:userId/ordered', async (req, res, next) => {
 })
 
 // create a new order
-router.post('/:userId', async (req, res, next) => {
+router.post('/:userId', auth.isAuthorized, async (req, res, next) => {
   try {
     const newOrder = await Order.create({
       status: 'inCart'
