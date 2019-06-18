@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {User} = require('../db/models')
+const auth = require('./authMiddleware')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -17,7 +18,7 @@ router.get('/', async (req, res, next) => {
 })
 
 //update user info
-router.put('/:userId', async (req, res, next) => {
+router.put('/:userId', auth.isAuthorized, async (req, res, next) => {
   try {
     let user = await User.findByPk(req.params.userId)
     if (!user) {
