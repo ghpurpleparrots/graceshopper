@@ -19,14 +19,14 @@ import {AddedToCartSnackbar} from '../components'
 
 const styles = theme => ({
   root: {
-    paddingTop: theme.spacing(2)
+    padding: theme.spacing(3, 2)
   },
   cardContainer: {
     display: 'flex',
     justifyContent: 'space-around'
   },
   cardGrid: {
-    paddingTop: theme.spacing(3),
+    paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8)
   },
   card: {
@@ -81,9 +81,6 @@ class AddToppings extends React.Component {
     this.handleGreenSwitch = this.handleGreenSwitch.bind(this)
     this.handleClose = this.handleClose.bind(this)
   }
-  componentDidMount() {
-    window.scrollTo(0, 0)
-  }
 
   handleSelectTopping(id) {
     let oldState = this.state.currentToppings
@@ -115,7 +112,7 @@ class AddToppings extends React.Component {
       await localStorage.setItem('cart', JSON.stringify(this.props.cart))
     }
 
-    await this.setState({open: true})
+    this.setState({open: true})
   }
 
   handleGreenSwitch(cardId) {
@@ -140,7 +137,7 @@ class AddToppings extends React.Component {
       this.props.history.push('/start-order')
     }
     return (
-      <div className="topping-component">
+      <div className="component">
         <Grid
           container
           className={classes.cardContainer}

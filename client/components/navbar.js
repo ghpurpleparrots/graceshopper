@@ -4,10 +4,12 @@ import {Link} from 'react-router-dom'
 import {getProducts} from '../store'
 import LoginMenu from './loginMenu'
 import {Cart} from '../components'
+
 import {makeStyles} from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton'
+import Typography from '@material-ui/core/Typography'
 import Badge from '@material-ui/core/Badge'
 import ShoppingCart from '@material-ui/icons/ShoppingCartOutlined'
 import Drawer from '@material-ui/core/Drawer'
@@ -49,14 +51,6 @@ const useStyles = makeStyles(theme => ({
   },
   logo: {
     maxHeight: '7vw'
-  },
-  button: {
-    color: 'white',
-    backgroundColor: 'purple'
-  },
-  buttons: {
-    width: '300px',
-    margin: theme.spacing(2, 0, 2, 2)
   }
 }))
 
@@ -112,7 +106,7 @@ const Navbar = props => {
         onClose={toggleDrawer('right', false)}
       >
         <Cart />
-        <div className={classes.buttons}>
+        <div>
           <Link to="/checkout">
             <Button
               variant="contained"

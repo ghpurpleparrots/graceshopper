@@ -14,14 +14,9 @@ nav a {
   display: inline-block;
   margin: 1em;
 }
-.home-component {
-  padding-top: 5px;
-}
+
 .component {
-  padding-top: 45px;
-}
-.topping-component {
-  padding-top: 120px;
+  padding-top: 85px;
 }
 #cart-list {
   list-style: none;
@@ -31,10 +26,6 @@ nav a {
 .profileLink {
   text-decoration: none;
   color: gray;
-}
-.button {
-  background-color: purple !important;
-  color: white !important;
 }
 
 #home-img-container {
@@ -51,11 +42,6 @@ nav a {
   width: 60;
 }
 
-#google-icon {
-  width: 20px !important;
-  height: 20px !important;
-  margin-right: 10px;
-}
 .icon {
   width: 35px !important;
   height: 35px !important;
@@ -65,7 +51,6 @@ nav a {
   width: 400px;
   height: 400px;
 }
-
 /* form div {
   margin: 1em;
   display: inline-block;
