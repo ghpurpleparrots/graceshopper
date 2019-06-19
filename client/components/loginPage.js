@@ -9,6 +9,7 @@ import {makeStyles} from '@material-ui/core/styles'
 import {auth} from '../store'
 import {connect} from 'react-redux'
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator'
+import OauthLoginForm from './oath-login-form'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -134,6 +135,7 @@ function LoginPage(props) {
               Continue As Guest
             </Button>
           </Link>
+          <OauthLoginForm />
         </div>
       </Grid>
     </Grid>
