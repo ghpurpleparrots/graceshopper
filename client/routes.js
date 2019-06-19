@@ -57,6 +57,12 @@ class Routes extends Component {
     const {isLoaded} = this.state
     return (
       <div>
+        {isLoggedIn && (
+          <Switch>
+            <Route exact path="/profile" component={Profile} />
+            <Route path="/added-to-cart" component={Home} />
+          </Switch>
+        )}
         {isLoaded && (
           <Switch>
             {/* Routes placed here are available to all visitors */}
@@ -82,12 +88,6 @@ class Routes extends Component {
 
             {/* Routes placed here are only available after logging in */}
 
-            {isLoggedIn && (
-              <Switch>
-                <Route exact path="/profile" component={Profile} />
-                <Route path="/added-to-cart" component={Home} />
-              </Switch>
-            )}
             {/* Displays our Login component as a fallback */}
             <Route component={Home} />
           </Switch>
