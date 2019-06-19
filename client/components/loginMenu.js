@@ -13,6 +13,7 @@ import {
   IconButton,
   ListItemText,
   ListItemAvatar,
+  ListItem,
   MenuItem,
   Avatar
 } from '@material-ui/core'
@@ -107,14 +108,12 @@ const LoginMenu = props => {
         >
           <Link to="/profile">
             <StyledMenuItem>
-              <ListItemAvatar>
-                <Avatar src="/user-default-image.png" className="avatar" />
-              </ListItemAvatar>
-              <ListItemText className="profileLink"> Profile </ListItemText>
+              <ListItemText className="profileLink"> My Profile </ListItemText>
             </StyledMenuItem>
           </Link>
           <StyledMenuItem>
             <Button
+              className="button"
               type="submit"
               variant="outlined"
               onClick={() => handleLogout()}
@@ -167,7 +166,7 @@ const LoginMenu = props => {
               </Typography>
             </Link>
             <StyledMenuItem>
-              <Button type="submit" variant="outlined">
+              <Button className="button" type="submit" variant="outlined">
                 Login
               </Button>
             </StyledMenuItem>

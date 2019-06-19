@@ -17,7 +17,7 @@ const styles = theme => ({
     width: 'auto',
     marginLeft: theme.spacing(2),
     marginRight: theme.spacing(2),
-    paddingTop: theme.spacing(4),
+    paddingTop: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
       width: 600,
       marginLeft: 'auto',
@@ -35,7 +35,7 @@ const styles = theme => ({
     }
   },
   cardGrid: {
-    paddingTop: theme.spacing(8),
+    paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(8)
   },
   cardContainer: {
@@ -101,7 +101,7 @@ class Flavors extends React.Component {
       this.props.history.push('/start-order')
     }
     return (
-      <div>
+      <div className="component">
         <Grid
           container
           spacing={0}

@@ -4,12 +4,12 @@ import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import TextField from '@material-ui/core/TextField'
 import Grid from '@material-ui/core/Grid'
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Typography from '@material-ui/core/Typography'
 import {withStyles} from '@material-ui/core/styles'
 import Container from '@material-ui/core/Container'
 import axios from 'axios'
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator'
+import OauthLoginForm from './oath-login-form'
 
 const styles = theme => ({
   '@global': {
@@ -106,9 +106,6 @@ class SignUp extends React.Component {
       <Container className="component" component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
@@ -229,6 +226,7 @@ class SignUp extends React.Component {
 
             <Grid container justify="flex-end" />
           </ValidatorForm>
+          <OauthLoginForm />
         </div>
       </Container>
     )

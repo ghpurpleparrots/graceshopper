@@ -1,6 +1,5 @@
 /* eslint-disable complexity */
 import axios from 'axios'
-
 /**
  * ACTION TYPES
  */
