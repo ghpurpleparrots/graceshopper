@@ -5,7 +5,7 @@ module.exports.isAuthorized = async function(req, res, next) {
     let user
     if (req.session.userId) {
       user = await User.findByPk(req.session.userId)
-    } else {
+    } else if (req.user) {
       user = await User.findByPk(req.user.id)
     }
     if (!user) {

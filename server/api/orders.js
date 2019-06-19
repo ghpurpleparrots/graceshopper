@@ -10,7 +10,7 @@ router.get('/', async (req, res, next) => {
 })
 
 //get a user's 'inCart' order
-router.get('/:userId', async (req, res, next) => {
+router.get('/:userId', auth.isAuthorized, async (req, res, next) => {
   try {
     const order = await Order.findOne({
       where: {
@@ -44,18 +44,27 @@ router.get('/:userId/ordered', auth.isAuthorized, async (req, res, next) => {
   }
 })
 
-// create a new order
-router.post('/:userId', async (req, res, next) => {
+//create a new guest order
+router.post('/guest', async (req, res, next) => {
   try {
     const newOrder = await Order.create({
       status: 'inCart'
     })
-    if (req.params.userId === 'guest') {
-      res.json(newOrder.id)
-    } else {
-      newOrder.setUser(req.params.userId)
-      res.json(newOrder.id)
-    }
+    res.json(newOrder.id)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// create a new order
+router.post('/:userId', auth.isAuthorized, async (req, res, next) => {
+  try {
+    const newOrder = await Order.create({
+      status: 'inCart'
+    })
+
+    newOrder.setUser(req.params.userId)
+    res.json(newOrder.id)
   } catch (err) {
     next(err)
   }
