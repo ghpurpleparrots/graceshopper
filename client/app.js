@@ -1,5 +1,5 @@
 import React from 'react'
-import {Navbar} from './components'
+import {Footer, Navbar} from './components'
 import Routes from './routes'
 
 class App extends React.Component {
@@ -8,6 +8,7 @@ class App extends React.Component {
       <div>
         <Navbar />
         <Routes />
+        <Footer />
       </div>
     )
   }

@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 const Review = props => {
-  const user = props.user
+  const {name, address, city, state, zipCode} = props.address
   const classes = useStyles()
 
   return (
@@ -27,10 +27,9 @@ const Review = props => {
           <Typography variant="h6" gutterBottom className={classes.title}>
             Shipping
           </Typography>
-          <Typography gutterBottom>{user.id ? user.name : 'Guest'}</Typography>
-          <Typography gutterBottom>
-            {user.id ? user.address : '1 Main St'}
-          </Typography>
+          <Typography gutterBottom>{name}</Typography>
+          <Typography gutterBottom>{address}</Typography>
+          <Typography gutterBottom>{`${city}, ${state} ${zipCode}`}</Typography>
         </Grid>
       </Grid>
     </React.Fragment>
@@ -38,7 +37,8 @@ const Review = props => {
 }
 
 const mapStateToProps = state => ({
-  user: state.user
+  user: state.user,
+  address: state.order.shippingAddress
 })
 
 export default connect(mapStateToProps)(Review)

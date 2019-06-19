@@ -18,7 +18,7 @@ export const UserHome = props => {
   const classes = useStyles()
 
   return (
-    <div className="component">
+    <div className="home-component">
       <Grid
         container
         spacing={1}
