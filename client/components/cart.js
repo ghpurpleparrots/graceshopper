@@ -58,6 +58,21 @@ const Cart = props => {
     }
   })
 
+  async function handleIncrement(groupId) {
+    await props.incrementQty(groupId)
+    await localStorage.setItem('cart', JSON.stringify(props.cart))
+  }
+
+  async function handleDecrement(groupId) {
+    await props.decrementQty(groupId)
+    await localStorage.setItem('cart', JSON.stringify(props.cart))
+  }
+
+  async function handleDelete(groupId) {
+    await props.deleteItem(groupId)
+    await localStorage.removeItem('cart')
+  }
+
   return (
     <div className={classes.root}>
       <Grid container>
@@ -92,7 +107,7 @@ const Cart = props => {
                   </ListItemText>
 
                   <Button
-                    onClick={() => props.incrementQty(item.groupId)}
+                    onClick={() => handleIncrement(item.groupId)}
                     className={classes.button}
                     color="primary"
                   >
@@ -104,8 +119,8 @@ const Cart = props => {
                   <Button
                     onClick={() =>
                       item.qty > 1
-                        ? props.decrementQty(item.groupId)
-                        : props.deleteItem(item.groupId)
+                        ? handleDecrement(item.groupId)
+                        : handleDelete(item.groupId)
                     }
                     className={classes.button}
                     color="secondary"
@@ -116,7 +131,7 @@ const Cart = props => {
                   <ListItemSecondaryAction>
                     <IconButton
                       onClick={() => {
-                        props.deleteItem(item.groupId)
+                        handleDelete(item.groupId)
                       }}
                       edge="end"
                       aria-label="Delete"
